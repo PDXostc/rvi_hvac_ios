@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "hazard.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "Screen Shot 2015-05-01 at 4.53.52 PM.png"
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",

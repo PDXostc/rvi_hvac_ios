@@ -52,7 +52,7 @@
 //        case 1:
     if (row == 0)  return @"LO";
     if (row == 14) return @"HI";
-    
+
     return [NSString stringWithFormat:@"%d", row + 15];
 //        case 2:
 //            return @"HI";

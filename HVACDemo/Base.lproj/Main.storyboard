@@ -17,27 +17,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4m6-iJ-OCe">
-                                <rect key="frame" x="0.0" y="378" width="600" height="162"/>
-                                <color key="backgroundColor" red="0.28627450980392155" green="0.65098039215686276" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="kfO-iL-ccy"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="cUw-xa-ZIn"/>
-                                </connections>
-                            </pickerView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="L_CLIMATE_SCREENCAP" translatesAutoresizingMaskIntoConstraints="NO" id="eIx-f5-xnw">
-                                <rect key="frame" x="257" y="201" width="88" height="91"/>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7F-sj-3vg">
+                                <rect key="frame" x="145" y="28" width="310" height="58"/>
+                                <state key="normal" image="Hazard">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vu7-cK-ttV">
+                                <rect key="frame" x="145" y="106" width="130" height="104"/>
+                                <state key="normal" image="SeatHeatLeft">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aO0-Ev-4oB">
+                                <rect key="frame" x="325" y="106" width="130" height="104"/>
+                                <state key="normal" image="SeatHeatRight">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="4m6-iJ-OCe" secondAttribute="trailing" constant="-16" id="6BV-zt-Ho4"/>
-                            <constraint firstItem="4m6-iJ-OCe" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="85H-jr-Kcu"/>
-                            <constraint firstAttribute="centerX" secondItem="4m6-iJ-OCe" secondAttribute="centerX" id="E0v-Vw-7g3"/>
-                            <constraint firstAttribute="centerX" secondItem="eIx-f5-xnw" secondAttribute="centerX" constant="-0.5" id="Jej-hK-rBS"/>
-                            <constraint firstItem="4m6-iJ-OCe" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="358" id="WL2-wg-jHd"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4m6-iJ-OCe" secondAttribute="bottom" constant="60" id="gQF-s9-9aa"/>
-                            <constraint firstItem="4m6-iJ-OCe" firstAttribute="top" secondItem="eIx-f5-xnw" secondAttribute="bottom" constant="86" id="mdh-gm-5T4"/>
+                            <constraint firstAttribute="centerX" secondItem="e7F-sj-3vg" secondAttribute="centerX" id="6Y4-jE-7Dw"/>
+                            <constraint firstItem="aO0-Ev-4oB" firstAttribute="top" secondItem="e7F-sj-3vg" secondAttribute="bottom" constant="20" id="6zc-5m-Bsa"/>
+                            <constraint firstItem="Vu7-cK-ttV" firstAttribute="leading" secondItem="e7F-sj-3vg" secondAttribute="leading" id="BBX-5q-IAW"/>
+                            <constraint firstItem="Vu7-cK-ttV" firstAttribute="top" secondItem="aO0-Ev-4oB" secondAttribute="top" id="Big-rF-Rcn"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="e7F-sj-3vg" secondAttribute="trailing" priority="750" constant="2" id="S9W-ie-vv6"/>
+                            <constraint firstItem="e7F-sj-3vg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" priority="750" constant="2" id="VCB-9m-AJq"/>
+                            <constraint firstItem="e7F-sj-3vg" firstAttribute="trailing" secondItem="aO0-Ev-4oB" secondAttribute="trailing" id="iNO-of-M8L"/>
+                            <constraint firstItem="e7F-sj-3vg" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="uuG-bL-02V"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -46,6 +54,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="L_CLIMATE_SCREENCAP" width="88" height="91"/>
+        <image name="Hazard" width="310" height="58"/>
+        <image name="SeatHeatLeft" width="130" height="104"/>
+        <image name="SeatHeatRight" width="130" height="104"/>
     </resources>
 </document>
