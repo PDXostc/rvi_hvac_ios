@@ -14,6 +14,7 @@
 		23A502751AF436E900208D21 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23A502741AF436E900208D21 /* Images.xcassets */; };
 		23A502781AF436E900208D21 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23A502761AF436E900208D21 /* LaunchScreen.xib */; };
 		23A502841AF436E900208D21 /* HVACDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A502831AF436E900208D21 /* HVACDemoTests.m */; };
+		6234837926524609DD59A9E8 /* HVACManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348F2B6AB0D4F1D0FC36E7 /* HVACManager.m */; };
 		6234863A1BFF50E700AC14A6 /* RPCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348D5986501A27799B8D8F /* RPCClient.m */; };
 		6234863DD00D0CA9BB0CEB3C /* RPCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348479F5A851E4819EC473 /* RPCRequest.m */; };
 		623489508CC94071751C19D4 /* RPCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234809BA42BCEA084982E76 /* RPCResponse.m */; };
@@ -44,11 +45,13 @@
 		23A502821AF436E900208D21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23A502831AF436E900208D21 /* HVACDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVACDemoTests.m; sourceTree = "<group>"; };
 		6234809BA42BCEA084982E76 /* RPCResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPCResponse.m; sourceTree = "<group>"; };
+		623482277589C8905AB4BAB5 /* HVACManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVACManager.h; sourceTree = "<group>"; };
 		62348296AD26C4CCFA42D1BA /* RPCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCClient.h; sourceTree = "<group>"; };
 		62348479F5A851E4819EC473 /* RPCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPCRequest.m; sourceTree = "<group>"; };
 		62348AE30F7D78939DE8357D /* RPCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCRequest.h; sourceTree = "<group>"; };
 		62348D5986501A27799B8D8F /* RPCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPCClient.m; sourceTree = "<group>"; };
 		62348DC88407CF59D3A8EA7B /* RPCResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCResponse.h; sourceTree = "<group>"; };
+		62348F2B6AB0D4F1D0FC36E7 /* HVACManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVACManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +102,8 @@
 				23A502761AF436E900208D21 /* LaunchScreen.xib */,
 				23A502671AF436E900208D21 /* Supporting Files */,
 				6234869BEE152D25A60EFAD0 /* RPC */,
+				62348F2B6AB0D4F1D0FC36E7 /* HVACManager.m */,
+				623482277589C8905AB4BAB5 /* HVACManager.h */,
 			);
 			path = HVACDemo;
 			sourceTree = "<group>";
@@ -249,6 +254,7 @@
 				6234863DD00D0CA9BB0CEB3C /* RPCRequest.m in Sources */,
 				623489508CC94071751C19D4 /* RPCResponse.m in Sources */,
 				6234863A1BFF50E700AC14A6 /* RPCClient.m in Sources */,
+				6234837926524609DD59A9E8 /* HVACManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
