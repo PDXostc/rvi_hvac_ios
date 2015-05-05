@@ -140,7 +140,7 @@
                                         <color key="backgroundColor" red="0.98823529409999999" green="0.54117647059999996" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.50196081399917603" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0" green="0" blue="0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="6Ng-07-i85" firstAttribute="top" secondItem="RXW-Du-Kh2" secondAttribute="top" id="1AJ-2Y-Ocw"/>
                                     <constraint firstItem="6Ng-07-i85" firstAttribute="bottom" secondItem="RXW-Du-Kh2" secondAttribute="bottom" id="8aR-5D-coq"/>
@@ -186,7 +186,7 @@
                                 <rect key="frame" x="210" y="483" width="180" height="47"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0" green="0" blue="0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="8PT-iY-JVF" firstAttribute="top" secondItem="Vu7-cK-ttV" secondAttribute="bottom" constant="8" id="0SL-Ax-4kx"/>
                             <constraint firstItem="Ufu-px-CIA" firstAttribute="leading" secondItem="Kzv-Dj-78V" secondAttribute="trailing" constant="10" id="1m4-zY-3rO"/>
