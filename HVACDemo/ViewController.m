@@ -70,8 +70,8 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-        [HVACManager sendMethod:(pickerView == self.pickerLeft) ? @"/temp_left" : @"/temp_right"
-                          value:[NSString stringWithFormat:@"%d", row + 15]];
+    [HVACManager sendService:(pickerView == self.pickerLeft) ? @"/temp_left" : @"/temp_right"
+                       value:[NSString stringWithFormat:@"%d", row + 15]];
 }
 
 - (IBAction)airDirectionButtonPressed:(id)sender
@@ -97,6 +97,9 @@
         [self.seatTempRight setTitle:[NSString stringWithFormat:@"%d", self.rightSeatTemp]
                             forState:UIControlStateNormal];
     }
+
+    [HVACManager sendService:@"/temp_left"
+                       value:@"20"];
 }
 
 - (IBAction)fanACButtonPressed:(id)sender

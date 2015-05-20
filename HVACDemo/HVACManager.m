@@ -38,9 +38,9 @@
 
     dispatch_once(&onceToken, ^{
         _sharedManager = [[HVACManager alloc] init];
-        _sharedManager.domain   = @"jlr.com/";
-        _sharedManager.vin      = @"vin/lilli";
-        _sharedManager.app      = @"/hvac/";
+        _sharedManager.domain   = @"jlr.com";
+        _sharedManager.vin      = @"/vin/lilli";
+        _sharedManager.app      = @"/hvac";
         _sharedManager.backend  = @"/backend/123456789";
         _sharedManager.endpoint = @"http://rvi1.nginfotpdx.net:8801";
 
@@ -50,11 +50,11 @@
     return _sharedManager;
 }
 
-- (void)sendMethod:(NSString *)method value:(NSString *)value
+- (void)sendService:(NSString *)service value:(NSString *)value
 {
     [self.client postRequest:[RPCRequest requestWithMethod:@"message"
                                             params:@{
-                                               @"service_name": [NSString stringWithFormat:@"%@%@%@%@", self.domain, self.vin, self.app, method],
+                                               @"service_name": [NSString stringWithFormat:@"%@%@%@%@", self.domain, self.vin, self.app, service],
                                                @"timeout": @((NSInteger)([[NSDate date] timeIntervalSince1970] + 5000)),
                                                @"parameters": @[
                                                    @{
@@ -64,16 +64,16 @@
                                                ]
                                            }
                                           callback:^(RPCResponse *response) {
-                                              NSLog(@"Sync request: %@", response);
-                                              NSLog(@"Sync request error: %@", response.error);
+                                              NSLog(@"Sync response: %@", response);
+                                              NSLog(@"Sync response error: %@", response.error);
                                           }]];
 
 
 }
 
 
-+ (void)sendMethod:(NSString *)method value:(NSString *)value
++ (void)sendService:(NSString *)service value:(NSString *)value
 {
-    [[HVACManager sharedManager] sendMethod:method value:value];
+    [[HVACManager sharedManager] sendService:service value:value];
 }
 @end

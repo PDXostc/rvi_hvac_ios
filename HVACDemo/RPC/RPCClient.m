@@ -41,6 +41,8 @@
                                                        options:nil
                                                          error:&jsonError];
 
+    NSLog(@"Sending: %@", [NSString stringWithCString:[payload bytes] encoding:NSUTF8StringEncoding]);
+
 //    if(jsonError != nil)
 //        [self handleFailedRequest:request withError:[NSError errorWithDomain:@"500" code:500 userInfo:nil]];
 //    else
@@ -61,8 +63,8 @@
     NSError       *error    = nil;
     NSData        *data     = [NSURLConnection sendSynchronousRequest:serviceRequest returningResponse:&response error:&error];
 
-//    NSString *foo2 = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    NSLog(@"foo2: %@", foo2);
+    NSString *foo2 = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"foo2: %@", foo2);
 
     if(data != nil)
         [self handleData:data forRequest:request];

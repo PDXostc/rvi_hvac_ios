@@ -18,5 +18,5 @@
 
 @interface HVACManager : NSObject
 
-+ (void)sendMethod:(NSString *)method value:(NSString *)value;
++ (void)sendService:(NSString *)service value:(NSString *)value;
 @end
