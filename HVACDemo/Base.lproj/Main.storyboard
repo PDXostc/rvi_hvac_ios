@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,6 +19,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7F-sj-3vg" userLabel="Button - Hazard">
                                 <rect key="frame" x="145" y="28" width="310" height="58"/>
+                                <animations/>
                                 <state key="normal" image="Hazard">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -27,6 +29,7 @@
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAN-fw-hQC">
                                 <rect key="frame" x="145" y="106" width="10" height="239"/>
+                                <animations/>
                                 <color key="backgroundColor" red="0.9882352941176471" green="0.54117647058823526" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="fpi-j9-feF"/>
@@ -34,6 +37,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4u-B1-kVk">
                                 <rect key="frame" x="445" y="106" width="10" height="239"/>
+                                <animations/>
                                 <color key="backgroundColor" red="0.9882352941176471" green="0.54117647058823526" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="VVf-kl-GvK"/>
@@ -41,6 +45,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vu7-cK-ttV" userLabel="Button - Seat Left">
                                 <rect key="frame" x="165" y="106" width="130" height="104"/>
+                                <animations/>
                                 <state key="normal" image="SeatHeatLeft">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -50,6 +55,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aO0-Ev-4oB" userLabel="Button - Seat Right">
                                 <rect key="frame" x="305" y="106" width="130" height="104"/>
+                                <animations/>
                                 <state key="normal" image="SeatHeatRight">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -59,6 +65,7 @@
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8PT-iY-JVF">
                                 <rect key="frame" x="165" y="218" width="130" height="127"/>
+                                <animations/>
                                 <color key="backgroundColor" red="0.28627450980000002" green="0.65098039220000004" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="127" id="lEL-WB-82e"/>
@@ -66,6 +73,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q3q-o3-EpA">
                                 <rect key="frame" x="305" y="218" width="130" height="127"/>
+                                <animations/>
                                 <color key="backgroundColor" red="0.28627450980000002" green="0.65098039220000004" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="127" id="J2d-3i-W12"/>
@@ -73,6 +81,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUZ-1E-6l0" userLabel="Button - Air Down">
                                 <rect key="frame" x="145" y="370" width="60" height="40"/>
+                                <animations/>
                                 <state key="normal" image="AirflowDirectionDown">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -82,6 +91,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W2T-zL-Gzj" userLabel="Button - Air Right">
                                 <rect key="frame" x="145" y="430" width="60" height="40"/>
+                                <animations/>
                                 <state key="normal" image="AirflowDirectionRight">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -91,6 +101,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXG-PC-83j" userLabel="Button - Air Up">
                                 <rect key="frame" x="145" y="490" width="60" height="40"/>
+                                <animations/>
                                 <state key="normal" image="AirflowDirectionUp">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -100,6 +111,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufu-px-CIA" userLabel="Button - Fan Max">
                                 <rect key="frame" x="395" y="370" width="60" height="40"/>
+                                <animations/>
                                 <state key="normal" image="FanMax">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -109,6 +121,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cv7-xG-U3A" userLabel="Button - Defrost Rear">
                                 <rect key="frame" x="395" y="430" width="60" height="40"/>
+                                <animations/>
                                 <state key="normal" image="DefrostRear">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -118,6 +131,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jUK-gm-EGT" userLabel="Button - Defrost Front">
                                 <rect key="frame" x="395" y="490" width="60" height="40"/>
+                                <animations/>
                                 <state key="normal" image="DefrostFront">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -130,6 +144,7 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Fan" translatesAutoresizingMaskIntoConstraints="NO" id="RXW-Du-Kh2">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="AoX-Jz-plS"/>
                                             <constraint firstAttribute="width" constant="25" id="pf2-cj-esn"/>
@@ -137,10 +152,12 @@
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ng-07-i85">
                                         <rect key="frame" x="33" y="0.0" width="141" height="25"/>
+                                        <animations/>
                                         <color key="backgroundColor" red="0.98823529409999999" green="0.54117647059999996" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0" green="0" blue="0" alpha="1" colorSpace="calibratedRGB"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="6Ng-07-i85" firstAttribute="top" secondItem="RXW-Du-Kh2" secondAttribute="top" id="1AJ-2Y-Ocw"/>
                                     <constraint firstItem="6Ng-07-i85" firstAttribute="bottom" secondItem="RXW-Du-Kh2" secondAttribute="bottom" id="8aR-5D-coq"/>
@@ -153,6 +170,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OX1-7b-ECU" userLabel="Button - Fan A/C">
                                 <rect key="frame" x="215" y="430" width="55" height="40"/>
+                                <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="A/C">
                                     <color key="titleColor" red="0.64705882349999999" green="0.92941176469999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -164,6 +182,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJI-Bd-aHX" userLabel="Button - Fan AUTO">
                                 <rect key="frame" x="273" y="430" width="55" height="40"/>
+                                <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="AUTO">
                                     <color key="titleColor" red="0.6470588235294118" green="0.92941176470588238" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -175,6 +194,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FN-cx-C1n" userLabel="Button - Fan Circ">
                                 <rect key="frame" x="330" y="430" width="55" height="40"/>
+                                <animations/>
                                 <state key="normal" image="FanCirc">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -184,9 +204,11 @@
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="JaguarLandRoverLogo" translatesAutoresizingMaskIntoConstraints="NO" id="bdE-uP-VIc">
                                 <rect key="frame" x="210" y="483" width="180" height="47"/>
+                                <animations/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0" green="0" blue="0" alpha="1" colorSpace="calibratedRGB"/>
+                        <animations/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="8PT-iY-JVF" firstAttribute="top" secondItem="Vu7-cK-ttV" secondAttribute="bottom" constant="8" id="0SL-Ax-4kx"/>
                             <constraint firstItem="Ufu-px-CIA" firstAttribute="leading" secondItem="Kzv-Dj-78V" secondAttribute="trailing" constant="10" id="1m4-zY-3rO"/>

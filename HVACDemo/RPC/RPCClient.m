@@ -48,6 +48,7 @@
 //    else
 //    {
     NSMutableURLRequest *serviceRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:self.serviceEndpoint]];
+    //NSMutableURLRequest *serviceRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://posttestserver.com/post.php"]];//self.serviceEndpoint]];
 
     [serviceRequest setValue:@"application/json-rpc" forHTTPHeaderField:@"Content-Type"];
     [serviceRequest setValue:@"objc-JSONRpc/1.0" forHTTPHeaderField:@"User-Agent"];

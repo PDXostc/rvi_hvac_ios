@@ -42,7 +42,7 @@
         _sharedManager.vin      = @"/vin/lilli";
         _sharedManager.app      = @"/hvac";
         _sharedManager.backend  = @"/backend/123456789";
-        _sharedManager.endpoint = @"http://rvi1.nginfotpdx.net:8801";
+        _sharedManager.endpoint = @"http://192.168.6.86:8811";//@"http://rvi1.nginfotpdx.net:8801";
 
         _sharedManager.client   = [[RPCClient alloc] initWithServiceEndpoint:_sharedManager.endpoint];
     });
@@ -55,7 +55,7 @@
     [self.client postRequest:[RPCRequest requestWithMethod:@"message"
                                             params:@{
                                                @"service_name": [NSString stringWithFormat:@"%@%@%@%@", self.domain, self.vin, self.app, service],
-                                               @"timeout": @((NSInteger)([[NSDate date] timeIntervalSince1970] + 5000)),
+                                               @"timeout": @((NSInteger)([[NSDate date] timeIntervalSince1970] + 5)),
                                                @"parameters": @[
                                                    @{
                                                            @"sending_node" : [NSString stringWithFormat:@"%@%@", self.domain, self.backend],
