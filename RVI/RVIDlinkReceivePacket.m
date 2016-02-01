@@ -37,7 +37,7 @@
     return self;
 }
 
-+ (id)dlinkReceivePacketWithService:(RVIService *)service
++ (id)receivePacketWithService:(RVIService *)service
 {
     return [[RVIDlinkReceivePacket alloc] initWithService:service];
 }
@@ -56,7 +56,7 @@
     return self;
 }
 
-+ (id)dlinkReceivePacketWithDictionary:(id)dictionary
++ (id)receivePacketWithDictionary:(NSDictionary *)dictionary
 {
     return [[RVIDlinkReceivePacket alloc] initWithDictionary:dictionary];
 }

@@ -16,7 +16,7 @@
 #import <Foundation/Foundation.h>
 #import "RVIRemoteConnectionDelegate.h"
 
-@interface RVIServerConnection : NSObject
+@interface RVIServerConnection : NSObject <RVIRemoteConnectionInterface>
 /**
  * The server url.
  */
@@ -44,11 +44,13 @@
 
 @property (nonatomic, weak) id<RVIRemoteConnectionDelegate> delegate;
 
-- (void)sendRviRequest:(RVIDlinkPacket *)dlinkPacket;
++ (id)serverConnection;
 
-- (BOOL)isConnected;
-- (BOOL)isConfigured;
-
-- (void)connect;
-- (void)disconnect:(NSError *)trigger;
+//- (void)sendRviRequest:(RVIDlinkPacket *)dlinkPacket;
+//
+//- (BOOL)isConnected;
+//- (BOOL)isConfigured;
+//
+//- (void)connect;
+//- (void)disconnect:(NSError *)trigger;
 @end

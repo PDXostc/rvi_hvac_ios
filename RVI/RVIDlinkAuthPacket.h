@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong) NSString *version;
 
-@property (nonatomic, strong) NSObject *creds;
+@property (nonatomic, strong) NSArray *creds;
 
 
 /**
@@ -32,9 +32,9 @@
  *
  * @param creds The credentials
  */
-- (id)initWithCredentials:(NSObject *)creds;
-+ (id)dlinkAuthPacketWithCredentials:(NSObject *)creds;
+- (id)initWithCredentials:(NSArray *)creds;
++ (id)authPacketWithCredentials:(NSArray *)creds;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
-+ (id)dlinkAuthPacketWithDictionary:(NSDictionary *)dict;
++ (id)authPacketWithDictionary:(NSDictionary *)dict;
 @end

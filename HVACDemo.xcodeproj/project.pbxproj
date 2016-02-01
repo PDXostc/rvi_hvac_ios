@@ -28,6 +28,7 @@
 		62348C77FAEC22FD0814D2D6 /* RVIRemoteConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348CF6A58937FC72D4A258 /* RVIRemoteConnectionManager.m */; };
 		62348DF3C04950D3CAE5C987 /* RVIDlinkReceivePacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348F74F3D204CAF7D97D3C /* RVIDlinkReceivePacket.m */; };
 		62348F475F079958818C000F /* RVIServiceBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348A4EB5EC0F0C166F599E /* RVIServiceBundle.m */; };
+		62348F8E55574C3B7F5B90A0 /* RVIBluetoothConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348AD8272026A8C74FD1D0 /* RVIBluetoothConnection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +71,9 @@
 		6234867B25D4F4E9FFE534DE /* RVIDlinkPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIDlinkPacket.h; sourceTree = "<group>"; };
 		6234871F04E20B533EA259B1 /* RVIDlinkServiceAnnouncePacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIDlinkServiceAnnouncePacket.m; sourceTree = "<group>"; };
 		62348729A670EC9782A2A1E9 /* RVINode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVINode.m; sourceTree = "<group>"; };
+		62348A1E5D22718F141824CC /* RVIBluetoothConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIBluetoothConnection.h; sourceTree = "<group>"; };
 		62348A4EB5EC0F0C166F599E /* RVIServiceBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIServiceBundle.m; sourceTree = "<group>"; };
+		62348AD8272026A8C74FD1D0 /* RVIBluetoothConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIBluetoothConnection.m; sourceTree = "<group>"; };
 		62348AE30F7D78939DE8357D /* RPCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCRequest.h; sourceTree = "<group>"; };
 		62348B0BC9A06137F88E906F /* RVIDlinkReceivePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIDlinkReceivePacket.h; sourceTree = "<group>"; };
 		62348B9C85090528692DFE84 /* RVIDlinkAuthPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIDlinkAuthPacket.h; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 				62348C4E0E7CB8FEA3AA917C /* RVIDlinkPacketParser.h */,
 				6234839B7560FC8865322B10 /* RVIRemoteConnectionDelegate.h */,
 				62348FE151D6CAD25CDA6458 /* RVIUtil.h */,
+				62348AD8272026A8C74FD1D0 /* RVIBluetoothConnection.m */,
+				62348A1E5D22718F141824CC /* RVIBluetoothConnection.h */,
 			);
 			path = RVI;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 				62348999EB2FB4F8AD2F32AC /* RVIDlinkAuthPacket.m in Sources */,
 				62348DF3C04950D3CAE5C987 /* RVIDlinkReceivePacket.m in Sources */,
 				6234832E97E8B22E26A78DDE /* RVIDlinkPacketParser.m in Sources */,
+				62348F8E55574C3B7F5B90A0 /* RVIBluetoothConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

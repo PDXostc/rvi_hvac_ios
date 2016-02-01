@@ -22,7 +22,7 @@
 
 }
 
-- (id)initWithCredentials:(NSObject *)creds
+- (id)initWithCredentials:(NSArray *)creds
 {
     if (creds == nil)
         return nil;
@@ -38,7 +38,7 @@
     return self;
 }
 
-+ (id)dlinkAuthPacketWithCredentials:(NSObject *)creds
++ (id)authPacketWithCredentials:(NSArray *)creds
 {
     return [[RVIDlinkAuthPacket alloc] initWithCredentials:creds];
 }
@@ -59,7 +59,7 @@
     return self;
 }
 
-+ (id)dlinkAuthPacketWithDictionary:(NSDictionary *)dict
++ (id)authPacketWithDictionary:(NSDictionary *)dict
 {
     return [[RVIDlinkServiceAnnouncePacket alloc] initWithDictionary:dict];
 }

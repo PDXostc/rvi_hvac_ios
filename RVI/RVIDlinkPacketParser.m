@@ -28,6 +28,21 @@
 
 }
 
+- (id)init
+{
+    if ((self = [super init]))
+    {
+
+    }
+
+    return self;
+}
+
++ (id)dlinkPacketParser
+{
+    return [[RVIDlinkPacketParser alloc] init];
+}
+
 
 /**
  *
@@ -77,11 +92,11 @@
         return nil;
 
     if (command == AUTHORIZE) {
-        return [RVIDlinkAuthPacket dlinkAuthPacketWithDictionary:jsonDict];
+        return [RVIDlinkAuthPacket authPacketWithDictionary:jsonDict];
     } else if (command == SERVICE_ANNOUNCE) {
-        return [RVIDlinkServiceAnnouncePacket dlinkServiceAnnouncePacketWithDictionary:jsonDict];
+        return [RVIDlinkServiceAnnouncePacket serviceAnnouncePacketWithDictionary:jsonDict];
     } else if (command == RECEIVE) {
-        return [RVIDlinkReceivePacket dlinkReceivePacketWithDictionary:jsonDict];
+        return [RVIDlinkReceivePacket receivePacketWithDictionary:jsonDict];
     } else {
         return nil;
     }

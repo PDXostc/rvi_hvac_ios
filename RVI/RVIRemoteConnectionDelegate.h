@@ -19,38 +19,79 @@
 @protocol RVIRemoteConnectionDelegate <NSObject>
 
 /**
- * On RVI did connect.
+ * Callback method for when the remote connection did connect.
  */
-- (void)onRVIDidConnect;
+- (void)onRemoteConnectionDidConnect;
 
 /**
- * On RVI did disconnect.
+ * Callback method for when the remote connection did disconnect.
  */
-- (void)onRVIDidDisconnect:(NSError *)error;
+- (void)onRemoteConnectionDidDisconnect:(NSError *)error;
 
 /**
- * On RVI did fail to connect.
+ * Callback method for when the remote connection did fail to connect.
  *
  * @param error the error
  */
-- (void)onRVIDidFailToConnect:(NSError *)error;
+- (void)onRemoteConnectionDidFailToConnect:(NSError *)error;
 
 /**
- * On RVI did receive packet.
+ * Callback method for when the remote connection did receive data.
  *
- * @param packet the packet
+ * @param data the data that was received
  */
-- (void)onRVIDidReceivePacket:(RVIDlinkPacket *)packet;
+- (void)onRemoteConnectionDidReceiveData:(NSString *)data;
 
 /**
- * On RVI did send packet.
+ * Callback method for when the remote connection did send data to the RVI node.
  */
-- (void)onRVIDidSendPacket:(RVIDlinkPacket *)packet;
+- (void)onDidSendDataToRemoteConnection:(RVIDlinkPacket *)packet;
 
 /**
- * On RVI did fail to send packet.
+ * Callback method for when the the remote connection did fail to send data to the RVI node.
  *
  * @param error the error
  */
-- (void)onRVIDidFailToSendPacket:(NSError *)error;
+- (void)onDidFailToSendDataToRemoteConnection:(NSError *)error;
+@end
+
+@protocol RVIRemoteConnectionInterface <NSObject>
+
+/**
+ * Send an rvi request.
+ *
+ * @param dlinkPacket the dlink packet
+ */
+- (void)sendRviRequest:(RVIDlinkPacket *)dlinkPacket;
+
+/**
+ * Is the interface configured.
+ *
+ * @return the boolean
+ */
+- (BOOL)isConfigured;
+
+//    /**
+//     * Is the interface available.
+//     *
+//     * @return the boolean
+//     */
+//    - (BOOL)isAvailable;
+
+/**
+ * Is the interface connected.
+ *
+ * @return the boolean
+ */
+- (BOOL)isConnected;
+
+/**
+ * Connect the interface.
+ */
+- (void)connect;
+
+/**
+ * Disconnect the interface.
+ */
+- (void)disconnect:(NSError *)trigger;
 @end

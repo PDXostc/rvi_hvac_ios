@@ -35,8 +35,8 @@
  * @param services The array of services to announce
  */
 - (id)initWithServices:(NSArray *)services;
-+ (id)dlinkServiceAnnoucePacketWithServices:(NSArray *)services;
++ (id)serviceAnnoucePacketWithServices:(NSArray *)services;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
-+ (id)dlinkServiceAnnouncePacketWithDictionary:(NSDictionary *)dict;
++ (id)serviceAnnouncePacketWithDictionary:(NSDictionary *)dict;
 @end

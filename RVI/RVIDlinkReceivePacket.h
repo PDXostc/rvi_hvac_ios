@@ -39,8 +39,8 @@
  * @param service The service that is getting invoked
  */
 - (id)initWithService:(RVIService *)service;
-+ (id)dlinkReceivePacketWithService:(RVIService *)service;
++ (id)receivePacketWithService:(RVIService *)service;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
-+ (id)dlinkReceivePacketWithDictionary:(NSDictionary *)dict;
++ (id)receivePacketWithDictionary:(NSDictionary *)dict;
 @end

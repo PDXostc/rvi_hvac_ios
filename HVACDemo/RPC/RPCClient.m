@@ -36,42 +36,42 @@
 
 - (void)postRequest:(RPCRequest *)request
 {
-    NSError *jsonError;
-    NSData  *payload = [NSJSONSerialization dataWithJSONObject:[request serialize]
-                                                       options:nil
-                                                         error:&jsonError];
-
-    NSLog(@"Sending: %@", [NSString stringWithCString:[payload bytes] encoding:NSUTF8StringEncoding]);
-
-//    if(jsonError != nil)
-//        [self handleFailedRequest:request withError:[NSError errorWithDomain:@"500" code:500 userInfo:nil]];
+//    NSError *jsonError;
+//    NSData  *payload = [NSJSONSerialization dataWithJSONObject:[request serialize]
+//                                                       options:nil
+//                                                         error:&jsonError];
+//
+//    NSLog(@"Sending: %@", [NSString stringWithCString:[payload bytes] encoding:NSUTF8StringEncoding]);
+//
+////    if(jsonError != nil)
+////        [self handleFailedRequest:request withError:[NSError errorWithDomain:@"500" code:500 userInfo:nil]];
+////    else
+////    {
+//    NSMutableURLRequest *serviceRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:self.serviceEndpoint]];
+//    //NSMutableURLRequest *serviceRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://posttestserver.com/post.php"]];//self.serviceEndpoint]];
+//
+//    [serviceRequest setValue:@"application/json-rpc" forHTTPHeaderField:@"Content-Type"];
+//    [serviceRequest setValue:@"objc-JSONRpc/1.0" forHTTPHeaderField:@"User-Agent"];
+//
+//    [serviceRequest setValue:[NSString stringWithFormat:@"%i", payload.length] forHTTPHeaderField:@"Content-Length"];
+//    [serviceRequest setHTTPMethod:@"POST"];
+//    [serviceRequest setHTTPBody:payload];
+//
+////    NSString *foo = [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
+////    NSLog(@"foo: %@", foo);
+//
+//    NSURLResponse *response = nil;
+//    NSError       *error    = nil;
+//    NSData        *data     = [NSURLConnection sendSynchronousRequest:serviceRequest returningResponse:&response error:&error];
+//
+//    NSString *foo2 = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//    NSLog(@"foo2: %@", foo2);
+//
+//    if(data != nil)
+//        [self handleData:data forRequest:request];
 //    else
-//    {
-    NSMutableURLRequest *serviceRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:self.serviceEndpoint]];
-    //NSMutableURLRequest *serviceRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://posttestserver.com/post.php"]];//self.serviceEndpoint]];
-
-    [serviceRequest setValue:@"application/json-rpc" forHTTPHeaderField:@"Content-Type"];
-    [serviceRequest setValue:@"objc-JSONRpc/1.0" forHTTPHeaderField:@"User-Agent"];
-
-    [serviceRequest setValue:[NSString stringWithFormat:@"%i", payload.length] forHTTPHeaderField:@"Content-Length"];
-    [serviceRequest setHTTPMethod:@"POST"];
-    [serviceRequest setHTTPBody:payload];
-
-//    NSString *foo = [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
-//    NSLog(@"foo: %@", foo);
-
-    NSURLResponse *response = nil;
-    NSError       *error    = nil;
-    NSData        *data     = [NSURLConnection sendSynchronousRequest:serviceRequest returningResponse:&response error:&error];
-
-    NSString *foo2 = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"foo2: %@", foo2);
-
-    if(data != nil)
-        [self handleData:data forRequest:request];
-    else
-        [self handleFailedRequest:request withError:[NSError errorWithDomain:@"300" code:300 userInfo:nil]];
-    //}
+//        [self handleFailedRequest:request withError:[NSError errorWithDomain:@"300" code:300 userInfo:nil]];
+//    //}
 }
 
 

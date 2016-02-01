@@ -35,7 +35,7 @@
     return self;
 }
 
-+ (id)dlinkServiceAnnoucePacketWithServices:(NSArray *)services
++ (id)serviceAnnoucePacketWithServices:(NSArray *)services
 {
     return [[RVIDlinkServiceAnnouncePacket alloc] initWithServices:services];
 }
@@ -54,7 +54,7 @@
     return self;
 }
 
-+ (id)dlinkServiceAnnouncePacketWithDictionary:(id)dictionary
++ (id)serviceAnnouncePacketWithDictionary:(NSDictionary *)dictionary
 {
     return [[RVIDlinkServiceAnnouncePacket alloc] initWithDictionary:dictionary];
 }

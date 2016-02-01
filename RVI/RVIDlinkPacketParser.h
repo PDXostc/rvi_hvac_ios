@@ -20,7 +20,7 @@
 /**
  * The interface Dlink packet parser listener. The object that's notified when complete dlink packets are parsed.
  */
-@protocol RVIDlinkPacketParserDelegate
+@protocol RVIDlinkPacketParserDelegate <NSObject>
 
 /**
  * On packet parsed. Callback method that notifies listener when a complete dlink packet was parsed out of the
@@ -51,5 +51,7 @@
 @interface RVIDlinkPacketParser : NSObject
 @property (nonatomic, weak) id <RVIDlinkPacketParserDelegate> delegate;
 
-
++ (id)dlinkPacketParser;
+- (void)parseData:(NSString *)data;
+- (void)clear;
 @end

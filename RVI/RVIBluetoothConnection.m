@@ -1,41 +1,29 @@
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-// 
-// Copyright (c) 2016 Jaguar Land Rover.
 //
-// This program is licensed under the terms and conditions of the
-// Mozilla Public License, version 2.0. The full text of the 
-// Mozilla Public License is at https://www.mozilla.org/MPL/2.0/
-// 
-// File:    RVIServerConnection.m
-// Project: HVACDemo
-// 
-// Created by Lilli Szafranski on 1/28/16.
+// Created by Lilli Szafranski on 1/30/16.
+// Copyright (c) 2016 Lilli Szafranski. All rights reserved.
 //
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-#import "RVIServerConnection.h"
+#import "RVIBluetoothConnection.h"
+#import "RVIDlinkPacket.h"
 
-@interface RVIServerConnection ()
-@end
 
-@implementation RVIServerConnection
+@implementation RVIBluetoothConnection
 {
 
 }
-
-- (id)init 
+- (id)init
 {
-    if ((self = [super init])) 
+    if ((self = [super init]))
     {
-        
+
     }
-    
+
     return self;
 }
-  
-+ (id)serverConnection
+
++ (id)bluetoothConnection
 {
-    return [[RVIServerConnection alloc] init];
+    return [[RVIBluetoothConnection alloc] init];
 }
 
 - (void)sendRviRequest:(RVIDlinkPacket *)dlinkPacket

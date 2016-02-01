@@ -16,43 +16,115 @@
 #import <Foundation/Foundation.h>
 #import "RVIDlinkPacket.h"
 
+typedef enum
+{
+    UNKNOWN,
+    SERVER,
+    BLUETOOTH,
+    GLOBAL,
+}RemoteConnectionType;
+
 @protocol RVIRemoteConnectionManagerDelegate <NSObject>
 /**
- * Callback method for when the remote connection did connect.
+ * On RVI did connect.
  */
-- (void)onRemoteConnectionDidConnect(;
+- (void)onRVIDidConnect;
 
 /**
- * Callback method for when the remote connection did disconnect.
+ * On RVI did disconnect.
  */
-- (void)onRemoteConnectionDidDisconnect:(NSError *)trigger;
+- (void)onRVIDidDisconnect:(NSError *)error;
 
 /**
- * Callback method for when the remote connection did fail to connect.
+ * On RVI did fail to connect.
  *
  * @param error the error
  */
-- (void)onRemoteConnectionDidFailToConnect:(NSError *)error;
+- (void)onRVIDidFailToConnect:(NSError *)error;
 
 /**
- * Callback method for when the remote connection did receive data.
+ * On RVI did receive packet.
  *
- * @param data the data that was received
+ * @param packet the packet
  */
-- (void)onRemoteConnectionDidReceiveData:(NSString *)data;
+- (void)onRVIDidReceivePacket:(RVIDlinkPacket *)packet;
 
 /**
- * Callback method for when the remote connection did send data to the RVI node.
+ * On RVI did send packet.
  */
-- (void)onDidSendDataToRemoteConnection:(RVIDlinkPacket *)packet;
+- (void)onRVIDidSendPacket:(RVIDlinkPacket *)packet;
 
 /**
- * Callback method for when the the remote connection did fail to send data to the RVI node.
+ * On RVI did fail to send packet.
  *
  * @param error the error
  */
-- (void)onDidFailToSendDataToRemoteConnection:(NSError *)error;
+- (void)onRVIDidFailToSendPacket:(NSError *)error;
 @end
 
 @interface RVIRemoteConnectionManager : NSObject
+@property (nonatomic, weak) id<RVIRemoteConnectionManagerDelegate> delegate;
+
+- (id)init;
++ (id)remoteConnectionManager;
+
+/**
+ * Connect the local RVI node to the remote RVI node.
+ */
+- (void)connect:(RemoteConnectionType)type;
+
+/**
+ * Disconnect the local RVI node from the remote RVI node
+ */
+- (void)disconnect:(RemoteConnectionType)type;
+
+/**
+ * Send an RVI request packet.
+ *
+ * @param dlinkPacket the dlink packet
+ */
+- (void)sendPacket:(RVIDlinkPacket *)dlinkPacket;
+
+/**
+ * Sets the server url to the remote RVI node, when using a TCP/IP link to interface with a remote node.
+ *
+ * @param serverUrl the server url
+ */
+- (void)setServerUrl:(NSString *)serverUrl;
+
+/**
+ * Sets the server port of the remote RVI node, when using a TCP/IP link to interface with a remote node.
+ *
+ * @param serverPort the server port
+ */
+- (void)setServerPort:(NSInteger)serverPort;
+
+/**
+ * Sets the trusted server certificate of the remote RVI node, when using a TCP/IP link to interface with a remote node.
+ *
+ * @param clientKeyStore the server certificate key store
+ * @param serverKeyStore the server certificate key store
+ */
+- (void)setServerKeyStores:(id)serverKeyStore clientKeyStore:(id)clientKeyStore clientKeyStorePassword:(NSString *)clientKeyStorePassword;
+
+/**
+ * Sets the device address of the remote Bluetooth receiver on the remote RVI node, when using a Bluetooth link to interface with a remote node.
+ *
+ * @param deviceAddress the Bluetooth device address
+ */
+- (void)setBluetoothDeviceAddress:(NSString *)deviceAddress;
+
+/**
+ * Sets the Bluetooth service record identifier of the remote RVI node, when using a Bluetooth link to interface with a remote node.
+ *
+ * @param serviceRecord the service record identifier
+ */
+- (void)setBluetoothServiceRecord:(id)serviceRecord;
+
+/**
+ * Sets the Bluetooth channel of the remote RVI node, when using a Bluetooth link to interface with a remote node.
+ *
+ * @param channel the channel
+ */
+- (void)setBluetoothChannel:(NSInteger)channel;
 @end
