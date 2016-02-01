@@ -86,7 +86,7 @@
     if ([self.delegate respondsToSelector:@selector(onJsonObjectParsed:)])
         [self.delegate onJsonObjectParsed:jsonDict];
 
-    DlinkCommand command = packet.cmd;
+    DlinkCommand command = packet.command;
 
     if (command == NONE)
         return nil;
@@ -104,6 +104,8 @@
 
 - (NSString *)recurse:(NSString *)buffer
 {
+    DLog(@"");
+
     NSInteger lengthOfString     = [buffer length];
     NSInteger lengthOfJsonObject = [self getLengthOfJsonObject:buffer];
 
@@ -140,6 +142,7 @@
  */
 - (void)parseData:(NSString *)data
 {
+    DLog(@"");
     if (self.buffer == nil) self.buffer = [NSMutableString string];
 
     self.buffer = [self recurse:[NSString stringWithFormat:@"%@%@", self.buffer, data]];

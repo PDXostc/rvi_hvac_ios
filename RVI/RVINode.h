@@ -55,7 +55,7 @@
  *
  * @param serverPort the server port
  */
-- (void)setServerPort:(NSInteger)serverPort;
+- (void)setServerPort:(UInt32)serverPort;
 
 /**
  * Sets the server port of the remote RVI node, when using a TCP/IP link to interface with a remote node.

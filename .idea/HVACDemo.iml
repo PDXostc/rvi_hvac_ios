@@ -10,26 +10,29 @@
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCRequest.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCClient.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCRequest.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/AppDelegate.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/HVACManager.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Images.xcassets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/main.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/ViewController.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/AppDelegate.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/client-certs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/server-certs.der" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/client.p12" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Base.lproj/LaunchScreen.xib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Base.lproj/Main.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/HVACManager.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/HVACDemoTests.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServiceBundle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIUtil.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIBluetoothConnection.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServerConnection.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIService.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacket.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIRemoteConnectionManager.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIRemoteConnectionDelegate.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIService.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkReceivePacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVINode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVINode.m" isTestSource="false" />
@@ -44,7 +47,7 @@
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkReceivePacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServiceBundle.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServerConnection.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIRemoteConnectionManager.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkReceivePacket.h" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

@@ -45,7 +45,7 @@ DlinkCommand commandForString(NSString * string)
 
 - (NSDictionary *)toDictionary
 {
-    return [@{@"cmd" : stringForCommand(self.cmd), @"tid" : @(self.tid), @"rvi_log_id" : self.logId} mutableCopy];
+    return [@{@"cmd" : stringForCommand(self.command), @"tid" : @(self.tid), @"rvi_log_id" : (self.logId ? self.logId : @"")} mutableCopy];
 }
 
 - (id)initWithCommand:(DlinkCommand)command
@@ -57,8 +57,8 @@ DlinkCommand commandForString(NSString * string)
 
     if ((self = [super init]))
     {
-        _cmd = command;
-        _tid = tidCounter++;
+        _command = command;
+        _tid     = tidCounter++;
     }
 
     return self;
@@ -76,9 +76,9 @@ DlinkCommand commandForString(NSString * string)
 
     if ((self = [super init]))
     {
-        _cmd = commandForString(dict[@"cmd"]);
-        _tid = [dict[@"tid"] integerValue];
-        _logId = dict[@"rvi_log_id"];
+        _command = commandForString(dict[@"cmd"]);
+        _tid     = [dict[@"tid"] integerValue];
+        _logId   = dict[@"rvi_log_id"];
     }
 
     return self;

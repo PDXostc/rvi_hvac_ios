@@ -61,7 +61,7 @@
 
 + (id)authPacketWithDictionary:(NSDictionary *)dict
 {
-    return [[RVIDlinkServiceAnnouncePacket alloc] initWithDictionary:dict];
+    return [[RVIDlinkAuthPacket alloc] initWithDictionary:dict];
 }
 
 - (NSDictionary *)toDictionary

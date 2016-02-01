@@ -71,7 +71,7 @@
     [self.remoteConnectionManager setServerUrl:serverUrl];
 }
 
-- (void)setServerPort:(NSInteger)serverPort
+- (void)setServerPort:(UInt32)serverPort
 {
     [self.remoteConnectionManager setServerPort:serverPort];
 }
@@ -164,7 +164,7 @@
     for (RVIServiceBundle *bundle in [self.allServiceBundles allValues])
         [allServices addObjectsFromArray:[bundle getFullyQualifiedLocalServiceNames]];
 
-    [self.remoteConnectionManager sendPacket:[RVIDlinkServiceAnnouncePacket serviceAnnoucePacketWithServices:allServices]];
+    [self.remoteConnectionManager sendPacket:[RVIDlinkServiceAnnouncePacket serviceAnnouncePacketWithServices:allServices]];
 }
 
 /**
@@ -182,6 +182,7 @@
     RVIService *service = packet.service;
 
     RVIServiceBundle *bundle = self.allServiceBundles[[self bundleKey:(id <RVIBundleInterface>)service]];
+
     if (bundle != nil)
         [bundle serviceInvoked:service];
 }
@@ -208,7 +209,7 @@
 
 - (void)handleAuthPacket:(RVIDlinkAuthPacket *)packet
 {
-
+    [self announceServices];
 }
 
 //private final static String SHARED_PREFS_STRING         = "com.rvisdk.settings";
@@ -252,7 +253,7 @@
 //
 //    return localServicePrefix;
 
-    return @"1234567890"; // TODO: PORT_COMPLETE
+    return @"ios/1234567890"; // TODO: PORT_COMPLETE
 }
 
 - (void)onRVIDidConnect

@@ -25,7 +25,7 @@
 /**
  * The server port.
  */
-@property (nonatomic)         NSInteger serverPort;
+@property (nonatomic)         UInt32 serverPort;
 
 /**
  * The key store of the server certs
@@ -41,6 +41,8 @@
  * The key store password of the client certs
  */
 @property (nonatomic, strong) NSString *clientKeyStorePassword;
+
+@property (nonatomic, readonly) BOOL isConnected;
 
 @property (nonatomic, weak) id<RVIRemoteConnectionDelegate> delegate;
 

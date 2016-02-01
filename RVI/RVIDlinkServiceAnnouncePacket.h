@@ -35,7 +35,7 @@
  * @param services The array of services to announce
  */
 - (id)initWithServices:(NSArray *)services;
-+ (id)serviceAnnoucePacketWithServices:(NSArray *)services;
++ (id)serviceAnnouncePacketWithServices:(NSArray *)services;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 + (id)serviceAnnouncePacketWithDictionary:(NSDictionary *)dict;

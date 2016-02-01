@@ -57,6 +57,8 @@
 
 - (void)connect:(RemoteConnectionType)type
 {
+    DLog(@"");
+
     self.remoteConnection = [self selectConfiguredRemoteConnection:type];
 
     if (self.remoteConnection != nil) [self.remoteConnection connect];
@@ -112,7 +114,7 @@
     self.directServerConnection.serverUrl = serverUrl;
 }
 
-- (void)setServerPort:(NSInteger)serverPort
+- (void)setServerPort:(UInt32)serverPort
 {
     self.directServerConnection.serverPort = serverPort;
 }
@@ -156,6 +158,7 @@
 
 - (void)onRemoteConnectionDidReceiveData:(NSString *)data
 {
+    DLog(@"%@", data);
     [self.dataParser parseData:data];
 }
 
@@ -171,6 +174,7 @@
 
 - (void)onPacketParsed:(RVIDlinkPacket *)packet
 {
+    DLog(@"");
     [self.delegate onRVIDidReceivePacket:packet];
 }
 

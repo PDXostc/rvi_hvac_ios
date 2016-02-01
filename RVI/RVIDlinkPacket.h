@@ -50,7 +50,7 @@ typedef enum
 /**
  * The cmd that was used in the request ("au", "sa", "rcv", or "ping").
  */
-@property (nonatomic) DlinkCommand cmd;
+@property (nonatomic) DlinkCommand command;
 
 /**
  * The log id string used by rvi_core

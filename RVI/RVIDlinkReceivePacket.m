@@ -49,7 +49,13 @@
 
     if ((self = [super initFromDictionary:dict]))
     {
-        _service = [RVIService serviceFromDictionary:dict[@"data"]];
+
+        NSError *error = nil;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[dict[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
+                                                                 options:NSJSONReadingMutableContainers
+                                                                   error:&error];
+
+        _service = [RVIService serviceFromDictionary:jsonDict];
         _mod = dict[@"mod"];
     }
 

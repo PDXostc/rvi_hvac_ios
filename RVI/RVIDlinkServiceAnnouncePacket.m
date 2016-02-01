@@ -35,7 +35,7 @@
     return self;
 }
 
-+ (id)serviceAnnoucePacketWithServices:(NSArray *)services
++ (id)serviceAnnouncePacketWithServices:(NSArray *)services
 {
     return [[RVIDlinkServiceAnnouncePacket alloc] initWithServices:services];
 }
