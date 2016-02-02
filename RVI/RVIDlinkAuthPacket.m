@@ -27,7 +27,7 @@
     if (creds == nil)
         return nil;
 
-    if ((self = [super initWithCommand:SERVICE_ANNOUNCE]))
+    if ((self = [super initWithCommand:AUTHORIZE]))
     {
         _creds = creds;
         _addr = @"0.0.0.0";
