@@ -115,20 +115,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     NSString *password = @"password";
     NSString *path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
 
@@ -185,16 +171,6 @@
 
 
     NSArray *myCerts = [[NSArray alloc] initWithObjects:(__bridge id)yourIdentity, /*(__bridge id)yourCertificate, (__bridge id)certificate,*/ nil];
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -463,48 +439,19 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
     // NO for client, YES for server.  In this example, we are a client
     // replace "localhost" with the name of the server to which you are connecting
     //SecPolicyRef policy             = SecPolicyCreateSSL(NO, CFSTR("localhost"));
-    SecPolicyRef policy = SecPolicyCreateSSL(NO, (__bridge CFStringRef)self.serverUrl);
+    SecPolicyRef policy = SecPolicyCreateSSL(NO, CFSTR("genivi.org"));//(__bridge CFStringRef)self.serverUrl);
     //SecTrustRef  trust  = NULL;
 
     // #2
     CFArrayRef streamCertificates = (__bridge CFArrayRef)[stream propertyForKey:(NSString *)kCFStreamPropertySSLPeerCertificates];
 
-
-//    NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"client" ofType:@"p12"];
-//    NSData *p12data = [NSData dataWithContentsOfFile:path];
-//
-//
-//
-//
-//    NSMutableDictionary *options = [[NSMutableDictionary alloc] init];
-//
-//    // Set the public key query dictionary
-//    //change to your .pfx  password here
-//    options[(id)kSecImportExportPassphrase] = @"password";
-//
-//    CFArrayRef items = CFArrayCreate(NULL, 0, 0, NULL);
-//
-//    OSStatus securityError = SecPKCS12Import((__bridge CFDataRef) p12data,
-//                                             (__bridge CFDictionaryRef)options, &items);
-//
-//    CFDictionaryRef identityDict = CFArrayGetValueAtIndex(items, 0);
-//    SecIdentityRef identityApp = (SecIdentityRef)CFDictionaryGetValue(identityDict, kSecImportItemIdentity);
-//    //NSLog(@"%@", securityError);
-//
-//    assert(securityError == noErr);
-////    SecKeyRef privateKeyRef;
-////    SecIdentityCopyPrivateKey(identityApp, &privateKeyRef);
-
-
-
-
-    
     if (eventCode == NSStreamEventHasBytesAvailable || eventCode == NSStreamEventHasSpaceAvailable)
     {
         /* Check it. */
 
        // NSArray     *certs = [stream propertyForKey:(__bridge NSString *)kCFStreamPropertySSLPeerCertificates];
         SecTrustRef  trust = (__bridge SecTrustRef)[stream propertyForKey:(__bridge NSString *)kCFStreamPropertySSLPeerTrust];
+        SecTrustRef serverTrust;
 
         /* Because you don't want the array of certificates to keep
            growing, you should add the anchor to the trust list only
@@ -514,14 +461,10 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
         if (!alreadyAdded || ![alreadyAdded boolValue])
         {
             NSLog(@"Not already added for stream");
-            //trust = addAnchorToTrust(trust, self.certificate); // defined earlier.
-
-
-            SecPolicyRef policyRef = SecPolicyCreateSSL(true, NULL);//(__bridge CFStringRef)@"genivi.org");
+            trust = addAnchorToTrust(trust, self.certificate); // defined earlier.
 
             OSStatus    status;
-            SecTrustRef serverTrust;
-            status = SecTrustCreateWithCertificates(streamCertificates, policyRef, &serverTrust);
+            status = SecTrustCreateWithCertificates(streamCertificates, policy, &serverTrust);
             // noErr == status?
 
             status = SecTrustSetAnchorCertificates(serverTrust, (__bridge CFArrayRef)@[(id)self.certificate]);
@@ -537,7 +480,7 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
         }
         SecTrustResultType res = kSecTrustResultInvalid;
 
-        if (SecTrustEvaluate(trust, &res))
+        if (SecTrustEvaluate(serverTrust, &res))
         {
             /* The trust evaluation failed for some reason.
                This probably means your certificate was broken
@@ -560,7 +503,7 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
 
         }
 
-        if (NO)//(res != kSecTrustResultProceed && res != kSecTrustResultUnspecified)
+        if (res != kSecTrustResultProceed && res != kSecTrustResultUnspecified)
         {
 //            /* The host is not trusted. */
 //            /* Tear down the input stream. */
