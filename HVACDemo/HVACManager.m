@@ -88,7 +88,7 @@
     [self.hvacBundle invokeService:@"seat_heat_right"
                         withParams:@{@"sending_node" : [NSString stringWithFormat:@"%@/%@/", @"genivi.org", [RVINode getLocalNodeIdentifier]],
                                    @"value" : @(5)}
-                           timeout:(NSInteger)(([[NSDate date] timeIntervalSince1970] * 1000) + 10000)];
+                           timeout:10000];
 }
 
 

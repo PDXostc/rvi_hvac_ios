@@ -71,7 +71,16 @@
 {
     NSMutableDictionary *dict = (NSMutableDictionary *)[super toDictionary];
 
-    dict[@"data"] = [self.service toDictionary];
+    NSError *error;
+    NSData *serviceData = [NSJSONSerialization dataWithJSONObject:[self.service toDictionary]
+                                                                                       options:nil
+                                                                                         error:nil];
+
+    if (error) {;} // TODO: Process error
+
+    dict[@"data"] = [[NSString alloc] initWithData:serviceData
+                                          encoding:NSUTF8StringEncoding];
+
     dict[@"mod"] = self.mod;
 
     return [NSDictionary dictionaryWithDictionary:dict];
