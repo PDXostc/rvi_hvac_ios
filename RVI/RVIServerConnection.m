@@ -114,7 +114,6 @@
     self.certificate = certificate;
 
 
-
     NSString *password = @"password";
     NSString *path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
 
@@ -160,19 +159,13 @@
     status = SecItemAdd(dict, NULL);
 
 
-
-
     // TODO: error handling on status
-
 
 
     self.certificate2 = yourCertificate;
 
 
-
     NSArray *myCerts = [[NSArray alloc] initWithObjects:(__bridge id)yourIdentity, /*(__bridge id)yourCertificate, (__bridge id)certificate,*/ nil];
-
-
 
 
     CFReadStreamRef  readStream;
@@ -186,55 +179,19 @@
     self.inputStream  = (__bridge_transfer NSInputStream *)readStream;
     self.outputStream = (__bridge_transfer NSOutputStream *)writeStream;
 
-
-//    // Set this kCFStreamPropertySocketSecurityLevel before
-//    // setting kCFStreamPropertySSLSettings.
-//    // Setting kCFStreamPropertySocketSecurityLevel
-//    // appears to override previous settings in kCFStreamPropertySSLSettings
-//    CFReadStreamSetProperty(readStream,
-//            kCFStreamPropertySocketSecurityLevel,
-//            kCFStreamSocketSecurityLevelTLSv1);
-
     // this disables certificate chain validation in ssl settings.
     NSDictionary *sslSettings = @{  (id)kCFStreamSSLValidatesCertificateChain : (id)kCFBooleanFalse,
                                     (id)kCFStreamSSLPeerName                  : self.serverUrl,
                                     (id)kCFStreamSSLLevel                     : (id)kCFStreamSocketSecurityLevelSSLv3,
                                     (id)kCFStreamPropertySocketSecurityLevel  : (id)kCFStreamSocketSecurityLevelSSLv3,
-//                                    (id)kCFStreamSSLAllowsExpiredRoots        : (id)kCFBooleanTrue,
-//                                    (id)kCFStreamSSLAllowsExpiredCertificates : (id)kCFBooleanTrue,
-//                                    (id)kCFStreamSSLAllowsAnyRoot             : (id)kCFBooleanTrue,
                                     (id)kCFStreamSSLCertificates              : myCerts,
                                     (id)kCFStreamSSLIsServer                  : (id)kCFBooleanFalse };
-
-
-
-
-
-//    CFReadStreamSetProperty(readStream,
-//            kCFStreamPropertySSLSettings,
-//            (__bridge CFDictionaryRef)sslSettings);
-
-
-//    [self.inputStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL
-//                           forKey:NSStreamSocketSecurityLevelKey];
 
     [self.inputStream setProperty:sslSettings
                            forKey:(__bridge NSString *)kCFStreamPropertySSLSettings];
 
-
-//    [self.inputStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL
-//                           forKey:NSStreamSocketSecurityLevelKey];
-
-//    [self.outputStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL
-//                            forKey:NSStreamSocketSecurityLevelKey];
-
     [self.outputStream setProperty:sslSettings
                             forKey:(__bridge NSString *)kCFStreamPropertySSLSettings];
-
-//    [self.outputStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL
-//                            forKey:NSStreamSocketSecurityLevelKey];
-
-
 }
 
 - (void)open
@@ -268,105 +225,6 @@
     self.outputStream = nil;
 }
 
-//- (void)setup2
-//{
-//    DLog(@"");
-//
-//    NSBundle *bundle                = [NSBundle bundleForClass:[self class]];
-//    NSData   *iosTrustedCertDerData = [NSData dataWithContentsOfFile:[bundle pathForResource:@"server-certs"
-//                                                                                      ofType:@"der"]];
-//
-//    SecCertificateRef certificate = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)iosTrustedCertDerData);
-//
-//    self.certificate = certificate;
-//
-//    [self verifiesManually:certificate];
-//}
-
-//- (void)useKeychain:(SecCertificateRef)certificate
-//{
-//    OSStatus err =SecItemAdd((__bridge CFDictionaryRef)[NSDictionary dictionaryWithObjectsAndKeys:
-//                                                                                                   (id)kSecClassCertificate, kSecClass,
-//                                                                                                   certificate, kSecValueRef, nil],
-//                             NULL);
-//    if ((err == noErr) || // success!
-//            (err == errSecDuplicateItem))
-//    { // the cert was already added.  Success!
-//        // create your socket normally.
-//        // This is oversimplified.  Refer to the CFNetwork Guide for more details.
-//        CFReadStreamRef  readStream;
-//        CFWriteStreamRef writeStream;
-//        CFStreamCreatePairWithSocketToHost(NULL,
-//                                            (CFStringRef)@"localhost",
-//                                            8443,
-//                                            &readStream,
-//                                            &writeStream);
-//        CFReadStreamSetProperty(readStream,
-//                                kCFStreamPropertySocketSecurityLevel,
-//                                kCFStreamSocketSecurityLevelTLSv1);
-//        CFReadStreamOpen(readStream);
-//        CFWriteStreamOpen(writeStream);
-//    } else
-//    {
-//        // handle the error.  There is probably something wrong with your cert.
-//    }
-//}
-
-//- (void)verifiesManually:(SecCertificateRef)certificate
-//{
-//    DLog(@"");
-//
-//    CFReadStreamRef  readStream;
-//    CFWriteStreamRef writeStream;
-//    CFStreamCreatePairWithSocketToHost(NULL,
-//            (__bridge CFStringRef)self.serverUrl,
-//            self.serverPort,
-//            &readStream,
-//            &writeStream);
-//
-//
-//    NSInputStream  *inputStream  = (__bridge NSInputStream *)readStream;
-//    NSOutputStream *outputStream = (__bridge NSOutputStream *)writeStream;
-//
-//
-//
-////    // Set this kCFStreamPropertySocketSecurityLevel before
-////    // setting kCFStreamPropertySSLSettings.
-////    // Setting kCFStreamPropertySocketSecurityLevel
-////    // appears to override previous settings in kCFStreamPropertySSLSettings
-////    CFReadStreamSetProperty(readStream,
-////            kCFStreamPropertySocketSecurityLevel,
-////            kCFStreamSocketSecurityLevelTLSv1);
-//
-//    // this disables certificate chain validation in ssl settings.
-//    NSDictionary *sslSettings = @{(id)kCFStreamSSLValidatesCertificateChain : (id)kCFBooleanFalse};
-//
-//
-////    CFReadStreamSetProperty(readStream,
-////            kCFStreamPropertySSLSettings,
-////            (__bridge CFDictionaryRef)sslSettings);
-//
-//
-//
-//    [self.inputStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL
-//                           forKey:NSStreamSocketSecurityLevelKey];
-//
-//    [self.inputStream setProperty:sslSettings
-//                           forKey:(__bridge NSString *)kCFStreamPropertySSLSettings];
-//
-//
-//    [inputStream setDelegate:self];
-//    [outputStream setDelegate:self];
-//
-//    [inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop]
-//                           forMode:NSDefaultRunLoopMode];
-//    [outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop]
-//                            forMode:NSDefaultRunLoopMode];
-//
-//    CFReadStreamOpen(readStream);
-//    CFWriteStreamOpen(writeStream);
-//}
-
 - (void)readString:(NSString *)string
 {
     NSLog(@"Reading in the following:");
@@ -385,42 +243,6 @@
     NSLog(@"%@", string);
 }
 
-
-SecTrustRef addAnchorToTrust(SecTrustRef trust, SecCertificateRef trustedCert)
-{
-#ifdef PRE_10_6_COMPAT
-        CFArrayRef oldAnchorArray = NULL;
-
-        /* In OS X prior to 10.6, copy the built-in
-           anchors into a new array. */
-        if (SecTrustCopyAnchorCertificates(&oldAnchorArray) != errSecSuccess) {
-                /* Something went wrong. */
-                return NULL;
-        }
-
-        CFMutableArrayRef newAnchorArray = CFArrayCreateMutableCopy(
-                kCFAllocatorDefault, 0, oldAnchorArray);
-        CFRelease(oldAnchorArray);
-#else
-        /* In iOS and OS X v10.6 and later, just create an empty
-           array. */
-        CFMutableArrayRef newAnchorArray = CFArrayCreateMutable (
-                kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-#endif
-
-        CFArrayAppendValue(newAnchorArray, trustedCert);
-
-        SecTrustSetAnchorCertificates(trust, newAnchorArray);
-
-#ifndef PRE_10_6_COMPAT
-        /* In iOS or OS X v10.6 and later, reenable the
-           built-in anchors after adding your own.
-         */
-        SecTrustSetAnchorCertificatesOnly(trust, false);
-#endif
-
-        return trust;
-}
 
 #pragma mark -
 #pragma mark NSStreamDelegate
@@ -445,13 +267,14 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
     // #2
     CFArrayRef streamCertificates = (__bridge CFArrayRef)[stream propertyForKey:(NSString *)kCFStreamPropertySSLPeerCertificates];
 
+    SecTrustRef serverTrust;
+    OSStatus status;
+    // noErr == status?
+
     if (eventCode == NSStreamEventHasBytesAvailable || eventCode == NSStreamEventHasSpaceAvailable)
     {
-        /* Check it. */
 
-       // NSArray     *certs = [stream propertyForKey:(__bridge NSString *)kCFStreamPropertySSLPeerCertificates];
-        SecTrustRef  trust = (__bridge SecTrustRef)[stream propertyForKey:(__bridge NSString *)kCFStreamPropertySSLPeerTrust];
-        SecTrustRef serverTrust;
+        status = SecTrustCreateWithCertificates(streamCertificates, policy, &serverTrust);
 
         /* Because you don't want the array of certificates to keep
            growing, you should add the anchor to the trust list only
@@ -461,20 +284,9 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
         if (!alreadyAdded || ![alreadyAdded boolValue])
         {
             NSLog(@"Not already added for stream");
-            trust = addAnchorToTrust(trust, self.certificate); // defined earlier.
-
-            OSStatus    status;
-            status = SecTrustCreateWithCertificates(streamCertificates, policy, &serverTrust);
-            // noErr == status?
 
             status = SecTrustSetAnchorCertificates(serverTrust, (__bridge CFArrayRef)@[(id)self.certificate]);
             // noErr == status?
-
-//            SecTrustResultType trustResult;
-//            status = SecTrustEvaluate(serverTrust, &trustResult);
-//            // noErr == status?
-
-
 
             [stream setProperty:@YES forKey:kAnchorAlreadyAdded];
         }
@@ -485,14 +297,6 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
             /* The trust evaluation failed for some reason.
                This probably means your certificate was broken
                in some way or your code is otherwise wrong. */
-
-//            /* Tear down the input stream. */
-//            [stream removeFromRunLoop: ... forMode: ...];
-//            [stream setDelegate: nil];
-//            [stream close];
-//
-//            /* Tear down the output stream. */
-//            ...
 
             DLog(@"SecTrustEvaluate(trust, &res) failed");
 
@@ -505,14 +309,6 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
 
         if (res != kSecTrustResultProceed && res != kSecTrustResultUnspecified)
         {
-//            /* The host is not trusted. */
-//            /* Tear down the input stream. */
-//            [stream removeFromRunLoop: ... forMode: ...];
-//            [stream setDelegate: nil];
-//            [stream close];
-//
-//            /* Tear down the output stream. */
-//            ...
 
             DLog(@"(res != kSecTrustResultProceed && res != kSecTrustResultUnspecified) res = %d", res);
 
@@ -524,7 +320,7 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
         }
         else
         {
-            // Host is trusted.  Handle the data callback normally.
+            // Host is trusted. Handle the data callback normally.
             isGood = YES;
         }
     }
@@ -573,45 +369,6 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
             if (stream == self.outputStream)
             {
                 NSLog(@"outputStream is ready.");
-
-
-
-            // #3
-//            SecTrustCreateWithCertificates(streamCertificates, policy, &trust);
-//
-//            // #4
-//            SecTrustSetAnchorCertificates(trust, (__bridge CFArrayRef)[NSArray arrayWithObject:(id)self.certificate]);
-//
-//            // #5
-//            SecTrustResultType trustResultType = kSecTrustResultInvalid;
-//            OSStatus           status          = SecTrustEvaluate(trust, &trustResultType);
-//            if (status == errSecSuccess)
-//            {
-//                // expect trustResultType == kSecTrustResultUnspecified
-//                // until my cert exists in the keychain see technote for more detail.
-//                if (trustResultType == kSecTrustResultUnspecified)
-//                {
-//                    NSLog(@"We can trust this certificate! TrustResultType: %d", trustResultType);
-//                }
-//                else
-//                {
-//                    NSLog(@"Cannot trust certificate. TrustResultType: %d", trustResultType);
-//                }
-//            }
-//            else
-//            {
-//                NSLog(@"Creating trust failed: %d", status);
-//                [stream close];
-//            }
-//            if (trust)
-//            {
-//                CFRelease(trust);
-//            }
-//            if (policy)
-//            {
-//                CFRelease(policy);
-//            }
-
 
                 if (self.isConnecting)
                     [self finishConnecting];
