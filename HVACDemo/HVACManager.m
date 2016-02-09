@@ -58,8 +58,9 @@
         [_sharedManager.hvacBundle setDelegate:_sharedManager];
         [_sharedManager.node setDelegate:_sharedManager];
 
+        //[_sharedManager.node setServerUrl:@"192.168.16.197"];
         [_sharedManager.node setServerUrl:@"192.168.16.132"];
-        [_sharedManager.node setServerPort:50000];//8820];
+        [_sharedManager.node setServerPort:8820];
         [_sharedManager.node addBundle:_sharedManager.hvacBundle];
     });
 

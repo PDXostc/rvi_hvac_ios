@@ -17,9 +17,11 @@
 		6234814D32FA6042AFFB895B /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 6234802DAEEF06FF48B5848A /* client.p12 */; };
 		6234816A8EE6D2F8EE1AF4BC /* server-certs.der in Resources */ = {isa = PBXBuildFile; fileRef = 62348EE0053E1D2C2B2AC9F0 /* server-certs.der */; };
 		623481AFD8D6711B02D720E4 /* RVIDlinkPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234863B8D24C5EC6447A36B /* RVIDlinkPacket.m */; };
+		6234822AF8AD16BFBAAE5746 /* insecure_device_cert.der in Resources */ = {isa = PBXBuildFile; fileRef = 62348A2406E9464B780D5469 /* insecure_device_cert.der */; };
 		6234832E97E8B22E26A78DDE /* RVIDlinkPacketParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348D275B345AFE52F21BA8 /* RVIDlinkPacketParser.m */; };
 		6234837926524609DD59A9E8 /* HVACManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348F2B6AB0D4F1D0FC36E7 /* HVACManager.m */; };
 		62348579F97E59052D6EB330 /* RVINode.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348729A670EC9782A2A1E9 /* RVINode.m */; };
+		6234858A3F350A79D0A66D06 /* lilli_ios_cert.der in Resources */ = {isa = PBXBuildFile; fileRef = 623481B8735CD9F27A2A3BDB /* lilli_ios_cert.der */; };
 		6234863A1BFF50E700AC14A6 /* RPCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348D5986501A27799B8D8F /* RPCClient.m */; };
 		6234863DD00D0CA9BB0CEB3C /* RPCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348479F5A851E4819EC473 /* RPCRequest.m */; };
 		62348689289860E7A5ED6C38 /* RVIServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 623484866FDD2508905A820E /* RVIServerConnection.m */; };
@@ -61,6 +63,7 @@
 		6234802DAEEF06FF48B5848A /* client.p12 */ = {isa = PBXFileReference; lastKnownFileType = file.p12; path = client.p12; sourceTree = "<group>"; };
 		6234809BA42BCEA084982E76 /* RPCResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPCResponse.m; sourceTree = "<group>"; };
 		62348198BA58A1ECE952DFFF /* RVIServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIServerConnection.h; sourceTree = "<group>"; };
+		623481B8735CD9F27A2A3BDB /* lilli_ios_cert.der */ = {isa = PBXFileReference; lastKnownFileType = file.der; path = lilli_ios_cert.der; sourceTree = "<group>"; };
 		623482277589C8905AB4BAB5 /* HVACManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVACManager.h; sourceTree = "<group>"; };
 		6234828A74C56EF908951241 /* RVIService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIService.h; sourceTree = "<group>"; };
 		62348296AD26C4CCFA42D1BA /* RPCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCClient.h; sourceTree = "<group>"; };
@@ -77,6 +80,7 @@
 		6234871F04E20B533EA259B1 /* RVIDlinkServiceAnnouncePacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIDlinkServiceAnnouncePacket.m; sourceTree = "<group>"; };
 		62348729A670EC9782A2A1E9 /* RVINode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVINode.m; sourceTree = "<group>"; };
 		62348A1E5D22718F141824CC /* RVIBluetoothConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIBluetoothConnection.h; sourceTree = "<group>"; };
+		62348A2406E9464B780D5469 /* insecure_device_cert.der */ = {isa = PBXFileReference; lastKnownFileType = file.der; path = insecure_device_cert.der; sourceTree = "<group>"; };
 		62348A4EB5EC0F0C166F599E /* RVIServiceBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIServiceBundle.m; sourceTree = "<group>"; };
 		62348AD8272026A8C74FD1D0 /* RVIBluetoothConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIBluetoothConnection.m; sourceTree = "<group>"; };
 		62348AE30F7D78939DE8357D /* RPCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPCRequest.h; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 				6234802DAEEF06FF48B5848A /* client.p12 */,
 				623482EE6FC46F9A35A4A0A1 /* client-certs */,
 				62348EE0053E1D2C2B2AC9F0 /* server-certs.der */,
+				62348A2406E9464B780D5469 /* insecure_device_cert.der */,
+				623481B8735CD9F27A2A3BDB /* lilli_ios_cert.der */,
 			);
 			path = TLS;
 			sourceTree = "<group>";
@@ -318,6 +324,8 @@
 				6234814D32FA6042AFFB895B /* client.p12 in Resources */,
 				62348D488B3E1B6625431F55 /* client-certs in Resources */,
 				6234816A8EE6D2F8EE1AF4BC /* server-certs.der in Resources */,
+				6234822AF8AD16BFBAAE5746 /* insecure_device_cert.der in Resources */,
+				6234858A3F350A79D0A66D06 /* lilli_ios_cert.der in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

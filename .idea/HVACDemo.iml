@@ -17,8 +17,10 @@
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/HVACManager.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/ViewController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/client-certs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/server-certs.der" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/insecure_device_cert.der" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/lilli_ios_cert.der" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/client.p12" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/server-certs.der" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Base.lproj/LaunchScreen.xib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Base.lproj/Main.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/HVACManager.m" isTestSource="false" />
