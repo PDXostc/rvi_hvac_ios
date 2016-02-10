@@ -14,21 +14,16 @@
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 #import "HVACManager.h"
-#import "RPCClient.h"
 #import "RVINode.h"
 
 @interface HVACManager () <RVINodeDelegate, RVIServiceBundleDelegate>
-@property (nonatomic, strong) NSString  *vin;
-@property (nonatomic, strong) NSString  *domain;
-@property (nonatomic, strong) NSString  *app;
-@property (nonatomic, strong) NSString  *backend;
-@property (nonatomic, strong) NSString  *endpoint;
-@property (nonatomic, strong) RPCClient *client;
+
 @property (nonatomic, strong) RVINode   *node;
 @property (nonatomic, strong) RVIServiceBundle *hvacBundle;
-
-
 @end
+
+#define RVI_DOMAIN              @"genivi.org"
+#define HVAC_BUNDLE_IDENTIFER   @"hvac"
 
 @implementation HVACManager
 {
@@ -42,17 +37,10 @@
 
     dispatch_once(&onceToken, ^{
         _sharedManager = [[HVACManager alloc] init];
-        _sharedManager.domain   = @"jlr.com";
-        _sharedManager.vin      = @"/vin/lilli";
-        _sharedManager.app      = @"/hvac";
-        _sharedManager.backend  = @"/backend/123456789";
-        _sharedManager.endpoint = @"http://192.168.6.86:8811";//@"http://rvi1.nginfotpdx.net:8801";
-
-        _sharedManager.client   = [[RPCClient alloc] initWithServiceEndpoint:_sharedManager.endpoint];
 
 
         _sharedManager.node       = [RVINode node];
-        _sharedManager.hvacBundle = [RVIServiceBundle serviceBundleWithDomain:@"genivi.org" bundleIdentifier:@"hvac" serviceIdentifiers:@[@"seat_heat_right"]];
+        _sharedManager.hvacBundle = [RVIServiceBundle serviceBundleWithDomain:RVI_DOMAIN bundleIdentifier:HVAC_BUNDLE_IDENTIFER serviceIdentifiers:@[@"seat_heat_right"]];
 
         [_sharedManager.hvacBundle setDelegate:_sharedManager];
         [_sharedManager.node setDelegate:_sharedManager];
@@ -60,7 +48,7 @@
         //[_sharedManager.node setServerUrl:@"192.168.16.197"];
         [_sharedManager.node setServerUrl:@"192.168.16.132"];
         [_sharedManager.node setServerPort:8820];
-        [_sharedManager.node setServerCertificate:@"lilli_ios_cert" serverDomain:@"genivi.org" clientCertificate:@"client" clientCertificatePassword:@"password"];
+        [_sharedManager.node setServerCertificate:@"lilli_ios_cert" serverDomain:RVI_DOMAIN clientCertificate:@"client" clientCertificatePassword:@"password"];
         [_sharedManager.node addBundle:_sharedManager.hvacBundle];
     });
 
@@ -69,25 +57,9 @@
 
 - (void)sendService:(NSString *)service value:(NSString *)value
 {
-//    [self.client postRequest:[RPCRequest requestWithMethod:@"message"
-//                                            params:@{
-//                                               @"service_name": [NSString stringWithFormat:@"%@%@%@%@", self.domain, self.vin, self.app, service],
-//                                               @"timeout": @((NSInteger)([[NSDate date] timeIntervalSince1970] + 5)),
-//                                               @"parameters": @[
-//                                                   @{
-//                                                           @"sending_node" : [NSString stringWithFormat:@"%@%@", self.domain, self.backend],
-//                                                           @"value" : value
-//                                                   }
-//                                               ]
-//                                           }
-//                                          callback:^(RPCResponse *response) {
-//                                              NSLog(@"Sync response: %@", response);
-//                                              NSLog(@"Sync response error: %@", response.error);
-//                                          }]];
-
-    [self.hvacBundle invokeService:@"seat_heat_right"
-                        withParams:@{@"sending_node" : [NSString stringWithFormat:@"%@/%@/", @"genivi.org", [RVINode getLocalNodeIdentifier]],
-                                   @"value" : @(5)}
+    [self.hvacBundle invokeService:service
+                        withParams:@{@"sending_node" : [NSString stringWithFormat:@"%@/%@/",RVI_DOMAIN, [RVINode getLocalNodeIdentifier]],
+                                   @"value" : value }
                            timeout:10000];
 }
 

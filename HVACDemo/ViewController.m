@@ -15,7 +15,6 @@
 
 
 #import "ViewController.h"
-#import "RPCClient.h"
 #import "HVACManager.h"
 
 @interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
