@@ -16,6 +16,16 @@
 #import <Foundation/Foundation.h>
 #import "RVIServiceBundle.h"
 
+typedef enum
+{
+    kRVINodeNotConfigured        = 1001,
+    kRVINodeJsonError            = 1002,
+    kRVINodeMissingCert          = 1003,
+    kRVINodeStreamEndEncountered = 1004,
+//    kRVINodeNotConfigured = 1005,
+//    kRVINodeNotConfigured = 1006,
+//    kRVINodeNotConfiguredr =1007
+};
 
 /**
  * The RVI node delegate interface.

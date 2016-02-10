@@ -17,16 +17,16 @@
 #import "RVIServerConnection.h"
 #import "RVIUtil.h"
 #import "RVIDlinkAuthPacket.h"
+#import "RVINode.h"
 
 @interface RVIServerConnection () <NSStreamDelegate>
-@property (nonatomic) SecCertificateRef      certificate;
-@property (nonatomic) SecCertificateRef      certificate2;
+@property (nonatomic) SecCertificateRef       certificate;
 @property (nonatomic, strong) NSInputStream  *inputStream;
 @property (nonatomic, strong) NSOutputStream *outputStream;
-@property (nonatomic) BOOL                   isConnected;
-@property (nonatomic) BOOL                   isConnecting;
-@property (nonatomic) BOOL                   verifiedInputCerts;
-@property (nonatomic) BOOL                   verifiedOutputCerts;
+@property (nonatomic) BOOL                    isConnected;
+@property (nonatomic) BOOL                    isConnecting;
+@property (nonatomic) BOOL                    verifiedInputCerts;
+@property (nonatomic) BOOL                    verifiedOutputCerts;
 @end
 
 @implementation RVIServerConnection
@@ -52,8 +52,10 @@
 - (void)sendRviRequest:(RVIDlinkPacket *)dlinkPacket
 {
     if (![self isConnected] || ![self isConfigured])
-    { // TODO: Call error on listener
-        [self.delegate onDidFailToSendDataToRemoteConnection:[NSError errorWithDomain:@"TODO" code:000 userInfo:@{NSLocalizedDescriptionKey : @"RVI node is not connected"}]]; // TODO: PORT_COMPLETE
+    {
+        [self.delegate onDidFailToSendDataToRemoteConnection:[NSError errorWithDomain:GENIVI_ERROR_DOMAIN
+                                                                                 code:kRVINodeNotConfigured
+                                                                             userInfo:@{NSLocalizedDescriptionKey : @"Sending data to node has failed: RVI node is not configured or connected"}]];
         return;
     }
 
@@ -61,6 +63,16 @@
     NSData  *payload = [NSJSONSerialization dataWithJSONObject:[dlinkPacket toDictionary]
                                                        options:nil
                                                          error:&jsonError];
+
+    if (jsonError)
+    {
+        [self.delegate onDidFailToSendDataToRemoteConnection:[NSError errorWithDomain:GENIVI_ERROR_DOMAIN
+                                                                                 code:kRVINodeJsonError
+                                                                             userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Sending data to node has failed: %@", jsonError.localizedDescription],
+                                                                                        NSUnderlyingErrorKey      : jsonError }]];
+        return;
+
+    }
 
     NSString *payloadString = [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
 
@@ -102,23 +114,77 @@
     [self open];
 }
 
+- (void)errorConnecting:(NSInteger)code underlyingError:(NSError *)underlyingError
+{
+    NSString *localizedDescription;
+
+    switch (code)
+    {
+        case errSecUnimplemented                    : localizedDescription = @"Connection to RVI node has failed due to TLS error: Function or operation not implemented.";                           break; // -4
+        case errSecIO                               : localizedDescription = @"Connection to RVI node has failed due to TLS error: I/O error (bummers)";                                              break; // -36
+        case errSecOpWr                             : localizedDescription = @"Connection to RVI node has failed due to TLS error: File already open with with write permission";                     break; // -49
+        case errSecParam                            : localizedDescription = @"Connection to RVI node has failed due to TLS error: One or more parameters passed to a function where not valid.";     break; // -50
+        case errSecAllocate                         : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failed to allocate memory.";                                       break; // -108
+        case errSecUserCanceled                     : localizedDescription = @"Connection to RVI node has failed due to TLS error: User canceled the operation.";                                     break; // -128
+        case errSecBadReq                           : localizedDescription = @"Connection to RVI node has failed due to TLS error: Bad parameter or invalid state for operation.";                    break; // -909
+        case errSecInternalComponent                : localizedDescription = @"Connection to RVI node has failed due to TLS error: errSecInternalComponent";                                          break; // -2070
+        case errSecNotAvailable                     : localizedDescription = @"Connection to RVI node has failed due to TLS error: No keychain is available. You may need to restart your computer."; break; // -25291
+        case errSecDuplicateItem                    : localizedDescription = @"Connection to RVI node has failed due to TLS error: The specified item already exists in the keychain.";               break; // -25299
+        case errSecItemNotFound                     : localizedDescription = @"Connection to RVI node has failed due to TLS error: The specified item could not be found in the keychain.";           break; // -25300
+        case errSecInteractionNotAllowed            : localizedDescription = @"Connection to RVI node has failed due to TLS error: User interaction is not allowed.";                                 break; // -25308
+        case errSecDecode                           : localizedDescription = @"Connection to RVI node has failed due to TLS error: Unable to decode the provided data.";                              break; // -26275
+        case errSecAuthFailed                       : localizedDescription = @"Connection to RVI node has failed due to TLS error: The user name or passphrase you entered is not correct.";          break; // -25293
+        case kSecTrustResultDeny                    : localizedDescription = @"Connection to RVI node has failed due to TLS error: User-configured deny.";                                            break; // 3
+        case kSecTrustResultUnspecified             : localizedDescription = @"Connection to RVI node has failed due to TLS error: User intent is unknown.";                                          break; // 4
+        case kSecTrustResultRecoverableTrustFailure : localizedDescription = @"Connection to RVI node has failed due to TLS error: Trust framework failure; retry after fixing inputs.";              break; // 5
+        case kSecTrustResultFatalTrustFailure       : localizedDescription = @"Connection to RVI node has failed due to TLS error: Trust framework failure; no \"easy\" fix.";                        break; // 6
+        case kSecTrustResultOtherError              : localizedDescription = @"Connection to RVI node has failed due to TLS error: A failure other than that of trust evaluation.";                   break; // 7
+        case kRVINodeMissingCert                    : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failure loading server cert";                                      break; // 1003
+        default                                     : localizedDescription = @"The secure connection failed for an unknown reason. Check underlying error";                                           break;
+    }
+
+    DLog(@"%@", localizedDescription);
+
+    [self.delegate onRemoteConnectionDidFailToConnect:[NSError errorWithDomain:GENIVI_ERROR_DOMAIN
+                                                                          code:code
+                                                                      userInfo:@{ NSLocalizedDescriptionKey : localizedDescription,
+                                                                                  NSUnderlyingErrorKey : underlyingError ? (id)underlyingError : (id)kCFNull }]];
+
+    [self close];
+}
+
+- (void)finishConnecting
+{
+    self.isConnecting = NO;
+    self.isConnected = YES;
+
+    [self.delegate onRemoteConnectionDidConnect];
+}
+
 - (void)setup
 {
+    OSStatus  status = errSecSuccess;
+    NSURL    *url    = [NSURL URLWithString:self.serverUrl];
+
+    DLog(@"Setting up connection to %@ : %i", [url absoluteString], (int)self.serverPort);
+
     NSBundle *bundle                = [NSBundle bundleForClass:[self class]];
     NSData   *iosTrustedCertDerData = [NSData dataWithContentsOfFile:[bundle pathForResource:@"lilli_ios_cert"
                                                                                       ofType:@"der"]];
 
     SecCertificateRef certificate = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)iosTrustedCertDerData);
 
-    // TODO: If cert is null, error
+    if (!certificate)
+    {
+        [self errorConnecting:kRVINodeMissingCert underlyingError:nil];
+        return;
+    }
 
     self.certificate = certificate;
-
 
     NSString *password = @"password";
     NSString *path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
 
-    // prepare password
     CFStringRef cfPassword = CFStringCreateWithCString(NULL,
                                                        password.UTF8String,
                                                        kCFStringEncodingUTF8);
@@ -128,19 +194,22 @@
 
     CFDictionaryRef optionsDictionary = CFDictionaryCreate(kCFAllocatorDefault, keys, values, 1, NULL, NULL);
 
-    // prepare p12 file content
     NSData *fileContent = [[NSData alloc] initWithContentsOfFile:path];
     CFDataRef cfDataOfFileContent = (__bridge CFDataRef)fileContent;
 
-    // extract p12 file content into items (array)
+    // TODO: More error handling
+
     CFArrayRef items = CFArrayCreate(NULL, 0, 0, NULL);
-    OSStatus status = errSecSuccess;
     status = SecPKCS12Import(cfDataOfFileContent,
                              optionsDictionary,
                              &items);
-    // TODO: error handling on status
 
-    // extract identity
+    if (status != errSecSuccess)
+    {
+        [self errorConnecting:status underlyingError:nil];
+        return;
+    }
+
     CFDictionaryRef yourIdentityAndTrust = CFArrayGetValueAtIndex(items, 0);
     const void *tempIdentity = NULL;
     tempIdentity = CFDictionaryGetValue(yourIdentityAndTrust,
@@ -148,44 +217,39 @@
 
     SecIdentityRef yourIdentity = (SecIdentityRef)tempIdentity;
 
-
-    // get certificate from identity
     SecCertificateRef yourCertificate = NULL;
     status = SecIdentityCopyCertificate(yourIdentity, &yourCertificate);
 
-    // at last, install certificate into keychain
-    const void *keys2[]   = {    kSecValueRef,             kSecClass };
-    const void *values2[] = { yourCertificate,  kSecClassCertificate };
+    if (status != errSecSuccess)
+    {
+        [self errorConnecting:status underlyingError:nil];
+        return;
+    }
+
+    const void *keys2[]   = { kSecValueRef,    kSecClass };
+    const void *values2[] = { yourCertificate, kSecClassCertificate };
     CFDictionaryRef dict  = CFDictionaryCreate(kCFAllocatorDefault, keys2, values2, 2, NULL, NULL);
     status = SecItemAdd(dict, NULL);
 
-
-    // TODO: error handling on status
-
-
-    self.certificate2 = yourCertificate;
-
-
-    NSArray *myCerts = [[NSArray alloc] initWithObjects:(__bridge id)yourIdentity, /*(__bridge id)yourCertificate, (__bridge id)certificate,*/ nil];
-
+    if (status != errSecSuccess && status != errSecDuplicateItem)
+    {
+        [self errorConnecting:status underlyingError:nil];
+        return;
+    }
 
     CFReadStreamRef  readStream;
     CFWriteStreamRef writeStream;
-    NSURL            *url = [NSURL URLWithString:self.serverUrl];
-
-    NSLog(@"Setting up connection to %@ : %i", [url absoluteString], (int)self.serverPort);
 
     CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)[url absoluteString], self.serverPort, &readStream, &writeStream);
 
     self.inputStream  = (__bridge_transfer NSInputStream *)readStream;
     self.outputStream = (__bridge_transfer NSOutputStream *)writeStream;
 
-    // this disables certificate chain validation in ssl settings.
     NSDictionary *sslSettings = @{  (id)kCFStreamSSLValidatesCertificateChain : (id)kCFBooleanFalse,
                                     (id)kCFStreamSSLPeerName                  : self.serverUrl,
                                     (id)kCFStreamSSLLevel                     : (id)kCFStreamSocketSecurityLevelSSLv3,
                                     (id)kCFStreamPropertySocketSecurityLevel  : (id)kCFStreamSocketSecurityLevelSSLv3,
-                                    (id)kCFStreamSSLCertificates              : myCerts,
+                                    (id)kCFStreamSSLCertificates              : @[(__bridge id)yourIdentity],
                                     (id)kCFStreamSSLIsServer                  : (id)kCFBooleanFalse };
 
     [self.inputStream setProperty:sslSettings
@@ -197,7 +261,7 @@
 
 - (void)open
 {
-    NSLog(@"Opening streams.");
+    DLog(@"Opening streams.");
 
     [self.inputStream setDelegate:self];
     [self.outputStream setDelegate:self];
@@ -211,7 +275,7 @@
 
 - (void)close
 {
-    NSLog(@"Closing streams.");
+    DLog(@"Closing streams.");
 
     [self.inputStream close];
     [self.outputStream close];
@@ -231,8 +295,7 @@
 
 - (void)readString:(NSString *)string
 {
-    NSLog(@"Reading in the following:");
-    NSLog(@"%@", string);
+    DLog(@"Reading in the following: %@", string);
 
     [self.delegate onRemoteConnectionDidReceiveData:string];
 }
@@ -243,52 +306,38 @@
 
     [self.outputStream write:buf maxLength:strlen((char *)buf)];
 
-    NSLog(@"Writing out the following:");
-    NSLog(@"%@", string);
-}
-
-- (void)finishConnecting
-{
-    self.isConnecting = NO;
-    self.isConnected = YES;
-
-    [self.delegate onRemoteConnectionDidConnect];
+    DLog(@"Writing out the following: %@", string);
 }
 
 - (NSInteger)verifyCertsForStream:(NSStream *)stream
 {
+    DLog(@"");
+
     SecTrustRef serverTrust;
     SecTrustResultType res = kSecTrustResultInvalid;
 
     SecPolicyRef policy = SecPolicyCreateSSL(NO, CFSTR("genivi.org"));
     CFArrayRef streamCertificates = (__bridge CFArrayRef)[stream propertyForKey:(NSString *)kCFStreamPropertySSLPeerCertificates];
+
     OSStatus status = SecTrustCreateWithCertificates(streamCertificates, policy, &serverTrust);
 
-    if (status != noErr)
+    if (status != errSecSuccess)
         return status;
 
     status = SecTrustSetAnchorCertificates(serverTrust, (__bridge CFArrayRef)@[(id)self.certificate]);
 
-    if (status != noErr)
+    if (status != errSecSuccess)
         return status;
 
-    if (SecTrustEvaluate(serverTrust, &res))                                /* The trust evaluation failed for some reason. This probably means your */
-    {                                                                       /* certificate was broken in some way or your code is otherwise wrong.   */
-        DLog(@"SecTrustEvaluate(trust, &res) failed");
+    status = SecTrustEvaluate(serverTrust, &res);
 
-        return res;
-    }
+    if (status != errSecSuccess)                                            /* The trust evaluation failed for some reason. This probably means your */
+        return status;                                                      /* certificate was broken in some way or your code is otherwise wrong.   */
 
     if (res != kSecTrustResultProceed && res != kSecTrustResultUnspecified) /* The host is not trusted. */
-    {
-        DLog(@"(res != kSecTrustResultProceed && res != kSecTrustResultUnspecified) res = %d", res);
-
         return res;
-    }
     else                                                                    /* Host is trusted. Handle the data callback normally. */
-    {
-        return noErr;
-    }
+        return errSecSuccess;
 }
 
 #pragma mark -
@@ -297,8 +346,6 @@
 #define BUFFER_LEN 2048
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
 {
-    DLog(@"");
-
     NSInteger result = 0;
     switch (eventCode)
     {
@@ -311,13 +358,12 @@
         case NSStreamEventHasBytesAvailable:
             DLog(@"NSStreamEventHasBytesAvailable");
             
-            if (!self.verifiedInputCerts) {
+            if (!self.verifiedInputCerts)
                 result = [self verifyCertsForStream:stream];
-            }
             
-            if (result) { // TODO: Error
-                [self close];
-
+            if (result)
+            {
+                [self errorConnecting:result underlyingError:nil];
                 break;
             }
 
@@ -325,8 +371,6 @@
 
             if (stream == self.inputStream)
             {
-                NSLog(@"inputStream is ready.");
-
                 uint8_t   buf[BUFFER_LEN];
                 NSInteger len = [self.inputStream read:buf maxLength:BUFFER_LEN];
                 NSMutableData *data = [[NSMutableData alloc] initWithLength:0];
@@ -339,20 +383,20 @@
             }
             else
             {
-                NSLog(@"stream != self.inputStream");
+                DLog(@"stream != self.inputStream");
             }
 
             break;
         case NSStreamEventHasSpaceAvailable:
             DLog(@"NSStreamEventHasSpaceAvailable");
             
-            if (!self.verifiedOutputCerts) {
+            if (!self.verifiedOutputCerts)
                 result = [self verifyCertsForStream:stream];
-            }
-            
-            if (result) { // TODO: Error
-                [self close];
 
+            
+            if (result)
+            {
+                [self errorConnecting:result underlyingError:nil];
                 break;
             }
 
@@ -360,21 +404,35 @@
 
             if (stream == self.outputStream)
             {
-                NSLog(@"outputStream is ready.");
-
                 if (self.isConnecting)
                     [self finishConnecting];
             }
             else
             {
-                NSLog(@"stream != self.outputStream");
+                DLog(@"stream != self.outputStream");
             }
             break;
         case NSStreamEventErrorOccurred:
-            NSLog(@"unexpected NSStreamEventErrorOccurred: %@", [stream streamError]);
+            DLog(@"unexpected NSStreamEventErrorOccurred: %@", [stream streamError]);
+
+            if (self.isConnecting)
+                [self errorConnecting:[[stream streamError] code] underlyingError:[stream streamError]];
+
+            else if (self.isConnected)
+                [self disconnect:[stream streamError]];
+
             break;
         case NSStreamEventEndEncountered:
             DLog(@"NSStreamEventEndEncountered: %@", [[stream class] description]);
+
+            if (self.isConnecting)
+                [self errorConnecting:kRVINodeStreamEndEncountered underlyingError:nil];
+
+            else if (self.isConnected)
+                [self disconnect:[NSError errorWithDomain:GENIVI_ERROR_DOMAIN
+                                                     code:kRVINodeStreamEndEncountered
+                                                 userInfo:@{ NSLocalizedDescriptionKey : @"The end of the stream has been reached." }]];
+
             break;
         default:
             break;

@@ -28,3 +28,5 @@
 #else
 #   define ULog(...)
 #endif
+
+#define GENIVI_ERROR_DOMAIN @"org.genivi.rvi"
