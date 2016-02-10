@@ -14,8 +14,8 @@
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 #import <Foundation/Foundation.h>
-#import "RVIDlinkPacket.h"
 
+@class RVIDlinkPacket;
 
 /**
  * The interface Dlink packet parser listener. The object that's notified when complete dlink packets are parsed.

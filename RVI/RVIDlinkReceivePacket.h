@@ -15,8 +15,8 @@
 
 #import <Foundation/Foundation.h>
 #import "RVIDlinkPacket.h"
-#import "RVIService.h"
 
+@class RVIService;
 
 @interface RVIDlinkReceivePacket : RVIDlinkPacket
 {

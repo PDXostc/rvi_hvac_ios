@@ -15,6 +15,7 @@
 
 #import "RVIDlinkPacketParser.h"
 #import "RVIUtil.h"
+#import "RVIDlinkPacket.h"
 #import "RVIDlinkAuthPacket.h"
 #import "RVIDlinkServiceAnnouncePacket.h"
 #import "RVIDlinkReceivePacket.h"

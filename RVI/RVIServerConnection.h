@@ -14,7 +14,9 @@
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 #import <Foundation/Foundation.h>
-#import "RVIRemoteConnectionDelegate.h"
+
+@protocol RVIRemoteConnectionDelegate;
+@protocol RVIRemoteConnectionInterface;
 
 @interface RVIServerConnection : NSObject <RVIRemoteConnectionInterface>
 /**

@@ -13,9 +13,8 @@
 //
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+#import "RVIDlinkPacket.h"
 #import "RVIDlinkAuthPacket.h"
-#import "RVIDlinkServiceAnnouncePacket.h"
-
 
 @implementation RVIDlinkAuthPacket
 {

@@ -4,8 +4,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RVIRemoteConnectionDelegate.h"
 
+
+@protocol RVIRemoteConnectionInterface;
+@protocol RVIRemoteConnectionDelegate;
 
 @interface RVIBluetoothConnection : NSObject <RVIRemoteConnectionInterface>
 
@@ -16,11 +18,4 @@
 
 + (id)bluetoothConnection;
 
-//- (void)sendRviRequest:(RVIDlinkPacket *)dlinkPacket;
-//
-//- (BOOL)isConnected;
-//- (BOOL)isConfigured;
-//
-//- (void)connect;
-//- (void)disconnect:(NSError *)trigger;
 @end

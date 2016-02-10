@@ -15,7 +15,6 @@
 
 #import "RVIDlinkServiceAnnouncePacket.h"
 
-
 @implementation RVIDlinkServiceAnnouncePacket
 {
 

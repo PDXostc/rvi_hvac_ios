@@ -16,7 +16,6 @@
 #import <Foundation/Foundation.h>
 #import "RVIDlinkPacket.h"
 
-
 @interface RVIDlinkAuthPacket : RVIDlinkPacket
 @property (nonatomic, strong) NSString *addr;
 

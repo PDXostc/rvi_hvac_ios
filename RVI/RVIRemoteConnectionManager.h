@@ -14,7 +14,8 @@
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 #import <Foundation/Foundation.h>
-#import "RVIDlinkPacket.h"
+
+@class RVIDlinkPacket;
 
 typedef enum
 {

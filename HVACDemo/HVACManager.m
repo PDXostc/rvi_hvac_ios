@@ -16,7 +16,6 @@
 #import "HVACManager.h"
 #import "RPCClient.h"
 #import "RVINode.h"
-#import "RVIServiceBundle.h"
 
 @interface HVACManager () <RVINodeDelegate, RVIServiceBundleDelegate>
 @property (nonatomic, strong) NSString  *vin;

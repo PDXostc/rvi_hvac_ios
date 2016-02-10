@@ -16,7 +16,6 @@
 #import <Foundation/Foundation.h>
 #import "RVIDlinkPacket.h"
 
-
 @interface RVIDlinkServiceAnnouncePacket : RVIDlinkPacket
 /**
  * The status.

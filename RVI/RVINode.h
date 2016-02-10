@@ -14,9 +14,9 @@
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 #import <Foundation/Foundation.h>
+#import "RVIServiceBundle.h"
 
 
-@class RVIServiceBundle;
 /**
  * The RVI node delegate interface.
  */

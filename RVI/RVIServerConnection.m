@@ -13,11 +13,10 @@
 //
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+#import "RVIRemoteConnectionDelegate.h"
 #import "RVIServerConnection.h"
 #import "RVIUtil.h"
 #import "RVIDlinkAuthPacket.h"
-#import "RVIDlinkServiceAnnouncePacket.h"
-#import "RVIDlinkReceivePacket.h"
 
 @interface RVIServerConnection () <NSStreamDelegate>
 @property (nonatomic) SecCertificateRef      certificate;

@@ -19,6 +19,7 @@
 #import "RVIDlinkPacketParser.h"
 #import "RVIBluetoothConnection.h"
 #import "RVIUtil.h"
+#import "RVIDlinkPacket.h"
 
 @interface RVIRemoteConnectionManager () <RVIRemoteConnectionDelegate, RVIDlinkPacketParserDelegate>
 @property (nonatomic, strong) RVIBluetoothConnection          *bluetoothConnection;

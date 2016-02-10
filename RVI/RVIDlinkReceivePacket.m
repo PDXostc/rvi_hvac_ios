@@ -13,6 +13,7 @@
 //
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+#import "RVIDlinkPacket.h"
 #import "RVIDlinkReceivePacket.h"
 #import "RVIService.h"
 
