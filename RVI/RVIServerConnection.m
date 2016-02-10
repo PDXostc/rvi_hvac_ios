@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSOutputStream *outputStream;
 @property (nonatomic) BOOL                   isConnected;
 @property (nonatomic) BOOL                   isConnecting;
+@property (nonatomic) BOOL                   verifiedInputCerts;
+@property (nonatomic) BOOL                   verifiedOutputCerts;
 @end
 
 @implementation RVIServerConnection
@@ -222,6 +224,9 @@
 
     self.inputStream  = nil;
     self.outputStream = nil;
+
+    self.verifiedInputCerts = NO;
+    self.verifiedOutputCerts = NO;
 }
 
 - (void)readString:(NSString *)string
@@ -242,89 +247,59 @@
     NSLog(@"%@", string);
 }
 
+- (void)finishConnecting
+{
+    self.isConnecting = NO;
+    self.isConnected = YES;
+
+    [self.delegate onRemoteConnectionDidConnect];
+}
+
+- (NSInteger)verifyCertsForStream:(NSStream *)stream
+{
+    SecTrustRef serverTrust;
+    SecTrustResultType res = kSecTrustResultInvalid;
+
+    SecPolicyRef policy = SecPolicyCreateSSL(NO, CFSTR("genivi.org"));
+    CFArrayRef streamCertificates = (__bridge CFArrayRef)[stream propertyForKey:(NSString *)kCFStreamPropertySSLPeerCertificates];
+    OSStatus status = SecTrustCreateWithCertificates(streamCertificates, policy, &serverTrust);
+
+    if (status != noErr)
+        return status;
+
+    status = SecTrustSetAnchorCertificates(serverTrust, (__bridge CFArrayRef)@[(id)self.certificate]);
+
+    if (status != noErr)
+        return status;
+
+    if (SecTrustEvaluate(serverTrust, &res))                                /* The trust evaluation failed for some reason. This probably means your */
+    {                                                                       /* certificate was broken in some way or your code is otherwise wrong.   */
+        DLog(@"SecTrustEvaluate(trust, &res) failed");
+
+        return res;
+    }
+
+    if (res != kSecTrustResultProceed && res != kSecTrustResultUnspecified) /* The host is not trusted. */
+    {
+        DLog(@"(res != kSecTrustResultProceed && res != kSecTrustResultUnspecified) res = %d", res);
+
+        return res;
+    }
+    else                                                                    /* Host is trusted. Handle the data callback normally. */
+    {
+        return noErr;
+    }
+}
 
 #pragma mark -
 #pragma mark NSStreamDelegate
 
-
-#define BUFFER_LEN 1024
-NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
-
+#define BUFFER_LEN 2048
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
 {
     DLog(@"");
 
-    BOOL isGood = NO;
-
-    // #1
-    // NO for client, YES for server.  In this example, we are a client
-    // replace "localhost" with the name of the server to which you are connecting
-    //SecPolicyRef policy             = SecPolicyCreateSSL(NO, CFSTR("localhost"));
-    SecPolicyRef policy = SecPolicyCreateSSL(NO, CFSTR("genivi.org"));//(__bridge CFStringRef)self.serverUrl);
-    //SecTrustRef  trust  = NULL;
-
-    // #2
-    CFArrayRef streamCertificates = (__bridge CFArrayRef)[stream propertyForKey:(NSString *)kCFStreamPropertySSLPeerCertificates];
-
-    SecTrustRef serverTrust;
-    OSStatus status;
-    // noErr == status?
-
-    if (eventCode == NSStreamEventHasBytesAvailable || eventCode == NSStreamEventHasSpaceAvailable)
-    {
-
-        status = SecTrustCreateWithCertificates(streamCertificates, policy, &serverTrust);
-
-        /* Because you don't want the array of certificates to keep
-           growing, you should add the anchor to the trust list only
-           upon the initial receipt of data (rather than every time).
-         */
-        NSNumber *alreadyAdded = [stream propertyForKey:kAnchorAlreadyAdded];
-        if (!alreadyAdded || ![alreadyAdded boolValue])
-        {
-            NSLog(@"Not already added for stream");
-
-            status = SecTrustSetAnchorCertificates(serverTrust, (__bridge CFArrayRef)@[(id)self.certificate]);
-            // noErr == status?
-
-            [stream setProperty:@YES forKey:kAnchorAlreadyAdded];
-        }
-        SecTrustResultType res = kSecTrustResultInvalid;
-
-        if (SecTrustEvaluate(serverTrust, &res))
-        {
-            /* The trust evaluation failed for some reason.
-               This probably means your certificate was broken
-               in some way or your code is otherwise wrong. */
-
-            DLog(@"SecTrustEvaluate(trust, &res) failed");
-
-            // TODO: Handle correctly
-            [self close];
-
-            return;
-
-        }
-
-        if (res != kSecTrustResultProceed && res != kSecTrustResultUnspecified)
-        {
-
-            DLog(@"(res != kSecTrustResultProceed && res != kSecTrustResultUnspecified) res = %d", res);
-
-            // TODO: Handle correctly
-            [self close];
-
-            return;
-
-        }
-        else
-        {
-            // Host is trusted. Handle the data callback normally.
-            isGood = YES;
-        }
-    }
-    
-    
+    NSInteger result = 0;
     switch (eventCode)
     {
         case NSStreamEventNone:
@@ -335,9 +310,18 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
             break;
         case NSStreamEventHasBytesAvailable:
             DLog(@"NSStreamEventHasBytesAvailable");
+            
+            if (!self.verifiedInputCerts) {
+                result = [self verifyCertsForStream:stream];
+            }
+            
+            if (result) { // TODO: Error
+                [self close];
 
-            if (!isGood)
                 break;
+            }
+
+            self.verifiedOutputCerts = NO;
 
             if (stream == self.inputStream)
             {
@@ -361,9 +345,18 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
             break;
         case NSStreamEventHasSpaceAvailable:
             DLog(@"NSStreamEventHasSpaceAvailable");
+            
+            if (!self.verifiedOutputCerts) {
+                result = [self verifyCertsForStream:stream];
+            }
+            
+            if (result) { // TODO: Error
+                [self close];
 
-            if (!isGood)
                 break;
+            }
+
+            self.verifiedOutputCerts = YES;
 
             if (stream == self.outputStream)
             {
@@ -386,13 +379,5 @@ NSString *kAnchorAlreadyAdded = @"AnchorAlreadyAdded";
         default:
             break;
     }
-}
-
-- (void)finishConnecting
-{
-    self.isConnecting = NO;
-    self.isConnected = YES;
-
-    [self.delegate onRemoteConnectionDidConnect];
 }
 @end
