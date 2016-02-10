@@ -20,8 +20,9 @@ typedef enum
 {
     kRVINodeNotConfigured        = 1001,
     kRVINodeJsonError            = 1002,
-    kRVINodeMissingCert          = 1003,
-    kRVINodeStreamEndEncountered = 1004,
+    kRVINodeMissingServerCert    = 1003,
+    kRVINodeMissingClientCert    = 1004,
+    kRVINodeStreamEndEncountered = 1005,
 //    kRVINodeNotConfigured = 1005,
 //    kRVINodeNotConfigured = 1006,
 //    kRVINodeNotConfiguredr =1007
@@ -70,7 +71,8 @@ typedef enum
 /**
  * Sets the server port of the remote RVI node, when using a TCP/IP link to interface with a remote node.
  *
- * @param serverKeyStore the KeyStore object that contains your server's self-signed certificate that the TLS connection should accept.
+ * @param serverCertificate the name of your server's self-signed certificate that the TLS connection should accept. Should be a file of type
+ *                 .der included with your app.
  *                 To make this KeyStore object, use BouncyCastle :(http://www.bouncycastle.org/download/bcprov-jdk15on-146.jar), and
  *                 this command-line command:
  *                 $ keytool -import -v -trustcacerts -alias 0 \
@@ -80,11 +82,13 @@ typedef enum
  *                 -provider org.bouncycastle.jce.provider.BouncyCastleProvider \
  *                 -providerpath [PATH_TO_bcprov-jdk15on-146.jar] \
  *                 -storepass [STOREPASS]
- * @param clientKeyStore the KeyStore object that contains your client's self-signed certificate that the TLS connection sends to the server.
+ * @param serverDomain the domain used as the "subjectAltName=DNS:<domain>" when creating the server certificate signing request
+ * @param clientCertificate the name of your client's self-signed certificate that the TLS connection sends to the server. Should be a password
+ *                  encoded file of type .p12 bundled with your app.
  *                       // TODO: openssl pkcs12 -export -in insecure_device_cert.crt -inkey insecure_device_key.pem -out client.p12 -name "client-certs"
- * @param clientKeyStorePassword the password of the client key store
+ * @param clientCertificatePassword the password of the client key store
  */
-- (void)setServerKeyStores:(id)serverKeyStore clientKeyStore:(id)clientKeyStore clientKeyStorePassword:(NSString *)clientKeyStorePassword;
+- (void)setServerCertificate:(NSString *)serverCertificate serverDomain:(NSString *)serverDomain clientCertificate:(NSString *)clientCertificate clientCertificatePassword:(NSString *)clientCertificatePassword;
 
 /**
  * Sets the device address of the remote Bluetooth receiver on the remote RVI node, when using a Bluetooth link to interface with a remote node.

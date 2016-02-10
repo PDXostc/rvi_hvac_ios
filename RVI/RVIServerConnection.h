@@ -30,31 +30,28 @@
 @property (nonatomic)         UInt32 serverPort;
 
 /**
- * The key store of the server certs
+ * The name of the of the server cert .der file
  */
-@property (nonatomic, strong) id serverKeyStore;
+@property (nonatomic, strong) id serverCertificate;
 
 /**
- * The key store of the client certs
+ * The domain used as the "subjectAltName=DNS:<domain>" when creating the server certificate signing request
  */
-@property (nonatomic, strong) id clientKeyStore;
+@property (nonatomic, copy) NSString *serverDomain;
 
 /**
- * The key store password of the client certs
+ * The name of the client cert .p12 file
  */
-@property (nonatomic, strong) NSString *clientKeyStorePassword;
+@property (nonatomic, strong) id clientCertificate;
+
+/**
+ * The password of the client cert
+ */
+@property (nonatomic, strong) NSString *clientCertificatePassword;
 
 @property (nonatomic, readonly) BOOL isConnected;
 
 @property (nonatomic, weak) id<RVIRemoteConnectionDelegate> delegate;
 
 + (id)serverConnection;
-
-//- (void)sendRviRequest:(RVIDlinkPacket *)dlinkPacket;
-//
-//- (BOOL)isConnected;
-//- (BOOL)isConfigured;
-//
-//- (void)connect;
-//- (void)disconnect:(NSError *)trigger;
 @end

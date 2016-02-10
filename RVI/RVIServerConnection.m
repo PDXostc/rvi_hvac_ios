@@ -83,7 +83,7 @@
 
 - (BOOL)isConfigured
 {
-    return ([self.serverUrl length] && self.serverPort);
+    return ([self.serverUrl length] && self.serverPort && [self.serverCertificate length] && [self.serverDomain length] && [self.clientCertificate length] && [self.clientCertificatePassword length]);
 }
 
 - (void)connect
@@ -139,7 +139,8 @@
         case kSecTrustResultRecoverableTrustFailure : localizedDescription = @"Connection to RVI node has failed due to TLS error: Trust framework failure; retry after fixing inputs.";              break; // 5
         case kSecTrustResultFatalTrustFailure       : localizedDescription = @"Connection to RVI node has failed due to TLS error: Trust framework failure; no \"easy\" fix.";                        break; // 6
         case kSecTrustResultOtherError              : localizedDescription = @"Connection to RVI node has failed due to TLS error: A failure other than that of trust evaluation.";                   break; // 7
-        case kRVINodeMissingCert                    : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failure loading server cert";                                      break; // 1003
+        case kRVINodeMissingServerCert              : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failure loading server cert";                                      break; // 1003
+        case kRVINodeMissingClientCert              : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failure loading client cert";                                      break; // 1004
         default                                     : localizedDescription = @"The secure connection failed for an unknown reason. Check underlying error";                                           break;
     }
 
@@ -169,24 +170,30 @@
     DLog(@"Setting up connection to %@ : %i", [url absoluteString], (int)self.serverPort);
 
     NSBundle *bundle                = [NSBundle bundleForClass:[self class]];
-    NSData   *iosTrustedCertDerData = [NSData dataWithContentsOfFile:[bundle pathForResource:@"lilli_ios_cert"
+    NSData   *iosTrustedCertDerData = [NSData dataWithContentsOfFile:[bundle pathForResource:[self.serverCertificate stringByDeletingPathExtension]
                                                                                       ofType:@"der"]];
+
+    if (!iosTrustedCertDerData)
+    {
+        [self errorConnecting:kRVINodeMissingServerCert underlyingError:nil];
+        return;
+    }
 
     SecCertificateRef certificate = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)iosTrustedCertDerData);
 
     if (!certificate)
     {
-        [self errorConnecting:kRVINodeMissingCert underlyingError:nil];
+        [self errorConnecting:kRVINodeMissingServerCert underlyingError:nil];
         return;
     }
 
     self.certificate = certificate;
 
-    NSString *password = @"password";
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:[self.clientCertificate stringByDeletingPathExtension]
+                                                     ofType:@"p12"];
 
     CFStringRef cfPassword = CFStringCreateWithCString(NULL,
-                                                       password.UTF8String,
+                                                       self.clientCertificatePassword.UTF8String,
                                                        kCFStringEncodingUTF8);
 
     const void *keys[]   = { kSecImportExportPassphrase };
@@ -197,7 +204,11 @@
     NSData *fileContent = [[NSData alloc] initWithContentsOfFile:path];
     CFDataRef cfDataOfFileContent = (__bridge CFDataRef)fileContent;
 
-    // TODO: More error handling
+    if (!cfDataOfFileContent)
+    {
+        [self errorConnecting:kRVINodeMissingClientCert underlyingError:nil];
+        return;
+    }
 
     CFArrayRef items = CFArrayCreate(NULL, 0, 0, NULL);
     status = SecPKCS12Import(cfDataOfFileContent,
@@ -316,7 +327,7 @@
     SecTrustRef serverTrust;
     SecTrustResultType res = kSecTrustResultInvalid;
 
-    SecPolicyRef policy = SecPolicyCreateSSL(NO, CFSTR("genivi.org"));
+    SecPolicyRef policy = SecPolicyCreateSSL(NO, (__bridge CFStringRef)self.serverDomain);
     CFArrayRef streamCertificates = (__bridge CFArrayRef)[stream propertyForKey:(NSString *)kCFStreamPropertySSLPeerCertificates];
 
     OSStatus status = SecTrustCreateWithCertificates(streamCertificates, policy, &serverTrust);

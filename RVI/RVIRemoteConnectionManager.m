@@ -120,11 +120,12 @@
     self.directServerConnection.serverPort = serverPort;
 }
 
-- (void)setServerKeyStores:(id)serverKeyStore clientKeyStore:(id)clientKeyStore clientKeyStorePassword:(NSString *)clientKeyStorePassword
+- (void)setServerCertificate:(NSString *)serverCertificate serverDomain:(NSString *)serverDomain clientCertificate:(NSString *)clientCertificate clientCertificatePassword:(NSString *)clientCertificatePassword
 {
-    self.directServerConnection.serverKeyStore = serverKeyStore;
-    self.directServerConnection.clientKeyStore = clientKeyStore;
-    self.directServerConnection.clientKeyStorePassword = clientKeyStorePassword;
+    self.directServerConnection.serverCertificate         = serverCertificate;
+    self.directServerConnection.serverDomain              = serverDomain;
+    self.directServerConnection.clientCertificate         = clientCertificate;
+    self.directServerConnection.clientCertificatePassword = clientCertificatePassword;
 }
 
 - (void)setBluetoothDeviceAddress:(NSString *)deviceAddress

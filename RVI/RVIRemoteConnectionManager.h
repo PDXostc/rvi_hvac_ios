@@ -103,10 +103,10 @@ typedef enum
 /**
  * Sets the trusted server certificate of the remote RVI node, when using a TCP/IP link to interface with a remote node.
  *
- * @param clientKeyStore the server certificate key store
- * @param serverKeyStore the server certificate key store
+ * @param clientCertificate the server certificate key store
+ * @param serverCertificate the server certificate key store
  */
-- (void)setServerKeyStores:(id)serverKeyStore clientKeyStore:(id)clientKeyStore clientKeyStorePassword:(NSString *)clientKeyStorePassword;
+- (void)setServerCertificate:(NSString *)serverCertificate serverDomain:(NSString *)serverDomain clientCertificate:(NSString *)clientCertificate clientCertificatePassword:(NSString *)clientCertificatePassword;
 
 /**
  * Sets the device address of the remote Bluetooth receiver on the remote RVI node, when using a Bluetooth link to interface with a remote node.

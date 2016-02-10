@@ -60,6 +60,7 @@
         //[_sharedManager.node setServerUrl:@"192.168.16.197"];
         [_sharedManager.node setServerUrl:@"192.168.16.132"];
         [_sharedManager.node setServerPort:8820];
+        [_sharedManager.node setServerCertificate:@"lilli_ios_cert" serverDomain:@"genivi.org" clientCertificate:@"client" clientCertificatePassword:@"password"];
         [_sharedManager.node addBundle:_sharedManager.hvacBundle];
     });
 

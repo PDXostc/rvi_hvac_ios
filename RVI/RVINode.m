@@ -76,9 +76,9 @@
     [self.remoteConnectionManager setServerPort:serverPort];
 }
 
-- (void)setServerKeyStores:(id)serverKeyStore clientKeyStore:(id)clientKeyStore clientKeyStorePassword:(NSString *)clientKeyStorePassword
+- (void)setServerCertificate:(NSString *)serverCertificate serverDomain:(NSString *)serverDomain clientCertificate:(NSString *)clientCertificate clientCertificatePassword:(NSString *)clientCertificatePassword
 {
-    [self.remoteConnectionManager setServerKeyStores:serverKeyStore clientKeyStore:clientKeyStore clientKeyStorePassword:clientKeyStorePassword];
+    [self.remoteConnectionManager setServerCertificate:serverCertificate serverDomain:serverDomain clientCertificate:clientCertificate clientCertificatePassword:clientCertificatePassword];
 }
 
 - (void)setBluetoothDeviceAddress:(NSString *)deviceAddress
