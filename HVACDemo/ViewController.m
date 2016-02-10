@@ -71,7 +71,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [HVACManager invokeService:(pickerView == self.pickerLeft) ? @"/temp_left" : @"/temp_right"
+    [HVACManager invokeService:(pickerView == self.pickerLeft) ? HVACServiceIdentifier_TEMP_LEFT : HVACServiceIdentifier_TEMP_RIGHT
                          value:[NSString stringWithFormat:@"%d", row + 15]];
 }
 
