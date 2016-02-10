@@ -71,8 +71,8 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [HVACManager sendService:(pickerView == self.pickerLeft) ? @"/temp_left" : @"/temp_right"
-                       value:[NSString stringWithFormat:@"%d", row + 15]];
+    [HVACManager invokeService:(pickerView == self.pickerLeft) ? @"/temp_left" : @"/temp_right"
+                         value:[NSString stringWithFormat:@"%d", row + 15]];
 }
 
 - (IBAction)airDirectionButtonPressed:(id)sender
@@ -99,8 +99,8 @@
                             forState:UIControlStateNormal];
     }
 
-    [HVACManager sendService:@"/temp_left"
-                       value:@"20"];
+    [HVACManager invokeService:@"/temp_left"
+                         value:@"20"];
 }
 
 - (IBAction)fanACButtonPressed:(id)sender

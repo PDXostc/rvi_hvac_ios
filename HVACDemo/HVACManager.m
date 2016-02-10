@@ -16,10 +16,13 @@
 #import "HVACManager.h"
 #import "RVINode.h"
 
+#define SERVICE_IDENTIFIERS @[@"hazard", @"temp_left", @"temp_right", @"seat_heat_left", @"seat_heat_right", @"fan_speed", @"airflow_direction", @"defrost_rear", @"defrost_front", @"defrost_max", @"air_circ", @"fan", @"control_auto", @"unsubscribe", @"subscribe", @"none"]
+
 @interface HVACManager () <RVINodeDelegate, RVIServiceBundleDelegate>
 
-@property (nonatomic, strong) RVINode   *node;
+@property (nonatomic, strong) RVINode          *node;
 @property (nonatomic, strong) RVIServiceBundle *hvacBundle;
+@property (nonatomic, weak)   id<HVACManagerDelegate> delegate;
 @end
 
 #define RVI_DOMAIN              @"genivi.org"
@@ -38,39 +41,48 @@
     dispatch_once(&onceToken, ^{
         _sharedManager = [[HVACManager alloc] init];
 
-
-        _sharedManager.node       = [RVINode node];
-        _sharedManager.hvacBundle = [RVIServiceBundle serviceBundleWithDomain:RVI_DOMAIN bundleIdentifier:HVAC_BUNDLE_IDENTIFER serviceIdentifiers:@[@"seat_heat_right"]];
-
-        [_sharedManager.hvacBundle setDelegate:_sharedManager];
+        [_sharedManager setNode:[RVINode node]];
         [_sharedManager.node setDelegate:_sharedManager];
-
-        //[_sharedManager.node setServerUrl:@"192.168.16.197"];
-        [_sharedManager.node setServerUrl:@"192.168.16.132"];
-        [_sharedManager.node setServerPort:8820];
-        [_sharedManager.node setServerCertificate:@"lilli_ios_cert" serverDomain:RVI_DOMAIN clientCertificate:@"client" clientCertificatePassword:@"password"];
-        [_sharedManager.node addBundle:_sharedManager.hvacBundle];
     });
 
     return _sharedManager;
 }
 
-- (void)sendService:(NSString *)service value:(NSString *)value
++ (void)setDelegate:(id <HVACManagerDelegate>)delegate
 {
-    [self.hvacBundle invokeService:service
+    [[HVACManager sharedManager] setDelegate:delegate];
+}
+
+- (void)invokeService:(HVACServiceIdentifier)service value:(NSObject *)value
+{
+    [self.hvacBundle invokeService:SERVICE_IDENTIFIERS[service]
                         withParams:@{@"sending_node" : [NSString stringWithFormat:@"%@/%@/",RVI_DOMAIN, [RVINode getLocalNodeIdentifier]],
                                    @"value" : value }
                            timeout:10000];
 }
 
 
-+ (void)sendService:(NSString *)service value:(NSString *)value
++ (void)invokeService:(HVACServiceIdentifier)service value:(NSObject *)value
 {
-    [[HVACManager sharedManager] sendService:service value:value];
+    [[HVACManager sharedManager] invokeService:service value:value];
 }
 
 - (void)start
 {
+    //[self.node setServerUrl:@"192.168.16.197"];
+    [self.node setServerUrl:@"192.168.16.132"];
+    [self.node setServerPort:8820];
+    [self.node setServerCertificate:@"lilli_ios_cert" serverDomain:RVI_DOMAIN clientCertificate:@"client" clientCertificatePassword:@"password"];
+
+    if (self.hvacBundle != NULL)
+        [self.node removeBundle:self.hvacBundle];
+
+    self.hvacBundle = [RVIServiceBundle serviceBundleWithDomain:RVI_DOMAIN
+                                               bundleIdentifier:HVAC_BUNDLE_IDENTIFER
+                                             serviceIdentifiers:[SERVICE_IDENTIFIERS subarrayWithRange:NSMakeRange(0, HVACServiceIdentifier_END_LOCAL)]];
+    [self.hvacBundle setDelegate:self];
+
+    [self.node addBundle:self.hvacBundle];
     [self.node connect];
 }
 
@@ -79,9 +91,26 @@
     [[HVACManager sharedManager] start];
 }
 
+- (void)restart
+{
+    [self.node disconnect];
+    [self.node connect];
+}
+
++ (void)restart
+{
+    [[HVACManager sharedManager] restart];
+}
+
+- (void)subscribeToHvac
+{
+    [self invokeService:HVACServiceIdentifier_SUBSCRIBE
+                  value:[NSString stringWithFormat:@"{\"node\":\"%@/%@/\"}", RVI_DOMAIN, [RVINode getLocalNodeIdentifier]]];
+}
+
 - (void)nodeDidConnect
 {
-
+    [self subscribeToHvac];
 }
 
 - (void)nodeDidFailToConnect:(NSError *)trigger
@@ -97,6 +126,9 @@
 - (void)onServiceInvoked:(RVIServiceBundle *)serviceBundle withIdentifier:(NSString *)serviceIdentifier params:(NSObject *)parameters
 {
     NSLog(@"onServiceInvoked...");
+
+    [self.delegate onServiceInvoked:(HVACServiceIdentifier)[SERVICE_IDENTIFIERS indexOfObjectIdenticalTo:serviceIdentifier]
+                     withParameters:parameters];
 }
 
 @end

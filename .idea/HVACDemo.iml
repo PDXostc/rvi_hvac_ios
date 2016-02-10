@@ -4,26 +4,17 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/AppDelegate.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Images.xcassets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/AppDelegate.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/ViewController.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCResponse.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCResponse.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCClient.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCRequest.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCClient.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/RPC/RPCRequest.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/AppDelegate.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/HVACManager.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Images.xcassets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/main.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/HVACManager.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/ViewController.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/client-certs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/insecure_device_cert.der" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/lilli_ios_cert.der" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/client.p12" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/server-certs.der" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/TLS/lilli_ios_cert.der" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Base.lproj/LaunchScreen.xib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Base.lproj/Main.storyboard" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemo/HVACManager.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/HVACDemoTests.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServiceBundle.h" isTestSource="false" />

@@ -171,7 +171,7 @@
 
     RVIService *pendingServiceInvocation = self.pendingServiceInvocations[serviceIdentifier];
     if (pendingServiceInvocation != nil) {
-        if (pendingServiceInvocation.timeout >= [[NSDate date] timeIntervalSince1970] * 1000) {
+        if (pendingServiceInvocation.timeout >= ([[NSDate date] timeIntervalSince1970] * 1000)) {
             pendingServiceInvocation.nodeIdentifier = remoteNodeIdentifier;
             [self.node invokeService:pendingServiceInvocation];
         }

@@ -74,11 +74,7 @@
 
     }
 
-    NSString *payloadString = [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
-
-    DLog(@"Sending data: %@", payloadString);
-
-    [self writeString:payloadString];
+    [self writeString:[[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding]];
 }
 
 - (BOOL)isConfigured
@@ -306,18 +302,12 @@
 
 - (void)readString:(NSString *)string
 {
-    DLog(@"Reading in the following: %@", string);
-
     [self.delegate onRemoteConnectionDidReceiveData:string];
 }
 
 - (void)writeString:(NSString *)string
 {
-    uint8_t *buf = (uint8_t *)[string UTF8String];
-
-    [self.outputStream write:buf maxLength:strlen((char *)buf)];
-
-    DLog(@"Writing out the following: %@", string);
+    [self.outputStream write:(uint8_t *)[string UTF8String] maxLength:strlen((char *)[string UTF8String])];
 }
 
 - (NSInteger)verifyCertsForStream:(NSStream *)stream
