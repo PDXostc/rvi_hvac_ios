@@ -17,28 +17,29 @@
 
 typedef enum
 {
-    HVACServiceIdentifier_HAZARD = 0,
-    HVACServiceIdentifier_TEMP_LEFT,
-    HVACServiceIdentifier_TEMP_RIGHT,
-    HVACServiceIdentifier_SEAT_HEAT_LEFT,
-    HVACServiceIdentifier_SEAT_HEAT_RIGHT,
-    HVACServiceIdentifier_FAN_SPEED,
-    HVACServiceIdentifier_AIRFLOW_DIRECTION,
-    HVACServiceIdentifier_DEFROST_REAR,
-    HVACServiceIdentifier_DEFROST_FRONT,
-    HVACServiceIdentifier_DEFROST_MAX,
-    HVACServiceIdentifier_AIR_CIRC,
-    HVACServiceIdentifier_AC,
-    HVACServiceIdentifier_AUTO,
-    HVACServiceIdentifier_END_LOCAL,
-    HVACServiceIdentifier_UNSUBSCRIBE = HVACServiceIdentifier_END_LOCAL,
-    HVACServiceIdentifier_SUBSCRIBE,
+    HSI_HAZARD = 0,
+    HSI_TEMP_LEFT,
+    HSI_TEMP_RIGHT,
+    HSI_SEAT_HEAT_LEFT,
+    HSI_SEAT_HEAT_RIGHT,
+    HSI_FAN_SPEED,
+    HSI_AIRFLOW_DIRECTION,
+    HSI_DEFROST_REAR,
+    HSI_DEFROST_FRONT,
+    HSI_DEFROST_MAX,
+    HSI_AIR_CIRC,
+    HSI_AC,
+    HSI_AUTO,
+    HSI_END_LOCAL,
+    HSI_UNSUBSCRIBE = HSI_END_LOCAL,
+    HSI_SUBSCRIBE,
+    HSI_NONE,
 } HVACServiceIdentifier;
 
 @protocol HVACManagerDelegate <NSObject>
 - (void)onNodeConnected;
 - (void)onNodeDisconnected;
-- (void)onServiceInvoked:(HVACServiceIdentifier)serviceIdentifier withParameters:(id)parameters;
+- (void)onServiceInvoked:(HVACServiceIdentifier)serviceIdentifier withValue:(id)value;
 @end
 
 @interface HVACManager : NSObject

@@ -74,8 +74,8 @@
 
     NSError *error;
     NSData *serviceData = [NSJSONSerialization dataWithJSONObject:[self.service toDictionary]
-                                                                                       options:nil
-                                                                                         error:nil];
+                                                          options:nil
+                                                            error:&error];
 
     if (error) {;} // TODO: Process error
 

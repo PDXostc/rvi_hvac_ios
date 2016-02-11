@@ -16,6 +16,7 @@
 		23A502841AF436E900208D21 /* HVACDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A502831AF436E900208D21 /* HVACDemoTests.m */; };
 		6234814D32FA6042AFFB895B /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 6234802DAEEF06FF48B5848A /* client.p12 */; };
 		623481AFD8D6711B02D720E4 /* RVIDlinkPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234863B8D24C5EC6447A36B /* RVIDlinkPacket.m */; };
+		6234823411B375A68E9E5194 /* HVACState.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348C708454A2415B1FA606 /* HVACState.m */; };
 		6234832E97E8B22E26A78DDE /* RVIDlinkPacketParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348D275B345AFE52F21BA8 /* RVIDlinkPacketParser.m */; };
 		6234837926524609DD59A9E8 /* HVACManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348F2B6AB0D4F1D0FC36E7 /* HVACManager.m */; };
 		62348579F97E59052D6EB330 /* RVINode.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348729A670EC9782A2A1E9 /* RVINode.m */; };
@@ -77,8 +78,11 @@
 		62348BCF9DACB60E4A912ABD /* RVIRemoteConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIRemoteConnectionManager.h; sourceTree = "<group>"; };
 		62348C05224ED9FCFBE963AE /* RVIDlinkServiceAnnouncePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIDlinkServiceAnnouncePacket.h; sourceTree = "<group>"; };
 		62348C4E0E7CB8FEA3AA917C /* RVIDlinkPacketParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIDlinkPacketParser.h; sourceTree = "<group>"; };
+		62348C708454A2415B1FA606 /* HVACState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVACState.m; sourceTree = "<group>"; };
 		62348CF6A58937FC72D4A258 /* RVIRemoteConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIRemoteConnectionManager.m; sourceTree = "<group>"; };
 		62348D275B345AFE52F21BA8 /* RVIDlinkPacketParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIDlinkPacketParser.m; sourceTree = "<group>"; };
+		62348D9AD6252FC304BEF24C /* HVACUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVACUtil.h; sourceTree = "<group>"; };
+		62348DDF01CAAE5227BF9319 /* HVACState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVACState.h; sourceTree = "<group>"; };
 		62348F2B6AB0D4F1D0FC36E7 /* HVACManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVACManager.m; sourceTree = "<group>"; };
 		62348F74F3D204CAF7D97D3C /* RVIDlinkReceivePacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVIDlinkReceivePacket.m; sourceTree = "<group>"; };
 		62348FE151D6CAD25CDA6458 /* RVIUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVIUtil.h; sourceTree = "<group>"; };
@@ -135,6 +139,9 @@
 				62348F2B6AB0D4F1D0FC36E7 /* HVACManager.m */,
 				623482277589C8905AB4BAB5 /* HVACManager.h */,
 				6234848F556E8E1681C0A2DD /* TLS */,
+				62348C708454A2415B1FA606 /* HVACState.m */,
+				62348DDF01CAAE5227BF9319 /* HVACState.h */,
+				62348D9AD6252FC304BEF24C /* HVACUtil.h */,
 			);
 			path = HVACDemo;
 			sourceTree = "<group>";
@@ -323,6 +330,7 @@
 				62348DF3C04950D3CAE5C987 /* RVIDlinkReceivePacket.m in Sources */,
 				6234832E97E8B22E26A78DDE /* RVIDlinkPacketParser.m in Sources */,
 				62348F8E55574C3B7F5B90A0 /* RVIBluetoothConnection.m in Sources */,
+				6234823411B375A68E9E5194 /* HVACState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

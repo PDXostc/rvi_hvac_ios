@@ -56,8 +56,8 @@
 - (void)invokeService:(HVACServiceIdentifier)service value:(NSObject *)value
 {
     [self.hvacBundle invokeService:SERVICE_IDENTIFIERS[service]
-                        withParams:@{@"sending_node" : [NSString stringWithFormat:@"%@/%@/",RVI_DOMAIN, [RVINode getLocalNodeIdentifier]],
-                                   @"value" : value }
+                        withParams:@{ @"sending_node" : [NSString stringWithFormat:@"%@/%@/",RVI_DOMAIN, [RVINode getLocalNodeIdentifier]],
+                                      @"value"        : value }
                            timeout:10000];
 }
 
@@ -79,7 +79,7 @@
 
     self.hvacBundle = [RVIServiceBundle serviceBundleWithDomain:RVI_DOMAIN
                                                bundleIdentifier:HVAC_BUNDLE_IDENTIFER
-                                             serviceIdentifiers:[SERVICE_IDENTIFIERS subarrayWithRange:NSMakeRange(0, HVACServiceIdentifier_END_LOCAL)]];
+                                             serviceIdentifiers:[SERVICE_IDENTIFIERS subarrayWithRange:NSMakeRange(0, HSI_END_LOCAL)]];
     [self.hvacBundle setDelegate:self];
 
     [self.node addBundle:self.hvacBundle];
@@ -104,7 +104,7 @@
 
 - (void)subscribeToHvac
 {
-    [self invokeService:HVACServiceIdentifier_SUBSCRIBE
+    [self invokeService:HSI_SUBSCRIBE
                   value:[NSString stringWithFormat:@"{\"node\":\"%@/%@/\"}", RVI_DOMAIN, [RVINode getLocalNodeIdentifier]]];
 }
 
@@ -128,7 +128,7 @@
     NSLog(@"onServiceInvoked...");
 
     [self.delegate onServiceInvoked:(HVACServiceIdentifier)[SERVICE_IDENTIFIERS indexOfObjectIdenticalTo:serviceIdentifier]
-                     withParameters:parameters];
+                          withValue:parameters];
 }
 
 @end

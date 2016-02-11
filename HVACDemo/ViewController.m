@@ -16,26 +16,39 @@
 
 #import "ViewController.h"
 #import "HVACManager.h"
+#import "HVACState.h"
+#import "HVACUtil.h"
 
-@interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate, HVACManagerDelegate>
 @property (nonatomic, weak) UIPickerView *pickerLeft;
 @property (nonatomic, weak) UIPickerView *pickerRight;
-@property (nonatomic, weak) IBOutlet UIButton *airDirectionDown;
-@property (nonatomic, weak) IBOutlet UIButton *airDirectionRight;
-@property (nonatomic, weak) IBOutlet UIButton *airDirectionUp;
-@property (nonatomic, weak) IBOutlet UIButton *fanAC;
-@property (nonatomic, weak) IBOutlet UIButton *fanAuto;
-@property (nonatomic, weak) IBOutlet UIButton *fanCirc;
-@property (nonatomic, weak) IBOutlet UIButton *fanMax;
-@property (nonatomic, weak) IBOutlet UIButton *defrostRear;
-@property (nonatomic, weak) IBOutlet UIButton *defrostFront;
-@property (nonatomic, weak) IBOutlet UIButton *hazards;
+@property (nonatomic, weak) IBOutlet UIButton *airDirectionDownButton;
+@property (nonatomic, weak) IBOutlet UIButton *airDirectionRightButton;
+@property (nonatomic, weak) IBOutlet UIButton *airDirectionUpButton;
+@property (nonatomic, weak) IBOutlet UIButton *fanACButton;
+@property (nonatomic, weak) IBOutlet UIButton *fanAutoButton;
+@property (nonatomic, weak) IBOutlet UIButton *fanCircButton;
+@property (nonatomic, weak) IBOutlet UIButton *defrostMaxButton;
+@property (nonatomic, weak) IBOutlet UIButton *defrostRearButton;
+@property (nonatomic, weak) IBOutlet UIButton *defrostFrontButton;
+@property (nonatomic, weak) IBOutlet UIButton *hazardButton;
 @property (nonatomic, weak) IBOutlet UIButton *seatTempLeftButton;
 @property (nonatomic, weak) IBOutlet UIButton *seatTempRightButton;
-@property (nonatomic, weak) IBOutlet UIButton *settings;
+@property (nonatomic, weak) IBOutlet UISlider *fanSpeedSlider;
+@property (nonatomic, weak) IBOutlet UIButton *settingsButton;
 @property                   NSInteger          leftSeatTemp;
 @property                   NSInteger          rightSeatTemp;
+@property (nonatomic) BOOL                     defrostMaxIsOn;
+@property (nonatomic) BOOL                     autoIsOn;
+@property (nonatomic, strong) HVACState       *savedState;
 @end
+
+#define TAG_AIRFLOW_DIRECTION_DOWN  100
+#define TAG_AIRFLOW_DIRECTION_RIGHT 101
+#define TAG_AIRFLOW_DIRECTION_UP    102
+
+#define DEFAULT_FAN_SPEED 3
+#define MAX_FAN_SPEED     8
 
 @implementation ViewController
 
@@ -43,6 +56,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 
+    [self.airDirectionDownButton  setTag:TAG_AIRFLOW_DIRECTION_DOWN];
+    [self.airDirectionRightButton setTag:TAG_AIRFLOW_DIRECTION_RIGHT];
+    [self.airDirectionUpButton    setTag:TAG_AIRFLOW_DIRECTION_UP];
+
+    [self.pickerLeft          setTag:HSI_TEMP_LEFT];
+    [self.pickerRight         setTag:HSI_TEMP_RIGHT];
+    [self.fanACButton         setTag:HSI_AC];
+    [self.fanAutoButton       setTag:HSI_AUTO];
+    [self.fanCircButton       setTag:HSI_AIR_CIRC];
+    [self.defrostMaxButton    setTag:HSI_DEFROST_MAX];
+    [self.defrostRearButton   setTag:HSI_DEFROST_REAR];
+    [self.defrostFrontButton  setTag:HSI_DEFROST_FRONT];
+    [self.hazardButton        setTag:HSI_HAZARD];
+    [self.seatTempLeftButton  setTag:HSI_SEAT_HEAT_LEFT];
+    [self.seatTempRightButton setTag:HSI_SEAT_HEAT_RIGHT];
+
+    [HVACManager setDelegate:self];
     [HVACManager start];
 }
 
@@ -51,30 +81,28 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 - (NSInteger)getAirflowDirectionValue
 {
-    return ([self.airDirectionDown  isHighlighted] ? 1 : 0) +
-           ([self.airDirectionRight isHighlighted] ? 2 : 0) +
-           ([self.airDirectionUp    isHighlighted] ? 4 : 0);
+    return ([self.airDirectionDownButton  isSelected] ? 1 : 0) +
+           ([self.airDirectionRightButton isSelected] ? 2 : 0) +
+           ([self.airDirectionUpButton    isSelected] ? 4 : 0);
 }
 
 - (void)setAirflowDirectionButtons:(NSInteger)value
 {
-
-    [self.airDirectionDown  setHighlighted:(value % 2 == 1)]; value /= 2;
-    [self.airDirectionRight setHighlighted:(value % 2 == 1)]; value /= 2;
-    [self.airDirectionUp    setHighlighted:(value % 2 == 1)];
+    [self.airDirectionDownButton  setSelected:(value % 2 == 1)]; value /= 2;
+    [self.airDirectionRightButton setSelected:(value % 2 == 1)]; value /= 2;
+    [self.airDirectionUpButton    setSelected:(value % 2 == 1)];
 }
 
-- (IBAction)airDirectionButtonPressed:(id)sender
-{
-    self.airDirectionDown.selected  =
-    self.airDirectionRight.selected =
-    self.airDirectionUp.selected    = NO;
-
-    ((UIButton *)sender).selected   = YES;
-}
+//- (IBAction)airDirectionButtonPressed:(id)sender
+//{
+//    self.airDirectionDownButton.selected  =
+//    self.airDirectionRightButton.selected =
+//    self.airDirectionUpButton.selected    = NO;
+//
+//    ((UIButton *)sender).selected   = YES;
+//}
 
 - (NSInteger)newSeatTempFrom:(NSInteger)previous
 {
@@ -83,69 +111,299 @@
     return previous == 7 ? 0 : previous;
 }
 
+- (NSInteger)updateSeatTempButton:(UIButton *)button savedTemp:(NSInteger)oldTemp invokeService:(HVACServiceIdentifier)serviceIdentifier
+{
+    NSInteger newTemp = [self newSeatTempFrom:oldTemp];
+
+    [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeat%@_%d.png", button.tag == HSI_SEAT_HEAT_LEFT ? @"Left" : @"Right", newTemp]]
+            forState:UIControlStateNormal];
+
+    if (serviceIdentifier != HSI_NONE)
+        [HVACManager invokeService:serviceIdentifier
+                             value:@(newTemp)];
+
+    return newTemp;
+}
+
 - (IBAction)seatTempButtonPressed:(id)sender
 {
     if (sender == self.seatTempLeftButton)
     {
-        self.leftSeatTemp  = [self newSeatTempFrom:self.leftSeatTemp];
-        [self.seatTempLeftButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeatLeft_%d.png", self.leftSeatTemp]]
-                                 forState:UIControlStateNormal];
-
-        [HVACManager invokeService:HVACServiceIdentifier_SEAT_HEAT_LEFT
-                             value:@(self.leftSeatTemp)];
+        self.leftSeatTemp = [self updateSeatTempButton:self.seatTempLeftButton savedTemp:self.leftSeatTemp invokeService:HSI_SEAT_HEAT_LEFT];
+//        self.leftSeatTemp  = [self newSeatTempFrom:self.leftSeatTemp];
+//        [self.seatTempLeftButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeatLeft_%d.png", self.leftSeatTemp]]
+//                                 forState:UIControlStateNormal];
+//
+//        [HVACManager invokeService:HSI_SEAT_HEAT_LEFT
+//                             value:@(self.leftSeatTemp)];
     }
     else
     {
-        self.rightSeatTemp = [self newSeatTempFrom:self.rightSeatTemp];
-        [self.seatTempRightButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeatRight_%d.png", self.rightSeatTemp]]
-                                  forState:UIControlStateNormal];
+        self.rightSeatTemp = [self updateSeatTempButton:self.seatTempRightButton savedTemp:self.rightSeatTemp invokeService:HSI_SEAT_HEAT_RIGHT];
 
-        [HVACManager invokeService:HVACServiceIdentifier_SEAT_HEAT_RIGHT
-                             value:@(self.rightSeatTemp)];
+//        self.rightSeatTemp = [self newSeatTempFrom:self.rightSeatTemp];
+//        [self.seatTempRightButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeatRight_%d.png", self.rightSeatTemp]]
+//                                  forState:UIControlStateNormal];
+//
+//        [HVACManager invokeService:HSI_SEAT_HEAT_RIGHT
+//                             value:@(self.rightSeatTemp)];
+    }
+}
+
+- (void)toggleTheToggleButton:(UIButton *)button //invokingService:(HVACServiceIdentifier)serviceIdentifier
+{
+    button.selected = !button.selected;
+
+//    if (serviceIdentifier != HSI_NONE)
+//        [HVACManager invokeService:serviceIdentifier
+//                             value:@(button.selected)];
+}
+
+- (HVACServiceIdentifier)getServiceIdentifierFromTag:(NSInteger)tag
+{
+    if (tag == TAG_AIRFLOW_DIRECTION_DOWN ||
+            tag == TAG_AIRFLOW_DIRECTION_RIGHT ||
+            tag == TAG_AIRFLOW_DIRECTION_UP)
+        return HSI_AIRFLOW_DIRECTION;
+
+    return (HVACServiceIdentifier)tag;
+}
+
+- (BOOL)shouldBreakOutOfMaxDefrostGivenServiceIdentifier:(HVACServiceIdentifier)serviceIdentifier
+{
+    switch (serviceIdentifier) {
+        case HSI_DEFROST_REAR:
+        case HSI_DEFROST_FRONT:
+        case HSI_AUTO:
+            return YES;
+        default:
+            return NO;
+    }
+}
+
+- (BOOL)shouldBreakOutOfAutoGivenServiceIdentifier:(HVACServiceIdentifier)serviceIdentifier
+{
+    switch (serviceIdentifier) {
+        case HSI_FAN_SPEED:
+        case HSI_AIRFLOW_DIRECTION:
+        case HSI_DEFROST_MAX:
+        case HSI_AIR_CIRC:
+        case HSI_AC:
+        case HSI_AUTO:
+            return YES;
+        default:
+            return NO;
+    }
+}
+
+- (void)breakOutOfAuto:(HVACServiceIdentifier)serviceIdentifier
+{
+    self.autoIsOn = NO;
+
+    if (serviceIdentifier != HSI_FAN_SPEED && self.savedState.fanSpeed != 0 && serviceIdentifier!= HSI_DEFROST_MAX) {
+        [self.fanSpeedSlider setValue:self.savedState.fanSpeed];
+        [HVACManager invokeService:HSI_FAN_SPEED value:@(self.savedState.fanSpeed)];
     }
 
+    if (serviceIdentifier != HSI_AIRFLOW_DIRECTION && serviceIdentifier!= HSI_DEFROST_MAX) {
+        [self setAirflowDirectionButtons:self.savedState.airDirection];
+        [HVACManager invokeService:HSI_AIRFLOW_DIRECTION value:@(self.savedState.airDirection)];
+    }
 
+    if (serviceIdentifier != HSI_AC) {
+        if (self.fanACButton.selected != self.savedState.ac)
+            [self toggleButtonPressed:self.fanACButton];
+    }
+
+    if (serviceIdentifier != HSI_AIR_CIRC) {
+        if (self.fanCircButton.selected != self.savedState.circ)
+            [self toggleButtonPressed:self.fanCircButton];
+    }
+
+    if (serviceIdentifier != HSI_DEFROST_MAX) {
+        if (self.defrostMaxButton.selected != self.savedState.defrostMax)
+            [self toggleButtonPressed:self.defrostMaxButton];
+    }
+
+    if (serviceIdentifier != HSI_AUTO) {
+        [self toggleTheToggleButton:self.fanAutoButton];
+        [HVACManager invokeService:HSI_AUTO value:@(NO)];
+    }
 }
 
-- (IBAction)fanACButtonPressed:(id)sender
+/* USER INTERFACE CALLBACK */
+- (IBAction)toggleButtonPressed:(id)sender
 {
-    ((UIButton *)sender).selected = !((UIButton *)sender).selected;
+    DLog(@"");
+
+    UIButton *toggleButton = (UIButton *)sender;
+    HVACServiceIdentifier serviceIdentifier = [self getServiceIdentifierFromTag:toggleButton.tag];
+
+    /* Toggle the state of the toggle button */
+    [self toggleTheToggleButton:toggleButton];
+
+    if (self.autoIsOn && [self shouldBreakOutOfAutoGivenServiceIdentifier:serviceIdentifier])
+        [self breakOutOfAuto:serviceIdentifier];
+
+    if (self.defrostMaxIsOn && [self shouldBreakOutOfMaxDefrostGivenServiceIdentifier:serviceIdentifier])
+        [self toggleButtonPressed:self.defrostMaxButton]; /* Call this method again, passing in the defrost max button */
+
+    switch (serviceIdentifier) {
+        case HSI_AIRFLOW_DIRECTION:
+
+            /* If the fan speed is off, turn it on */
+            if (self.fanSpeedSlider.value == 0) {
+                self.fanSpeedSlider.value = DEFAULT_FAN_SPEED;
+                [HVACManager invokeService:HSI_FAN_SPEED value:@(DEFAULT_FAN_SPEED)];
+            }
+
+            if ([self getAirflowDirectionValue] == 0) {
+                self.fanSpeedSlider.value = 0;
+                [HVACManager invokeService:HSI_FAN_SPEED value:@(0)];
+            }
+
+            [HVACManager invokeService:serviceIdentifier value:@([self getAirflowDirectionValue])];
+
+            break;
+
+        case HSI_AUTO:
+
+            if (toggleButton.selected) {
+                self.savedState = [HVACState hvacStateWithAirDirection:[self getAirflowDirectionValue]
+                                                              fanSpeed:(NSInteger)self.fanSpeedSlider.value
+                                                                    ac:self.fanACButton.isSelected
+                                                                  circ:self.fanCircButton.isSelected
+                                                            defrostMax:self.defrostMaxButton.isSelected];
+                
+                [self setAirflowDirectionButtons:0];
+                [HVACManager invokeService:HSI_AIRFLOW_DIRECTION value:@(0)];
+
+                self.fanSpeedSlider.value = 0;
+                [HVACManager invokeService:HSI_FAN_SPEED value:@(0)];
+
+                if (!self.fanACButton.selected)
+                    [self toggleButtonPressed:self.fanACButton];
+
+                if (self.fanCircButton.selected)
+                    [self toggleButtonPressed:self.fanCircButton];
+
+                if (self.defrostMaxButton.selected)
+                    [self toggleButtonPressed:self.defrostMaxButton];
+
+                self.autoIsOn = YES;
+            }
+
+            [HVACManager invokeService:serviceIdentifier value:@(toggleButton.selected)];
+
+            break;
+
+        case HSI_DEFROST_MAX:
+
+            if (toggleButton.selected) {
+                if (!self.defrostFrontButton.selected)
+                    [self toggleButtonPressed:self.defrostFrontButton];
+
+                if (!self.defrostRearButton.selected)
+                    [self toggleButtonPressed:self.defrostRearButton];
+
+                [self setAirflowDirectionButtons:4];
+                [HVACManager invokeService:HSI_AIRFLOW_DIRECTION value:@(4)];
+
+                self.fanSpeedSlider.value = 5;
+                [HVACManager invokeService:HSI_FAN_SPEED value:@(5)];
+
+
+                self.defrostMaxIsOn = YES;
+            } else {
+                self.defrostMaxIsOn = NO;
+            }
+
+        case HSI_AC:
+        case HSI_DEFROST_REAR:
+        case HSI_DEFROST_FRONT:
+        case HSI_AIR_CIRC:
+
+            [HVACManager invokeService:serviceIdentifier value:@(toggleButton.selected)];
+
+            break;
+    }
 }
 
-- (IBAction)fanAutoButtonPressed:(id)sender
+/* RVI SERVICE INVOCATION CALLBACK */
+- (void)onServiceInvoked:(HVACServiceIdentifier)serviceIdentifier withValue:(id)value
 {
-    ((UIButton *)sender).selected = !((UIButton *)sender).selected;
+    UIView *view = [self.view viewWithTag:serviceIdentifier];
+    BOOL newToggleButtonState;
 
+    switch (serviceIdentifier) {
+        case HSI_DEFROST_MAX:
+        case HSI_AUTO:
+
+            newToggleButtonState = [(NSNumber *)value boolValue];
+
+            /* Special extra work for auto/max_defrost */
+            if (newToggleButtonState)
+                self.savedState = [HVACState hvacStateWithAirDirection:[self getAirflowDirectionValue]
+                                                              fanSpeed:(NSInteger)self.fanSpeedSlider.value
+                                                                    ac:self.fanACButton.isSelected
+                                                                  circ:self.fanCircButton.isSelected
+                                                            defrostMax:self.defrostMaxButton.isSelected];
+
+
+            if (serviceIdentifier == HSI_AUTO)
+                self.autoIsOn = newToggleButtonState;
+
+            if (serviceIdentifier == HSI_DEFROST_MAX)
+                self.defrostMaxIsOn = newToggleButtonState;
+
+            /* Pass through... */
+
+        case HSI_AC:
+        case HSI_AIR_CIRC:
+        case HSI_DEFROST_FRONT:
+        case HSI_DEFROST_REAR:
+            if (view != NULL && [(UIButton *)view isSelected] != [(NSNumber *)value boolValue])
+                ((UIButton *)view).selected = !((UIButton *)view).selected;
+
+            break;
+
+        case HSI_AIRFLOW_DIRECTION:
+            [self setAirflowDirectionButtons:[(NSNumber *)value integerValue]];
+
+            break;
+
+        case HSI_FAN_SPEED:
+            if (view != NULL) [((UIProgressView *)view) setProgress:[(NSNumber *)value integerValue]];
+
+            break;
+
+        case HSI_SEAT_HEAT_LEFT:
+            self.leftSeatTemp = [self updateSeatTempButton:self.seatTempLeftButton savedTemp:self.leftSeatTemp invokeService:HSI_NONE];
+
+            break;
+
+        case HSI_SEAT_HEAT_RIGHT:
+            self.rightSeatTemp = [self updateSeatTempButton:self.seatTempRightButton savedTemp:self.rightSeatTemp invokeService:HSI_NONE];
+
+            break;
+
+        case HSI_TEMP_LEFT:
+        case HSI_TEMP_RIGHT:
+            //if (view != null) ((NumberPicker) view).setValue(Integer.parseInt((String) value));//((Double) value).intValue());
+
+            break;
+
+        case HSI_HAZARD:
+            //toggleHazardButtonFlashing(Boolean.parseBoolean((String) value));//(Boolean) value);
+
+            break;
+
+        case HSI_SUBSCRIBE:
+        case HSI_UNSUBSCRIBE:
+        case HSI_NONE:
+            break;
+    }
 }
-
-- (IBAction)fanCircButtonPressed:(id)sender
-{
-    ((UIButton *)sender).selected = !((UIButton *)sender).selected;
-
-}
-
-- (IBAction)fanMaxButtonPressed:(id)sender
-{
-    ((UIButton *)sender).selected = !((UIButton *)sender).selected;
-
-}
-
-- (IBAction)defrostButtonPressed:(id)sender
-{
-    ((UIButton *)sender).selected = !((UIButton *)sender).selected;
-
-}
-
-- (IBAction)hazardsButtonPressed:(id)sender
-{
-    self.hazards.selected = !self.hazards.selected;
-}
-
-- (IBAction)settingsButtonPressed:(id)sender
-{
-
-}
-
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -168,9 +426,64 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [HVACManager invokeService:(pickerView == self.pickerLeft) ? HVACServiceIdentifier_TEMP_LEFT : HVACServiceIdentifier_TEMP_RIGHT
+    [HVACManager invokeService:(pickerView == self.pickerLeft) ? HSI_TEMP_LEFT : HSI_TEMP_RIGHT
                          value:[NSString stringWithFormat:@"%d", row + 15]];
 }
 
+- (void)onNodeConnected
+{
+
+}
+
+- (void)onNodeDisconnected
+{
+
+}
+
+
+//- (IBAction)fanACButtonPressed:(id)sender
+//{
+//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
+//
+//    // TODO: AC stuff
+//}
+//
+//- (IBAction)fanAutoButtonPressed:(id)sender
+//{
+//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
+//
+//    // TODO: Auto stuff
+//}
+//
+//- (IBAction)fanCircButtonPressed:(id)sender
+//{
+//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
+//
+//    // TODO: Circ stuff
+//}
+//
+//- (IBAction)fanMaxButtonPressed:(id)sender
+//{
+//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
+//
+//    // TODO: Max stuff
+//}
+//
+//- (IBAction)defrostButtonPressed:(id)sender
+//{
+//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
+//
+//    // TODO: Circ stuff
+//}
+//
+//- (IBAction)hazardsButtonPressed:(id)sender
+//{
+//    self.hazardButton.selected = !self.hazardButton.selected;
+//}
+//
+//- (IBAction)settingsButtonPressed:(id)sender
+//{
+//
+//}
 
 @end
