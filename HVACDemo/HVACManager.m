@@ -127,8 +127,8 @@
 {
     NSLog(@"onServiceInvoked...");
 
-    [self.delegate onServiceInvoked:(HVACServiceIdentifier)[SERVICE_IDENTIFIERS indexOfObjectIdenticalTo:serviceIdentifier]
-                          withValue:parameters];
+    [self.delegate onServiceInvoked:(HVACServiceIdentifier)[SERVICE_IDENTIFIERS indexOfObject:serviceIdentifier]
+                          withValue:((NSDictionary *)parameters)[@"value"]];
 }
 
 @end

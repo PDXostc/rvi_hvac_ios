@@ -217,7 +217,7 @@
  */
 - (void)serviceInvoked:(RVIService *)service
 {
-    [self.delegate onServiceInvoked:self withIdentifier:service.bundleIdentifier params:service.parameters];
+    [self.delegate onServiceInvoked:self withIdentifier:service.serviceIdentifier params:service.parameters];
 }
 
 /**
