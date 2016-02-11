@@ -17,116 +17,122 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7F-sj-3vg" userLabel="Button - Hazard">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7F-sj-3vg" userLabel="Button - Hazard">
                                 <rect key="frame" x="145" y="28" width="310" height="58"/>
-                                <state key="normal" image="Hazard">
+                                <state key="normal" image="Hazards_Off">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="hazardsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="83h-QK-O4X"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAN-fw-hQC">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MAN-fw-hQC">
                                 <rect key="frame" x="145" y="106" width="10" height="239"/>
                                 <color key="backgroundColor" red="0.9882352941176471" green="0.54117647058823526" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="fpi-j9-feF"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4u-B1-kVk">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R4u-B1-kVk">
                                 <rect key="frame" x="445" y="106" width="10" height="239"/>
                                 <color key="backgroundColor" red="0.9882352941176471" green="0.54117647058823526" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="VVf-kl-GvK"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vu7-cK-ttV" userLabel="Button - Seat Left">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vu7-cK-ttV" userLabel="Button - Seat Left">
                                 <rect key="frame" x="165" y="106" width="130" height="104"/>
-                                <state key="normal" image="SeatHeatLeft">
+                                <state key="normal" image="SeatHeatLeft_0">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="seatTempButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I2L-Ek-zlC"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aO0-Ev-4oB" userLabel="Button - Seat Right">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aO0-Ev-4oB" userLabel="Button - Seat Right">
                                 <rect key="frame" x="305" y="106" width="130" height="104"/>
-                                <state key="normal" image="SeatHeatRight">
+                                <state key="normal" image="SeatHeatRight_0">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="seatTempButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6SH-zd-aiR"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8PT-iY-JVF">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8PT-iY-JVF">
                                 <rect key="frame" x="165" y="218" width="130" height="127"/>
                                 <color key="backgroundColor" red="0.28627450980000002" green="0.65098039220000004" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="127" id="lEL-WB-82e"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q3q-o3-EpA">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3q-o3-EpA">
                                 <rect key="frame" x="305" y="218" width="130" height="127"/>
                                 <color key="backgroundColor" red="0.28627450980000002" green="0.65098039220000004" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="127" id="J2d-3i-W12"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUZ-1E-6l0" userLabel="Button - Air Down">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUZ-1E-6l0" userLabel="Button - Air Down">
                                 <rect key="frame" x="145" y="370" width="60" height="40"/>
-                                <state key="normal" image="AirflowDirectionDown">
+                                <state key="normal" image="AirflowDirectionDown_Off">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="AirflowDirectionDown_On"/>
                                 <connections>
                                     <action selector="airDirectionButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lai-Dv-znZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W2T-zL-Gzj" userLabel="Button - Air Right">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W2T-zL-Gzj" userLabel="Button - Air Right">
                                 <rect key="frame" x="145" y="430" width="60" height="40"/>
-                                <state key="normal" image="AirflowDirectionRight">
+                                <state key="normal" image="AirflowDirectionRight_Off">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="AirflowDirectionUp_On"/>
                                 <connections>
                                     <action selector="airDirectionButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="15h-J2-RNZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXG-PC-83j" userLabel="Button - Air Up">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXG-PC-83j" userLabel="Button - Air Up">
                                 <rect key="frame" x="145" y="490" width="60" height="40"/>
-                                <state key="normal" image="AirflowDirectionUp">
+                                <state key="normal" image="AirflowDirectionUp_Off">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="AirflowDirectionUp_On"/>
                                 <connections>
                                     <action selector="airDirectionButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dqU-lM-8Ir"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufu-px-CIA" userLabel="Button - Fan Max">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufu-px-CIA" userLabel="Button - Fan Max">
                                 <rect key="frame" x="395" y="370" width="60" height="40"/>
-                                <state key="normal" image="FanMax">
+                                <state key="normal" image="DefrostMax_Off">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="DefrostMax_On"/>
                                 <connections>
                                     <action selector="fanMaxButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xCp-5K-IBc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cv7-xG-U3A" userLabel="Button - Defrost Rear">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cv7-xG-U3A" userLabel="Button - Defrost Rear">
                                 <rect key="frame" x="395" y="430" width="60" height="40"/>
-                                <state key="normal" image="DefrostRear">
+                                <state key="normal" image="DefrostRear_Off">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="DefrostRear_On"/>
                                 <connections>
                                     <action selector="defrostButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1V8-YZ-ciK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jUK-gm-EGT" userLabel="Button - Defrost Front">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jUK-gm-EGT" userLabel="Button - Defrost Front">
                                 <rect key="frame" x="395" y="490" width="60" height="40"/>
-                                <state key="normal" image="DefrostFront">
+                                <state key="normal" image="DefrostFront_Off">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="DefrostFront_On"/>
                                 <connections>
                                     <action selector="defrostButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fmd-7B-WHD"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kzv-Dj-78V">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kzv-Dj-78V">
                                 <rect key="frame" x="215" y="370" width="170" height="25"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Fan" translatesAutoresizingMaskIntoConstraints="NO" id="RXW-Du-Kh2">
@@ -136,7 +142,7 @@
                                             <constraint firstAttribute="width" constant="25" id="pf2-cj-esn"/>
                                         </constraints>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ng-07-i85">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Ng-07-i85">
                                         <rect key="frame" x="33" y="0.0" width="141" height="25"/>
                                         <color key="backgroundColor" red="0.98823529409999999" green="0.54117647059999996" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
@@ -152,39 +158,42 @@
                                     <constraint firstAttribute="trailing" secondItem="6Ng-07-i85" secondAttribute="trailing" constant="-4" id="lpu-nq-Rfh"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OX1-7b-ECU" userLabel="Button - Fan A/C">
-                                <rect key="frame" x="215" y="430" width="55" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OX1-7b-ECU" userLabel="Button - Fan A/C">
+                                <rect key="frame" x="172" y="410" width="60" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="A/C">
+                                <state key="normal" image="FanAC_Off">
                                     <color key="titleColor" red="0.64705882349999999" green="0.92941176469999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="FanAC_On"/>
                                 <connections>
                                     <action selector="fanACButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="u4a-cc-pK9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJI-Bd-aHX" userLabel="Button - Fan AUTO">
-                                <rect key="frame" x="273" y="430" width="55" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJI-Bd-aHX" userLabel="Button - Fan AUTO">
+                                <rect key="frame" x="220" y="410" width="60" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="AUTO">
+                                <state key="normal" image="FanAuto_Off">
                                     <color key="titleColor" red="0.6470588235294118" green="0.92941176470588238" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="FanAuto_On"/>
                                 <connections>
                                     <action selector="fanAutoButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FMH-Tv-ssn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FN-cx-C1n" userLabel="Button - Fan Circ">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FN-cx-C1n" userLabel="Button - Fan Circ">
                                 <rect key="frame" x="330" y="430" width="55" height="40"/>
-                                <state key="normal" image="FanCirc">
+                                <state key="normal" image="FanCirc_Off">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="FanCirc_On"/>
                                 <connections>
                                     <action selector="fanCircButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NQo-fL-bHu"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="JaguarLandRoverLogo" translatesAutoresizingMaskIntoConstraints="NO" id="bdE-uP-VIc">
-                                <rect key="frame" x="210" y="483" width="180" height="47"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="JaguarLandRoverLogo" translatesAutoresizingMaskIntoConstraints="NO" id="bdE-uP-VIc">
+                                <rect key="frame" x="159" y="467" width="282" height="63"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -272,8 +281,8 @@
                         <outlet property="fanCirc" destination="3FN-cx-C1n" id="ebm-I6-XeC"/>
                         <outlet property="fanMax" destination="Ufu-px-CIA" id="DHS-gz-srY"/>
                         <outlet property="hazards" destination="e7F-sj-3vg" id="oPD-lB-hWO"/>
-                        <outlet property="seatTempLeft" destination="Vu7-cK-ttV" id="3iT-Mq-B0Z"/>
-                        <outlet property="seatTempRight" destination="aO0-Ev-4oB" id="y9S-Bg-J7w"/>
+                        <outlet property="seatTempLeftButton" destination="Vu7-cK-ttV" id="aZx-pb-rrR"/>
+                        <outlet property="seatTempRightButton" destination="aO0-Ev-4oB" id="hdv-WP-c2D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -281,17 +290,27 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AirflowDirectionDown" width="60" height="40"/>
-        <image name="AirflowDirectionRight" width="60" height="40"/>
-        <image name="AirflowDirectionUp" width="60" height="40"/>
-        <image name="DefrostFront" width="60" height="40"/>
-        <image name="DefrostRear" width="60" height="40"/>
-        <image name="Fan" width="45" height="45"/>
-        <image name="FanCirc" width="55" height="40"/>
-        <image name="FanMax" width="60" height="40"/>
-        <image name="Hazard" width="310" height="58"/>
-        <image name="JaguarLandRoverLogo" width="180" height="47"/>
-        <image name="SeatHeatLeft" width="130" height="104"/>
-        <image name="SeatHeatRight" width="130" height="104"/>
+        <image name="AirflowDirectionDown_Off" width="112" height="80"/>
+        <image name="AirflowDirectionDown_On" width="112" height="80"/>
+        <image name="AirflowDirectionRight_Off" width="112" height="80"/>
+        <image name="AirflowDirectionUp_Off" width="112" height="80"/>
+        <image name="AirflowDirectionUp_On" width="112" height="80"/>
+        <image name="DefrostFront_Off" width="112" height="80"/>
+        <image name="DefrostFront_On" width="112" height="80"/>
+        <image name="DefrostMax_Off" width="112" height="80"/>
+        <image name="DefrostMax_On" width="112" height="80"/>
+        <image name="DefrostRear_Off" width="112" height="80"/>
+        <image name="DefrostRear_On" width="112" height="80"/>
+        <image name="Fan" width="40" height="40"/>
+        <image name="FanAC_Off" width="112" height="80"/>
+        <image name="FanAC_On" width="112" height="80"/>
+        <image name="FanAuto_Off" width="112" height="80"/>
+        <image name="FanAuto_On" width="112" height="80"/>
+        <image name="FanCirc_Off" width="112" height="80"/>
+        <image name="FanCirc_On" width="112" height="80"/>
+        <image name="Hazards_Off" width="416" height="81"/>
+        <image name="JaguarLandRoverLogo" width="282" height="63"/>
+        <image name="SeatHeatLeft_0" width="159" height="129"/>
+        <image name="SeatHeatRight_0" width="159" height="129"/>
     </resources>
 </document>

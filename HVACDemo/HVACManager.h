@@ -43,7 +43,7 @@ typedef enum
 
 @interface HVACManager : NSObject
 + (void)setDelegate:(id<HVACManagerDelegate>)delegate;
-+ (void)invokeService:(HVACServiceIdentifier)service value:(NSString *)value;
++ (void)invokeService:(HVACServiceIdentifier)service value:(NSObject *)value;
 + (void)start;
 + (void)restart;
 @end

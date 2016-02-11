@@ -74,7 +74,10 @@
 
     }
 
-    [self writeString:[[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding]];
+    NSString *payloadString = [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
+    [self writeString:payloadString];
+
+    DLog(@"Sending packet: %@", payloadString);
 }
 
 - (BOOL)isConfigured

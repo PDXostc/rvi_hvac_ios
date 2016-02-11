@@ -30,8 +30,8 @@
 @property (nonatomic, weak) IBOutlet UIButton *defrostRear;
 @property (nonatomic, weak) IBOutlet UIButton *defrostFront;
 @property (nonatomic, weak) IBOutlet UIButton *hazards;
-@property (nonatomic, weak) IBOutlet UIButton *seatTempLeft;
-@property (nonatomic, weak) IBOutlet UIButton *seatTempRight;
+@property (nonatomic, weak) IBOutlet UIButton *seatTempLeftButton;
+@property (nonatomic, weak) IBOutlet UIButton *seatTempRightButton;
 @property (nonatomic, weak) IBOutlet UIButton *settings;
 @property                   NSInteger          leftSeatTemp;
 @property                   NSInteger          rightSeatTemp;
@@ -51,28 +51,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+
+- (NSInteger)getAirflowDirectionValue
 {
-    return 1;
+    return ([self.airDirectionDown  isHighlighted] ? 1 : 0) +
+           ([self.airDirectionRight isHighlighted] ? 2 : 0) +
+           ([self.airDirectionUp    isHighlighted] ? 4 : 0);
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+- (void)setAirflowDirectionButtons:(NSInteger)value
 {
-    return 15;
-}
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    if (row == 0)  return @"LO";
-    if (row == 14) return @"HI";
-
-    return [NSString stringWithFormat:@"%d", row + 15];
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    [HVACManager invokeService:(pickerView == self.pickerLeft) ? HVACServiceIdentifier_TEMP_LEFT : HVACServiceIdentifier_TEMP_RIGHT
-                         value:[NSString stringWithFormat:@"%d", row + 15]];
+    [self.airDirectionDown  setHighlighted:(value % 2 == 1)]; value /= 2;
+    [self.airDirectionRight setHighlighted:(value % 2 == 1)]; value /= 2;
+    [self.airDirectionUp    setHighlighted:(value % 2 == 1)];
 }
 
 - (IBAction)airDirectionButtonPressed:(id)sender
@@ -84,23 +76,35 @@
     ((UIButton *)sender).selected   = YES;
 }
 
+- (NSInteger)newSeatTempFrom:(NSInteger)previous
+{
+    previous += previous == 0 ? 1 : 2;
+
+    return previous == 7 ? 0 : previous;
+}
+
 - (IBAction)seatTempButtonPressed:(id)sender
 {
-    if (sender == self.seatTempLeft)
+    if (sender == self.seatTempLeftButton)
     {
-        self.leftSeatTemp = (self.leftSeatTemp + 1) % 3;
-        [self.seatTempLeft setTitle:[NSString stringWithFormat:@"%d", self.leftSeatTemp]
-                           forState:UIControlStateNormal];
+        self.leftSeatTemp  = [self newSeatTempFrom:self.leftSeatTemp];
+        [self.seatTempLeftButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeatLeft_%d.png", self.leftSeatTemp]]
+                                 forState:UIControlStateNormal];
+
+        [HVACManager invokeService:HVACServiceIdentifier_SEAT_HEAT_LEFT
+                             value:@(self.leftSeatTemp)];
     }
     else
     {
-        self.rightSeatTemp = (self.rightSeatTemp + 1) % 3;
-        [self.seatTempRight setTitle:[NSString stringWithFormat:@"%d", self.rightSeatTemp]
-                            forState:UIControlStateNormal];
+        self.rightSeatTemp = [self newSeatTempFrom:self.rightSeatTemp];
+        [self.seatTempRightButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeatRight_%d.png", self.rightSeatTemp]]
+                                  forState:UIControlStateNormal];
+
+        [HVACManager invokeService:HVACServiceIdentifier_SEAT_HEAT_RIGHT
+                             value:@(self.rightSeatTemp)];
     }
 
-    [HVACManager invokeService:@"/temp_left"
-                         value:@"20"];
+
 }
 
 - (IBAction)fanACButtonPressed:(id)sender
@@ -142,6 +146,31 @@
 
 }
 
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return 15;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    if (row == 0)  return @"LO";
+    if (row == 14) return @"HI";
+
+    return [NSString stringWithFormat:@"%d", row + 15];
+}
+
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    [HVACManager invokeService:(pickerView == self.pickerLeft) ? HVACServiceIdentifier_TEMP_LEFT : HVACServiceIdentifier_TEMP_RIGHT
+                         value:[NSString stringWithFormat:@"%d", row + 15]];
+}
 
 
 @end
