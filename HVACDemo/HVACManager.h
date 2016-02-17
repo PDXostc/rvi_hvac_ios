@@ -15,8 +15,36 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum
+{
+    HSI_HAZARD = 0,
+    HSI_TEMP_LEFT,
+    HSI_TEMP_RIGHT,
+    HSI_SEAT_HEAT_LEFT,
+    HSI_SEAT_HEAT_RIGHT,
+    HSI_FAN_SPEED,
+    HSI_AIRFLOW_DIRECTION,
+    HSI_DEFROST_REAR,
+    HSI_DEFROST_FRONT,
+    HSI_DEFROST_MAX,
+    HSI_AIR_CIRC,
+    HSI_AC,
+    HSI_AUTO,
+    HSI_END_LOCAL,
+    HSI_UNSUBSCRIBE = HSI_END_LOCAL,
+    HSI_SUBSCRIBE,
+    HSI_NONE,
+} HVACServiceIdentifier;
+
+@protocol HVACManagerDelegate <NSObject>
+- (void)onNodeConnected;
+- (void)onNodeDisconnected;
+- (void)onServiceInvoked:(HVACServiceIdentifier)serviceIdentifier withValue:(id)value;
+@end
 
 @interface HVACManager : NSObject
-
-+ (void)sendService:(NSString *)service value:(NSString *)value;
++ (void)setDelegate:(id<HVACManagerDelegate>)delegate;
++ (void)invokeService:(HVACServiceIdentifier)service value:(NSObject *)value;
++ (void)start;
++ (void)restart;
 @end

@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "jaguar_land_rover_logo.png"
+      "filename" : "jlr_logo_color.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
