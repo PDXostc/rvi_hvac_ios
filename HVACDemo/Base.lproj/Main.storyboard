@@ -23,16 +23,6 @@
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="seL-9l-95R" userLabel="View [Container] - Settings/Connected">
                                 <rect key="frame" x="28" y="20" width="544" height="32"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W3q-YI-UYo" userLabel="Button - Settings">
-                                        <rect key="frame" x="512" y="0.0" width="32" height="32"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="32" id="3EA-5r-C95"/>
-                                            <constraint firstAttribute="width" secondItem="W3q-YI-UYo" secondAttribute="height" multiplier="1:1" id="grh-ZK-IFF"/>
-                                            <constraint firstAttribute="height" constant="32" id="wpb-nq-L3w"/>
-                                        </constraints>
-                                        <state key="normal" image="ConnectedCar_Off"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87V-nh-T2h" userLabel="Button - Connected">
                                         <rect key="frame" x="472" y="0.0" width="32" height="32"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -40,6 +30,16 @@
                                             <constraint firstAttribute="width" secondItem="87V-nh-T2h" secondAttribute="height" multiplier="1:1" id="Wwa-Wi-mUd"/>
                                             <constraint firstAttribute="width" constant="32" id="ey8-Bi-pl0"/>
                                             <constraint firstAttribute="height" constant="32" id="r2v-u0-Nnf"/>
+                                        </constraints>
+                                        <state key="normal" image="ConnectedCar_Off"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W3q-YI-UYo" userLabel="Button - Settings">
+                                        <rect key="frame" x="512" y="0.0" width="32" height="32"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="3EA-5r-C95"/>
+                                            <constraint firstAttribute="width" secondItem="W3q-YI-UYo" secondAttribute="height" multiplier="1:1" id="grh-ZK-IFF"/>
+                                            <constraint firstAttribute="height" constant="32" id="wpb-nq-L3w"/>
                                         </constraints>
                                         <state key="normal" image="ConnectedCar_Off"/>
                                     </button>
@@ -184,11 +184,11 @@
                                     </view>
                                     <pickerView contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JE1-PH-jB0">
                                         <rect key="frame" x="114" y="52" width="54" height="66"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </pickerView>
                                     <pickerView contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="kta-KL-gm2">
                                         <rect key="frame" x="376" y="52" width="54" height="66"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -277,6 +277,10 @@
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="28B-xJ-Xip">
                                         <rect key="frame" x="36" y="0.0" width="510" height="31"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" red="0.98823529409999999" green="0.54117647059999996" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="sliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="7Wa-dy-6Vk"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -392,7 +396,7 @@
                                         <state key="selected" image="FanCirc_On"/>
                                         <state key="highlighted" image="FanCirc_On"/>
                                         <connections>
-                                            <action selector="toggleButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="edd-RT-gkO"/>
+                                            <action selector="toggleButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fiN-qB-EIa"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufu-px-CIA" userLabel="Button - Defrost Max">
@@ -558,15 +562,23 @@
                         <outlet property="airDirectionDownButton" destination="uUZ-1E-6l0" id="trZ-z3-jsw"/>
                         <outlet property="airDirectionRightButton" destination="W2T-zL-Gzj" id="JBZ-NH-wY5"/>
                         <outlet property="airDirectionUpButton" destination="RXG-PC-83j" id="WsS-fl-96G"/>
+                        <outlet property="connectedButton" destination="87V-nh-T2h" id="UJt-60-P3F"/>
                         <outlet property="defrostFrontButton" destination="jUK-gm-EGT" id="HL7-dh-om8"/>
                         <outlet property="defrostMaxButton" destination="Ufu-px-CIA" id="DHS-gz-srY"/>
                         <outlet property="defrostRearButton" destination="cv7-xG-U3A" id="xAg-0Y-m6q"/>
                         <outlet property="fanACButton" destination="OX1-7b-ECU" id="Puz-hZ-19W"/>
                         <outlet property="fanAutoButton" destination="fJI-Bd-aHX" id="wAw-Dc-a2P"/>
                         <outlet property="fanCircButton" destination="3FN-cx-C1n" id="ebm-I6-XeC"/>
+                        <outlet property="fanSpeedSlider" destination="28B-xJ-Xip" id="DoD-8X-e1F"/>
                         <outlet property="hazardButton" destination="e7F-sj-3vg" id="oPD-lB-hWO"/>
+                        <outlet property="logo" destination="bdE-uP-VIc" id="ppT-Y1-y1Z"/>
+                        <outlet property="pickerLeft" destination="JE1-PH-jB0" id="ohK-g0-zPO"/>
+                        <outlet property="pickerRight" destination="kta-KL-gm2" id="neF-YW-kMt"/>
                         <outlet property="seatTempLeftButton" destination="Vu7-cK-ttV" id="aZx-pb-rrR"/>
                         <outlet property="seatTempRightButton" destination="aO0-Ev-4oB" id="hdv-WP-c2D"/>
+                        <outlet property="settingsButton" destination="W3q-YI-UYo" id="dJs-C8-Hih"/>
+                        <outlet property="tempBarLeft" destination="MAN-fw-hQC" id="MBE-uN-wqA"/>
+                        <outlet property="tempBarRight" destination="R4u-B1-kVk" id="1kI-lt-kWq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

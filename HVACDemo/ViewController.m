@@ -20,27 +20,32 @@
 #import "HVACUtil.h"
 
 @interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate, HVACManagerDelegate>
-@property (nonatomic, weak) UIPickerView *pickerLeft;
-@property (nonatomic, weak) UIPickerView *pickerRight;
-@property (nonatomic, weak) IBOutlet UIButton *airDirectionDownButton;
-@property (nonatomic, weak) IBOutlet UIButton *airDirectionRightButton;
-@property (nonatomic, weak) IBOutlet UIButton *airDirectionUpButton;
-@property (nonatomic, weak) IBOutlet UIButton *fanACButton;
-@property (nonatomic, weak) IBOutlet UIButton *fanAutoButton;
-@property (nonatomic, weak) IBOutlet UIButton *fanCircButton;
-@property (nonatomic, weak) IBOutlet UIButton *defrostMaxButton;
-@property (nonatomic, weak) IBOutlet UIButton *defrostRearButton;
-@property (nonatomic, weak) IBOutlet UIButton *defrostFrontButton;
-@property (nonatomic, weak) IBOutlet UIButton *hazardButton;
-@property (nonatomic, weak) IBOutlet UIButton *seatTempLeftButton;
-@property (nonatomic, weak) IBOutlet UIButton *seatTempRightButton;
-@property (nonatomic, weak) IBOutlet UISlider *fanSpeedSlider;
-@property (nonatomic, weak) IBOutlet UIButton *settingsButton;
-@property                   NSInteger          leftSeatTemp;
-@property                   NSInteger          rightSeatTemp;
-@property (nonatomic) BOOL                     defrostMaxIsOn;
-@property (nonatomic) BOOL                     autoIsOn;
-@property (nonatomic, strong) HVACState       *savedState;
+@property (nonatomic, weak) IBOutlet UIButton     *connectedButton;
+@property (nonatomic, weak) IBOutlet UIButton     *settingsButton;
+@property (nonatomic, weak) IBOutlet UIButton     *hazardButton;
+@property (nonatomic, weak) IBOutlet UIButton     *seatTempLeftButton;
+@property (nonatomic, weak) IBOutlet UIButton     *seatTempRightButton;
+@property (nonatomic, weak) IBOutlet UIView       *tempBarLeft;
+@property (nonatomic, weak) IBOutlet UIView       *tempBarRight;
+@property (nonatomic, weak) IBOutlet UIPickerView *pickerLeft;
+@property (nonatomic, weak) IBOutlet UIPickerView *pickerRight;
+@property (nonatomic, weak) IBOutlet UISlider     *fanSpeedSlider;
+@property (nonatomic, weak) IBOutlet UIButton     *airDirectionDownButton;
+@property (nonatomic, weak) IBOutlet UIButton     *airDirectionRightButton;
+@property (nonatomic, weak) IBOutlet UIButton     *airDirectionUpButton;
+@property (nonatomic, weak) IBOutlet UIButton     *fanACButton;
+@property (nonatomic, weak) IBOutlet UIButton     *fanAutoButton;
+@property (nonatomic, weak) IBOutlet UIButton     *fanCircButton;
+@property (nonatomic, weak) IBOutlet UIButton     *defrostMaxButton;
+@property (nonatomic, weak) IBOutlet UIButton    *defrostRearButton;
+@property (nonatomic, weak) IBOutlet UIButton    *defrostFrontButton;
+@property (nonatomic, weak) IBOutlet UIImageView *logo;
+@property (nonatomic)                NSInteger    leftSeatTemp;
+@property (nonatomic)                NSInteger    rightSeatTemp;
+@property (nonatomic)                BOOL         defrostMaxIsOn;
+@property (nonatomic)                BOOL         autoIsOn;
+@property (nonatomic, strong)        HVACState   *savedState;
+@property (nonatomic)                int          lastSliderIntVal;
 @end
 
 #define TAG_AIRFLOW_DIRECTION_DOWN  100
@@ -60,17 +65,26 @@
     [self.airDirectionRightButton setTag:TAG_AIRFLOW_DIRECTION_RIGHT];
     [self.airDirectionUpButton    setTag:TAG_AIRFLOW_DIRECTION_UP];
 
-    [self.pickerLeft          setTag:HSI_TEMP_LEFT];
-    [self.pickerRight         setTag:HSI_TEMP_RIGHT];
-    [self.fanACButton         setTag:HSI_AC];
-    [self.fanAutoButton       setTag:HSI_AUTO];
-    [self.fanCircButton       setTag:HSI_AIR_CIRC];
-    [self.defrostMaxButton    setTag:HSI_DEFROST_MAX];
-    [self.defrostRearButton   setTag:HSI_DEFROST_REAR];
-    [self.defrostFrontButton  setTag:HSI_DEFROST_FRONT];
-    [self.hazardButton        setTag:HSI_HAZARD];
-    [self.seatTempLeftButton  setTag:HSI_SEAT_HEAT_LEFT];
-    [self.seatTempRightButton setTag:HSI_SEAT_HEAT_RIGHT];
+    [self.hazardButton            setTag:HSI_HAZARD];
+    [self.seatTempLeftButton      setTag:HSI_SEAT_HEAT_LEFT];
+    [self.seatTempRightButton     setTag:HSI_SEAT_HEAT_RIGHT];
+    [self.pickerLeft              setTag:HSI_TEMP_LEFT];
+    [self.pickerRight             setTag:HSI_TEMP_RIGHT];
+    [self.fanSpeedSlider          setTag:HSI_FAN_SPEED];
+    [self.fanACButton             setTag:HSI_AC];
+    [self.fanAutoButton           setTag:HSI_AUTO];
+    [self.fanCircButton           setTag:HSI_AIR_CIRC];
+    [self.defrostMaxButton        setTag:HSI_DEFROST_MAX];
+    [self.defrostRearButton       setTag:HSI_DEFROST_REAR];
+    [self.defrostFrontButton      setTag:HSI_DEFROST_FRONT];
+
+    [self.pickerLeft  setDataSource:self];
+    [self.pickerRight setDataSource:self];
+    [self.pickerLeft  setDelegate:self];
+    [self.pickerRight setDelegate:self];
+
+    [self.fanSpeedSlider setMinimumValue:0.0];
+    [self.fanSpeedSlider setMaximumValue:MAX_FAN_SPEED];
 
     [HVACManager setDelegate:self];
     [HVACManager start];
@@ -94,15 +108,6 @@
     [self.airDirectionRightButton setSelected:(value % 2 == 1)]; value /= 2;
     [self.airDirectionUpButton    setSelected:(value % 2 == 1)];
 }
-
-//- (IBAction)airDirectionButtonPressed:(id)sender
-//{
-//    self.airDirectionDownButton.selected  =
-//    self.airDirectionRightButton.selected =
-//    self.airDirectionUpButton.selected    = NO;
-//
-//    ((UIButton *)sender).selected   = YES;
-//}
 
 - (NSInteger)newSeatTempFrom:(NSInteger)previous
 {
@@ -130,33 +135,16 @@
     if (sender == self.seatTempLeftButton)
     {
         self.leftSeatTemp = [self updateSeatTempButton:self.seatTempLeftButton savedTemp:self.leftSeatTemp invokeService:HSI_SEAT_HEAT_LEFT];
-//        self.leftSeatTemp  = [self newSeatTempFrom:self.leftSeatTemp];
-//        [self.seatTempLeftButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeatLeft_%d.png", self.leftSeatTemp]]
-//                                 forState:UIControlStateNormal];
-//
-//        [HVACManager invokeService:HSI_SEAT_HEAT_LEFT
-//                             value:@(self.leftSeatTemp)];
     }
     else
     {
         self.rightSeatTemp = [self updateSeatTempButton:self.seatTempRightButton savedTemp:self.rightSeatTemp invokeService:HSI_SEAT_HEAT_RIGHT];
-
-//        self.rightSeatTemp = [self newSeatTempFrom:self.rightSeatTemp];
-//        [self.seatTempRightButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeatRight_%d.png", self.rightSeatTemp]]
-//                                  forState:UIControlStateNormal];
-//
-//        [HVACManager invokeService:HSI_SEAT_HEAT_RIGHT
-//                             value:@(self.rightSeatTemp)];
     }
 }
 
-- (void)toggleTheToggleButton:(UIButton *)button //invokingService:(HVACServiceIdentifier)serviceIdentifier
+- (void)toggleTheToggleButton:(UIButton *)button
 {
     button.selected = !button.selected;
-
-//    if (serviceIdentifier != HSI_NONE)
-//        [HVACManager invokeService:serviceIdentifier
-//                             value:@(button.selected)];
 }
 
 - (HVACServiceIdentifier)getServiceIdentifierFromTag:(NSInteger)tag
@@ -326,6 +314,25 @@
             [HVACManager invokeService:serviceIdentifier value:@(toggleButton.selected)];
 
             break;
+
+        default:
+            break;
+    }
+}
+
+- (IBAction)sliderValueChanged:(UISlider *)sender
+{
+    DLog(@"%f", self.fanSpeedSlider.value);
+    
+    /* Truncate the value to an int and only send when changed. */
+    int sliderIntVal = (int)sender.value;
+    if (sliderIntVal != self.lastSliderIntVal) {
+        [HVACManager invokeService:HSI_FAN_SPEED value:@((int)self.fanSpeedSlider.value)];
+    
+        if (sliderIntVal == 0.0) {
+            [self setAirflowDirectionButtons:0];
+            [HVACManager invokeService:HSI_AIRFLOW_DIRECTION value:@(0)];
+        }
     }
 }
 
@@ -373,7 +380,7 @@
             break;
 
         case HSI_FAN_SPEED:
-            if (view != NULL) [((UIProgressView *)view) setProgress:[(NSNumber *)value integerValue]];
+            if (view != NULL) [((UISlider *)view) setValue:[(NSNumber *)value floatValue]];
 
             break;
 
@@ -389,8 +396,9 @@
 
         case HSI_TEMP_LEFT:
         case HSI_TEMP_RIGHT:
-            //if (view != null) ((NumberPicker) view).setValue(Integer.parseInt((String) value));//((Double) value).intValue());
-
+            if (view != NULL) [((UIPickerView *)view) selectRow:[(NSNumber *)value integerValue] - 15
+                                                    inComponent:0
+                                                       animated:YES];
             break;
 
         case HSI_HAZARD:
@@ -415,14 +423,20 @@
     return 15;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+- (NSString *)titleForRow:(NSInteger)row
 {
     if (row == 0)  return @"LO";
     if (row == 14) return @"HI";
 
-    return [NSString stringWithFormat:@"%d", row + 15];
+    return [NSString stringWithFormat:@"%d°", row + 15];
 }
 
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [[NSAttributedString alloc] initWithString:[self titleForRow:row]
+                                           attributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                         NSFontAttributeName            : [UIFont boldSystemFontOfSize:32]}];
+}
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -439,51 +453,5 @@
 {
 
 }
-
-
-//- (IBAction)fanACButtonPressed:(id)sender
-//{
-//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
-//
-//    // TODO: AC stuff
-//}
-//
-//- (IBAction)fanAutoButtonPressed:(id)sender
-//{
-//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
-//
-//    // TODO: Auto stuff
-//}
-//
-//- (IBAction)fanCircButtonPressed:(id)sender
-//{
-//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
-//
-//    // TODO: Circ stuff
-//}
-//
-//- (IBAction)fanMaxButtonPressed:(id)sender
-//{
-//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
-//
-//    // TODO: Max stuff
-//}
-//
-//- (IBAction)defrostButtonPressed:(id)sender
-//{
-//    [self toggleButton:sender invokingService:HVACServiceIdentifier_NONE];
-//
-//    // TODO: Circ stuff
-//}
-//
-//- (IBAction)hazardsButtonPressed:(id)sender
-//{
-//    self.hazardButton.selected = !self.hazardButton.selected;
-//}
-//
-//- (IBAction)settingsButtonPressed:(id)sender
-//{
-//
-//}
 
 @end
