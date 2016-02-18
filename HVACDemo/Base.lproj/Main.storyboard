@@ -194,6 +194,7 @@
                                     <constraint firstItem="JE1-PH-jB0" firstAttribute="trailing" secondItem="Vu7-cK-ttV" secondAttribute="trailing" id="VCM-AU-DPN"/>
                                     <constraint firstItem="Vu7-cK-ttV" firstAttribute="leading" secondItem="314-TB-0j6" secondAttribute="trailing" id="WSb-Se-8H1"/>
                                     <constraint firstItem="kta-KL-gm2" firstAttribute="width" secondItem="Vu7-cK-ttV" secondAttribute="width" id="XpE-9W-vKF"/>
+                                    <constraint firstItem="ZEA-Lf-dgI" firstAttribute="width" secondItem="314-TB-0j6" secondAttribute="width" id="Y3i-Zt-V3x"/>
                                     <constraint firstAttribute="bottom" secondItem="MAN-fw-hQC" secondAttribute="bottom" id="YtU-cc-pQq"/>
                                     <constraint firstItem="R4u-B1-kVk" firstAttribute="top" secondItem="zXw-vu-Iqj" secondAttribute="top" id="Z4t-Dn-zSl"/>
                                     <constraint firstItem="314-TB-0j6" firstAttribute="height" secondItem="MAN-fw-hQC" secondAttribute="height" id="ZR6-dt-jHy"/>
@@ -209,6 +210,7 @@
                                     <constraint firstItem="aO0-Ev-4oB" firstAttribute="width" secondItem="Vu7-cK-ttV" secondAttribute="width" id="hfg-rB-5KJ"/>
                                     <constraint firstItem="aO0-Ev-4oB" firstAttribute="height" secondItem="Vu7-cK-ttV" secondAttribute="height" id="ieJ-DC-0l4"/>
                                     <constraint firstItem="kta-KL-gm2" firstAttribute="leading" secondItem="aO0-Ev-4oB" secondAttribute="leading" id="le2-5N-J9g"/>
+                                    <constraint firstItem="qzd-Sr-y0u" firstAttribute="width" secondItem="314-TB-0j6" secondAttribute="width" multiplier="2" id="shM-62-qTi"/>
                                     <constraint firstItem="314-TB-0j6" firstAttribute="leading" secondItem="MAN-fw-hQC" secondAttribute="trailing" id="stM-rY-Jkz"/>
                                     <constraint firstItem="JE1-PH-jB0" firstAttribute="bottom" secondItem="MAN-fw-hQC" secondAttribute="bottom" id="vkE-QT-5TF"/>
                                     <constraint firstItem="JE1-PH-jB0" firstAttribute="height" secondItem="Vu7-cK-ttV" secondAttribute="height" id="wLr-1k-Ftz"/>
