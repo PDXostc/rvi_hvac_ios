@@ -392,8 +392,11 @@
                                             <action selector="toggleButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y0k-9B-sUC"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" misplaced="YES" image="JaguarLandRoverLogo" translatesAutoresizingMaskIntoConstraints="NO" id="bdE-uP-VIc">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" misplaced="YES" image="JaguarLandRoverLogo" translatesAutoresizingMaskIntoConstraints="NO" id="bdE-uP-VIc">
                                         <rect key="frame" x="130" y="152" width="157" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="bdE-uP-VIc" secondAttribute="height" multiplier="157:36" id="tZh-3G-4RO"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -421,6 +424,7 @@
                                     <constraint firstItem="jUK-gm-EGT" firstAttribute="bottom" secondItem="RXG-PC-83j" secondAttribute="bottom" id="Phg-2N-ynp"/>
                                     <constraint firstItem="cv7-xG-U3A" firstAttribute="trailing" secondItem="Ufu-px-CIA" secondAttribute="trailing" id="PzN-lc-YMY"/>
                                     <constraint firstItem="cv7-xG-U3A" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3FN-cx-C1n" secondAttribute="trailing" constant="5" id="QJH-yR-LWC"/>
+                                    <constraint firstItem="jUK-gm-EGT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bdE-uP-VIc" secondAttribute="trailing" constant="10" id="RxN-M7-hWo"/>
                                     <constraint firstItem="W2T-zL-Gzj" firstAttribute="width" secondItem="uUZ-1E-6l0" secondAttribute="width" id="SQp-qc-V6c"/>
                                     <constraint firstItem="Ufu-px-CIA" firstAttribute="width" secondItem="uUZ-1E-6l0" secondAttribute="width" id="Sc9-Od-ecj"/>
                                     <constraint firstItem="Ufu-px-CIA" firstAttribute="top" secondItem="wxU-z5-KNS" secondAttribute="top" id="Smk-Ja-quP"/>
@@ -432,6 +436,7 @@
                                     <constraint firstAttribute="trailing" secondItem="jUK-gm-EGT" secondAttribute="trailing" id="cS9-oy-R8u"/>
                                     <constraint firstItem="RXG-PC-83j" firstAttribute="leading" secondItem="wxU-z5-KNS" secondAttribute="leading" id="eb3-8F-Kaf"/>
                                     <constraint firstAttribute="trailing" secondItem="Ufu-px-CIA" secondAttribute="trailing" id="f0B-Zs-DlP"/>
+                                    <constraint firstItem="bdE-uP-VIc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RXG-PC-83j" secondAttribute="trailing" constant="10" id="fvg-4h-6wC"/>
                                     <constraint firstItem="jUK-gm-EGT" firstAttribute="height" secondItem="uUZ-1E-6l0" secondAttribute="height" id="iQ7-cN-Pci"/>
                                     <constraint firstItem="3FN-cx-C1n" firstAttribute="leading" secondItem="fJI-Bd-aHX" secondAttribute="trailing" priority="250" constant="34" id="jAX-zs-c17"/>
                                     <constraint firstItem="Ufu-px-CIA" firstAttribute="height" secondItem="uUZ-1E-6l0" secondAttribute="height" id="jQc-mQ-68Q"/>
