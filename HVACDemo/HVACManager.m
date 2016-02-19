@@ -111,16 +111,17 @@
 - (void)nodeDidConnect
 {
     [self subscribeToHvac];
+    [self.delegate onNodeConnected];
 }
 
 - (void)nodeDidFailToConnect:(NSError *)trigger
 {
-
+    [self.delegate onNodeDisconnected];
 }
 
 - (void)nodeDidDisconnect:(NSError *)trigger
 {
-
+    [self.delegate onNodeDisconnected];
 }
 
 - (void)onServiceInvoked:(RVIServiceBundle *)serviceBundle withIdentifier:(NSString *)serviceIdentifier params:(NSObject *)parameters

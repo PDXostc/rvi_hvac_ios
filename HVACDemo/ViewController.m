@@ -353,6 +353,11 @@
     }
 }
 
+- (IBAction)connectedButtonPressed:(id)sender
+{
+    [HVACManager restart];
+}
+
 /* RVI SERVICE INVOCATION CALLBACK */
 - (void)onServiceInvoked:(HVACServiceIdentifier)serviceIdentifier withValue:(id)value
 {
@@ -467,12 +472,12 @@
 
 - (void)onNodeConnected
 {
-
+    self.connectedButton.selected = YES;
 }
 
 - (void)onNodeDisconnected
 {
-
+    self.connectedButton.selected = NO;
 }
 
 - (void)drawPickerBackground:(UIPickerView *)picker

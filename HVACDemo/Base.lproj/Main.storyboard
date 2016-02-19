@@ -32,6 +32,10 @@
                                             <constraint firstAttribute="height" constant="32" id="r2v-u0-Nnf"/>
                                         </constraints>
                                         <state key="normal" image="ConnectedCar_Off"/>
+                                        <state key="selected" image="ConnectedCar_On"/>
+                                        <connections>
+                                            <action selector="connectedButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kJU-sF-tlm"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W3q-YI-UYo" userLabel="Button - Settings">
                                         <rect key="frame" x="512" y="0.0" width="32" height="32"/>
@@ -594,6 +598,7 @@
         <image name="AirflowDirectionUp_Off" width="112" height="80"/>
         <image name="AirflowDirectionUp_On" width="112" height="80"/>
         <image name="ConnectedCar_Off" width="96" height="96"/>
+        <image name="ConnectedCar_On" width="96" height="96"/>
         <image name="DefrostFront_Off" width="112" height="80"/>
         <image name="DefrostFront_On" width="112" height="80"/>
         <image name="DefrostMax_Off" width="112" height="80"/>
