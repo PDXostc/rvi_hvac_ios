@@ -22,28 +22,28 @@
       <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/HVACDemoTests.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServiceBundle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIUtil.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIRemoteConnectionDelegate.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIBluetoothConnection.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIBluetoothConnection.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServerConnection.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIService.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacket.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServerConnection.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIService.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkReceivePacket.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacket.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIBluetoothConnection.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacketParser.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkAuthPacket.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkServiceAnnouncePacket.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacket.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIRemoteConnectionManager.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIRemoteConnectionDelegate.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIService.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVINode.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVINode.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkServiceAnnouncePacket.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacketParser.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIBluetoothConnection.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkAuthPacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkServiceAnnouncePacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkPacketParser.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIRemoteConnectionManager.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkReceivePacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServiceBundle.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIRemoteConnectionManager.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServerConnection.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RVI/RVIDlinkReceivePacket.h" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
