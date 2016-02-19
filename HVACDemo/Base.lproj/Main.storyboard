@@ -106,9 +106,9 @@
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="zXw-vu-Iqj" userLabel="View [Container] - Seat/Air Temps">
                                 <rect key="frame" x="28" y="151" width="544" height="118"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAN-fw-hQC" userLabel="View - Left Temp Bar">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAN-fw-hQC" userLabel="View - Left Temp Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="10" height="118"/>
-                                        <color key="backgroundColor" red="0.98823529409999999" green="0.54117647059999996" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="10" id="ZJm-5w-n6Y"/>
                                         </constraints>
@@ -175,9 +175,9 @@
                                             <constraint firstAttribute="width" priority="250" constant="12" id="tT7-ae-MKF"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4u-B1-kVk" userLabel="View - Right Temp Bar">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4u-B1-kVk" userLabel="View - Right Temp Bar">
                                         <rect key="frame" x="534" y="0.0" width="10" height="118"/>
-                                        <color key="backgroundColor" red="0.98823529409999999" green="0.54117647059999996" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="10" id="HqH-Zr-GL2"/>
                                         </constraints>

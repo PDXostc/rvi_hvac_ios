@@ -20,32 +20,32 @@
 #import "HVACUtil.h"
 
 @interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate, HVACManagerDelegate>
-@property (nonatomic, weak) IBOutlet UIButton     *connectedButton;
-@property (nonatomic, weak) IBOutlet UIButton     *settingsButton;
-@property (nonatomic, weak) IBOutlet UIButton     *hazardButton;
-@property (nonatomic, weak) IBOutlet UIButton     *seatTempLeftButton;
-@property (nonatomic, weak) IBOutlet UIButton     *seatTempRightButton;
-@property (nonatomic, weak) IBOutlet UIView       *tempBarLeft;
-@property (nonatomic, weak) IBOutlet UIView       *tempBarRight;
-@property (nonatomic, weak) IBOutlet UIPickerView *pickerLeft;
-@property (nonatomic, weak) IBOutlet UIPickerView *pickerRight;
-@property (nonatomic, weak) IBOutlet UISlider     *fanSpeedSlider;
-@property (nonatomic, weak) IBOutlet UIButton     *airDirectionDownButton;
-@property (nonatomic, weak) IBOutlet UIButton     *airDirectionRightButton;
-@property (nonatomic, weak) IBOutlet UIButton     *airDirectionUpButton;
-@property (nonatomic, weak) IBOutlet UIButton     *fanACButton;
-@property (nonatomic, weak) IBOutlet UIButton     *fanAutoButton;
-@property (nonatomic, weak) IBOutlet UIButton     *fanCircButton;
-@property (nonatomic, weak) IBOutlet UIButton     *defrostMaxButton;
-@property (nonatomic, weak) IBOutlet UIButton    *defrostRearButton;
-@property (nonatomic, weak) IBOutlet UIButton    *defrostFrontButton;
-@property (nonatomic, weak) IBOutlet UIImageView *logo;
-@property (nonatomic)                NSInteger    leftSeatTemp;
-@property (nonatomic)                NSInteger    rightSeatTemp;
-@property (nonatomic)                BOOL         defrostMaxIsOn;
-@property (nonatomic)                BOOL         autoIsOn;
-@property (nonatomic, strong)        HVACState   *savedState;
-@property (nonatomic)                int          lastSliderIntVal;
+@property (nonatomic, weak) IBOutlet UIButton      *connectedButton;
+@property (nonatomic, weak) IBOutlet UIButton      *settingsButton;
+@property (nonatomic, weak) IBOutlet UIButton      *hazardButton;
+@property (nonatomic, weak) IBOutlet UIButton      *seatTempLeftButton;
+@property (nonatomic, weak) IBOutlet UIButton      *seatTempRightButton;
+@property (nonatomic, weak) IBOutlet UIView *tempBarLeft;
+@property (nonatomic, weak) IBOutlet UIView *tempBarRight;
+@property (nonatomic, weak) IBOutlet UIPickerView  *pickerLeft;
+@property (nonatomic, weak) IBOutlet UIPickerView  *pickerRight;
+@property (nonatomic, weak) IBOutlet UISlider      *fanSpeedSlider;
+@property (nonatomic, weak) IBOutlet UIButton      *airDirectionDownButton;
+@property (nonatomic, weak) IBOutlet UIButton      *airDirectionRightButton;
+@property (nonatomic, weak) IBOutlet UIButton      *airDirectionUpButton;
+@property (nonatomic, weak) IBOutlet UIButton      *fanACButton;
+@property (nonatomic, weak) IBOutlet UIButton      *fanAutoButton;
+@property (nonatomic, weak) IBOutlet UIButton      *fanCircButton;
+@property (nonatomic, weak) IBOutlet UIButton      *defrostMaxButton;
+@property (nonatomic, weak) IBOutlet UIButton      *defrostRearButton;
+@property (nonatomic, weak) IBOutlet UIButton      *defrostFrontButton;
+@property (nonatomic, weak) IBOutlet UIImageView   *logo;
+@property (nonatomic)                NSInteger      leftSeatTemp;
+@property (nonatomic)                NSInteger      rightSeatTemp;
+@property (nonatomic)                BOOL           defrostMaxIsOn;
+@property (nonatomic)                BOOL           autoIsOn;
+@property (nonatomic, strong)        HVACState     *savedState;
+@property (nonatomic)                int            lastSliderIntVal;
 @end
 
 #define TAG_AIRFLOW_DIRECTION_DOWN  100
@@ -54,6 +54,8 @@
 
 #define DEFAULT_FAN_SPEED 3
 #define MAX_FAN_SPEED     8
+
+#define MAX_TEMP_VALUE    14
 
 @implementation ViewController
 
@@ -88,6 +90,16 @@
 
     [HVACManager setDelegate:self];
     [HVACManager start];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self makeGradientForBar:self.tempBarLeft];
+    [self makeGradientForBar:self.tempBarRight];
+
+    [self updateTemperatureBars];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -329,10 +341,12 @@
     if (sliderIntVal != self.lastSliderIntVal) {
         [HVACManager invokeService:HSI_FAN_SPEED value:@((int)self.fanSpeedSlider.value)];
     
-        if (sliderIntVal == 0.0) {
+        if (sliderIntVal == 0) {
             [self setAirflowDirectionButtons:0];
             [HVACManager invokeService:HSI_AIRFLOW_DIRECTION value:@(0)];
         }
+
+        self.lastSliderIntVal = sliderIntVal;
     }
 }
 
@@ -399,6 +413,8 @@
             if (view != NULL) [((UIPickerView *)view) selectRow:[(NSNumber *)value integerValue] - 15
                                                     inComponent:0
                                                        animated:YES];
+
+            [self updateTemperatureBars];
             break;
 
         case HSI_HAZARD:
@@ -442,6 +458,8 @@
 {
     [HVACManager invokeService:(pickerView == self.pickerLeft) ? HSI_TEMP_LEFT : HSI_TEMP_RIGHT
                          value:[NSString stringWithFormat:@"%d", row + 15]];
+
+    [self updateTemperatureBars];
 }
 
 - (void)onNodeConnected
@@ -454,4 +472,47 @@
 
 }
 
+- (void)drawPickerBackground:(UIPickerView *)picker
+{
+
+}
+
+#define TEMP_STEPS           (14.0)
+#define GRADIENT_UNIT_HEIGHT (0.15)
+#define BAR_UNIT_HEIGHT      (1.0 - GRADIENT_UNIT_HEIGHT)
+#define TEMP_STEP_HEIGHT     (BAR_UNIT_HEIGHT / TEMP_STEPS)
+- (void)drawTemperateBar:(UIView *)bar value:(NSInteger)value
+{
+    NSInteger inverseValue = 14 - value;
+    CALayer *layer = [bar.layer sublayers][0];
+
+    layer.position = CGPointMake(0.0, (CGFloat)(TEMP_STEP_HEIGHT * inverseValue) * bar.frame.size.height);
+}
+
+- (void)updateTemperatureBars
+{
+    [self drawTemperateBar:self.tempBarLeft
+                     value:[self.pickerLeft selectedRowInComponent:0]];
+    [self drawTemperateBar:self.tempBarRight
+                     value:[self.pickerRight selectedRowInComponent:0]];
+
+}
+
+- (void)makeGradientForBar:(UIView *)tempBar
+{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = tempBar.bounds;
+
+    gradient.anchorPoint = CGPointMake(0, 0);
+    gradient.position    = CGPointMake(0, 0);
+    gradient.startPoint  = CGPointMake(0.5, GRADIENT_UNIT_HEIGHT);
+    gradient.endPoint    = CGPointMake(0.5, 0.0);
+
+    gradient.colors = @[(__bridge id)[[UIColor colorWithRed:(CGFloat)(252.0 / 255.0)
+                                                      green:(CGFloat)(138.0 / 255.0)
+                                                       blue:(CGFloat)(10.0  / 255.0)
+                                                      alpha:1.0] CGColor], (__bridge id)[[UIColor clearColor] CGColor]];
+
+    [tempBar.layer insertSublayer:gradient atIndex:0];
+}
 @end
