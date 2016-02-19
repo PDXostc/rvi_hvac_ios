@@ -100,6 +100,9 @@
     [self makeGradientForBar:self.tempBarRight];
 
     [self updateTemperatureBars];
+
+    [self makeGradientForPicker:self.pickerLeft];
+    [self makeGradientForPicker:self.pickerRight];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -514,5 +517,32 @@
                                                       alpha:1.0] CGColor], (__bridge id)[[UIColor clearColor] CGColor]];
 
     [tempBar.layer insertSublayer:gradient atIndex:0];
+}
+
+- (void)makeGradientForPicker:(UIView *)picker
+{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = picker.bounds;
+
+    gradient.anchorPoint = CGPointMake(0, 0);
+    gradient.position    = CGPointMake(0, 0);
+
+    gradient.locations   = @[@(0.0),
+                             @(GRADIENT_UNIT_HEIGHT * 2.0),
+                             @(1.0 - GRADIENT_UNIT_HEIGHT * 2.0),
+                             @(1.0)];
+
+    gradient.colors = @[(__bridge id)[[UIColor colorWithRed:(CGFloat)(142.0 / 255.0)
+                                                      green:(CGFloat)(205.0 / 255.0)
+                                                       blue:(CGFloat)(223.0 / 255.0)
+                                                      alpha:0.8] CGColor],
+                        (__bridge id)[[UIColor clearColor] CGColor],
+                        (__bridge id)[[UIColor clearColor] CGColor],
+                        (__bridge id)[[UIColor colorWithRed:(CGFloat)(142.0 / 255.0)
+                                                      green:(CGFloat)(205.0 / 255.0)
+                                                       blue:(CGFloat)(223.0 / 255.0)
+                                                      alpha:0.8] CGColor]];
+
+    [picker.layer insertSublayer:gradient atIndex:0];
 }
 @end
