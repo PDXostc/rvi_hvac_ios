@@ -18,14 +18,15 @@
 
 typedef enum
 {
-    kRVINodeNotConfigured        = 1001,
-    kRVINodeJsonError            = 1002,
-    kRVINodeMissingServerCert    = 1003,
-    kRVINodeMissingClientCert    = 1004,
-    kRVINodeStreamEndEncountered = 1005,
-//    kRVINodeNotConfigured = 1005,
-//    kRVINodeNotConfigured = 1006,
-//    kRVINodeNotConfiguredr =1007
+    kRVINodeNotConfigured         = 1001,
+    kRVINodeJsonError             = 1002,
+    kRVINodeMissingServerCert     = 1003,
+    kRVINodeMissingClientCert     = 1004,
+    kRVINodeMissingCertFromServer = 1005,
+    kRVINodeStreamEndEncountered  = 1006,
+//    kRVINodeNotConfigured = 100X,
+//    kRVINodeNotConfigured = 100X,
+//    kRVINodeNotConfiguredr =100X
 };
 
 /**

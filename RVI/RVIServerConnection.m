@@ -138,8 +138,9 @@
         case kSecTrustResultRecoverableTrustFailure : localizedDescription = @"Connection to RVI node has failed due to TLS error: Trust framework failure; retry after fixing inputs.";              break; // 5
         case kSecTrustResultFatalTrustFailure       : localizedDescription = @"Connection to RVI node has failed due to TLS error: Trust framework failure; no \"easy\" fix.";                        break; // 6
         case kSecTrustResultOtherError              : localizedDescription = @"Connection to RVI node has failed due to TLS error: A failure other than that of trust evaluation.";                   break; // 7
-        case kRVINodeMissingServerCert              : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failure loading server cert";                                      break; // 1003
-        case kRVINodeMissingClientCert              : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failure loading client cert";                                      break; // 1004
+        case kRVINodeMissingServerCert              : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failure loading server cert.";                                     break; // 1003
+        case kRVINodeMissingClientCert              : localizedDescription = @"Connection to RVI node has failed due to TLS error: Failure loading client cert.";                                     break; // 1004
+        case kRVINodeMissingCertFromServer          : localizedDescription = @"Connection to RVI node has failed due to TLS error: Server connection did not send cert.";                             break; // 1005
         default                                     : localizedDescription = @"The secure connection failed for an unknown reason. Check underlying error";                                           break;
     }
 
@@ -301,6 +302,8 @@
 
     self.verifiedInputCerts = NO;
     self.verifiedOutputCerts = NO;
+
+    self.certificate = nil;
 }
 
 - (void)readString:(NSString *)string
@@ -322,6 +325,9 @@
 
     SecPolicyRef policy = SecPolicyCreateSSL(NO, (__bridge CFStringRef)self.serverDomain);
     CFArrayRef streamCertificates = (__bridge CFArrayRef)[stream propertyForKey:(NSString *)kCFStreamPropertySSLPeerCertificates];
+
+    if (!streamCertificates)
+        return kRVINodeMissingCertFromServer;
 
     OSStatus status = SecTrustCreateWithCertificates(streamCertificates, policy, &serverTrust);
 
