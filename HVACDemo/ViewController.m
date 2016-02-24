@@ -124,17 +124,17 @@
     [self.airDirectionUpButton    setSelected:(value % 2 == 1)];
 }
 
+/* Change the value from 5 -> 3 -> 1 -> 0. Whoever came up with these values is a complete dolt. I mean, seriously!?
+ * You can't even have them decrease by even amounts so I can write nicer code?! */
 - (NSInteger)newSeatTempFrom:(NSInteger)previous
 {
-    previous += previous == 0 ? 1 : 2;
+    previous -= (previous == 1) ? 1 : 2;
 
-    return previous == 7 ? 0 : previous;
+    return previous == -2 ? 5 : previous;
 }
 
-- (NSInteger)updateSeatTempButton:(UIButton *)button savedTemp:(NSInteger)oldTemp invokeService:(HVACServiceIdentifier)serviceIdentifier
+- (NSInteger)updateSeatTempButton:(UIButton *)button newTemp:(NSInteger)newTemp invokeService:(HVACServiceIdentifier)serviceIdentifier
 {
-    NSInteger newTemp = [self newSeatTempFrom:oldTemp];
-
     [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"SeatHeat%@_%d.png", button.tag == HSI_SEAT_HEAT_LEFT ? @"Left" : @"Right", newTemp]]
             forState:UIControlStateNormal];
 
@@ -149,11 +149,15 @@
 {
     if (sender == self.seatTempLeftButton)
     {
-        self.leftSeatTemp = [self updateSeatTempButton:self.seatTempLeftButton savedTemp:self.leftSeatTemp invokeService:HSI_SEAT_HEAT_LEFT];
+        self.leftSeatTemp = [self updateSeatTempButton:self.seatTempLeftButton
+                                               newTemp:[self newSeatTempFrom:self.leftSeatTemp]
+                                         invokeService:HSI_SEAT_HEAT_LEFT];
     }
     else
     {
-        self.rightSeatTemp = [self updateSeatTempButton:self.seatTempRightButton savedTemp:self.rightSeatTemp invokeService:HSI_SEAT_HEAT_RIGHT];
+        self.rightSeatTemp = [self updateSeatTempButton:self.seatTempRightButton
+                                                newTemp:[self newSeatTempFrom:self.rightSeatTemp]
+                                          invokeService:HSI_SEAT_HEAT_RIGHT];
     }
 }
 
@@ -407,12 +411,12 @@
             break;
 
         case HSI_SEAT_HEAT_LEFT:
-            self.leftSeatTemp = [self updateSeatTempButton:self.seatTempLeftButton savedTemp:self.leftSeatTemp invokeService:HSI_NONE];
+            self.leftSeatTemp = [self updateSeatTempButton:self.seatTempLeftButton newTemp:[(NSNumber *)value integerValue] invokeService:HSI_NONE];
 
             break;
 
         case HSI_SEAT_HEAT_RIGHT:
-            self.rightSeatTemp = [self updateSeatTempButton:self.seatTempRightButton savedTemp:self.rightSeatTemp invokeService:HSI_NONE];
+            self.rightSeatTemp = [self updateSeatTempButton:self.seatTempRightButton newTemp:[(NSNumber *)value integerValue] invokeService:HSI_NONE];
 
             break;
 
