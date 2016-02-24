@@ -122,7 +122,7 @@
         if ((packet = [self stringToPacket:[buffer substringToIndex:(NSUInteger)lengthOfJsonObject]]) != nil)
             [self.delegate onPacketParsed:packet];
 
-        return [self recurse:[buffer substringToIndex:(NSUInteger)lengthOfJsonObject]];
+        return [self recurse:[buffer substringFromIndex:(NSUInteger)lengthOfJsonObject]];
 
     } else if (lengthOfJsonObject == 0) { /* Current data is less than 1 json object */
         return buffer;
