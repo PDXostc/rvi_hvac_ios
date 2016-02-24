@@ -69,8 +69,8 @@
 
 - (void)start
 {
-    [self.node setServerUrl:@"192.168.16.197"];
-    //[self.node setServerUrl:@"192.168.16.132"];
+    //[self.node setServerUrl:@"192.168.16.197"];
+    [self.node setServerUrl:@"192.168.16.132"];
     [self.node setServerPort:8820];
     [self.node setServerCertificate:@"lilli_ios_cert" serverDomain:RVI_DOMAIN clientCertificate:@"client" clientCertificatePassword:@"password"];
 
