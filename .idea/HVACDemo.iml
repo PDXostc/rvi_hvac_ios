@@ -18,8 +18,8 @@
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/Base.lproj/Main.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/ViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemo/AppDelegate.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/HVACDemoTests.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/HVACDemoTests/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIServiceBundle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIUtil.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RVI/RVIBluetoothConnection.m" isTestSource="false" />

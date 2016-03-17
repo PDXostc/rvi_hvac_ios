@@ -239,21 +239,18 @@
  * @param context the application context
  * @return the local prefix
  */
+#define LOCAL_SERVICE_PREFIX_STRING_KEY @"org.genivi.rvi.local_service_prefix_string_key"
 + (NSString *)getLocalNodeIdentifier
 {
-//    SharedPreferences sharedPrefs = context.getSharedPreferences(SHARED_PREFS_STRING, MODE_PRIVATE);
-//    String localServicePrefix;
-//
-//    if ((localServicePrefix = sharedPrefs.getString(LOCAL_SERVICE_PREFIX_STRING, nil)) == nil)
-//        localServicePrefix = "android/" + uuidB58String();
-//
-//    SharedPreferences.Editor editor = sharedPrefs.edit();
-//    editor.putString(LOCAL_SERVICE_PREFIX_STRING, localServicePrefix);
-//    editor.apply();
-//
-//    return localServicePrefix;
+    NSString *savedIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:LOCAL_SERVICE_PREFIX_STRING_KEY];
 
-    return @"ios/1234567890"; // TODO: PORT_COMPLETE
+    if (!savedIdentifier)
+    {
+        savedIdentifier = [NSString stringWithFormat:@"ios/%@", [[NSUUID UUID] UUIDString]];
+        [[NSUserDefaults standardUserDefaults] setObject:savedIdentifier forKey:LOCAL_SERVICE_PREFIX_STRING_KEY];
+    }
+
+    return savedIdentifier;
 }
 
 - (void)onRVIDidConnect

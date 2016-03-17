@@ -39,7 +39,7 @@ typedef enum
 @protocol HVACManagerDelegate <NSObject>
 - (void)onNodeConnected;
 - (void)onNodeDisconnected;
-- (void)onServiceInvoked:(HVACServiceIdentifier)serviceIdentifier withValue:(id)value;
+- (void)onServiceInvoked:(HVACServiceIdentifier)serviceIdentifier withValue:(id)value   ;
 @end
 
 @interface HVACManager : NSObject
