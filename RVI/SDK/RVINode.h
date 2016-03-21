@@ -92,6 +92,13 @@ typedef enum
 - (void)setServerCertificate:(NSString *)serverCertificate serverDomain:(NSString *)serverDomain clientCertificate:(NSString *)clientCertificate clientCertificatePassword:(NSString *)clientCertificatePassword;
 
 /**
+ * Method to pass the SDK your app's JWT-encoded json credentials for invoking services on a remote node and receiving service invocations from a remote node.
+ *
+ * @param jwtString a jwt-encoded credentials string
+ */
+- (void)addJWTCredentials:(NSString *)jwtString;
+
+/**
  * Sets the device address of the remote Bluetooth receiver on the remote RVI node, when using a Bluetooth link to interface with a remote node.
  *
  * @param deviceAddress the Bluetooth device address
